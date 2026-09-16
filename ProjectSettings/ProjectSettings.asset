@@ -608,8 +608,9 @@ PlayerSettings:
   gcIncremental: 1
   gcWBarrierValidation: 0
   managedCodeVariant: {}
-  apiCompatibilityLevelPerPlatform: {}
-  editorAssembliesCompatibilityLevel: 1
+  apiCompatibilityLevelPerPlatform:
+    Standalone: 3
+  editorAssembliesCompatibilityLevel: 2
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: DoubleDungeon
