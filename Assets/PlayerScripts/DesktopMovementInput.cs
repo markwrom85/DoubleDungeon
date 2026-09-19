@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 // Owned by the player; bindings resolve again when devices connect or disconnect.
 public sealed class DesktopMovementInput : IDisposable
 {
+    private readonly PlayerInput playerInput;
     private readonly InputActionAsset actions;
     private readonly InputAction move;
     private readonly InputAction mouseMove;
@@ -12,28 +13,26 @@ public sealed class DesktopMovementInput : IDisposable
     private readonly InputAction attack;
     public bool FireHeld => attack.IsPressed();
 
-    public DesktopMovementInput()
+    public DesktopMovementInput(PlayerInput owner)
     {
-        var source = InputSystem.actions;
+        playerInput = owner ?? throw new ArgumentNullException(nameof(owner));
+        var source = playerInput.actions;
         if (source == null)
-            throw new InvalidOperationException("Assign InputSystem_Actions as the project-wide Input Actions asset in Project Settings > Input System Package.");
-        // Own a copy so disabling this player cannot disable UI or other consumers.
-        // All bindings come from the editable asset, including future binding changes.
+            throw new InvalidOperationException("Assign InputSystem_Actions to the PlayerInput component.");
         source.FindAction("Player/Move", true);
         source.FindAction("Player/MouseMove", true);
         source.FindAction("Player/Pointer", true);
         source.FindAction("Player/Attack", true);
-        actions = UnityEngine.Object.Instantiate(source);
-        actions.Disable();
+        actions = source;
         move = actions.FindAction("Player/Move", true);
         mouseMove = actions.FindAction("Player/MouseMove", true);
         pointer = actions.FindAction("Player/Pointer", true);
         attack = actions.FindAction("Player/Attack", true);
     }
 
-    public void Enable() { move.Enable(); mouseMove.Enable(); pointer.Enable(); attack.Enable(); }
-    public void Disable() { move.Disable(); mouseMove.Disable(); pointer.Disable(); attack.Disable(); }
-    public void Dispose() { actions.Disable(); UnityEngine.Object.Destroy(actions); }
+    public void Enable() { playerInput.ActivateInput(); }
+    public void Disable() { playerInput.DeactivateInput(); }
+    public void Dispose() { }
 
     // Return true even at the mouse target, so Arduino input cannot move it away.
     public bool TryGetMovement(Vector3 position, Camera camera, float step, Rect overlay,

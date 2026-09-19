@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 #if !NET_STANDARD_2_0 && !NET_STANDARD_2_1
 using System.IO.Ports;
 using System.Threading;
@@ -22,6 +23,7 @@ public class ArduinoJoystickPlayer : MonoBehaviour
     [Header("Shooting")]
     public CardinalGun gun;
 
+    [SerializeField] private PlayerInput playerInput;
     private DesktopMovementInput desktopInput;
     private string activeInput = "Idle";
     private Rect OverlayRect => new Rect(12, 12, Mathf.Min(700, Screen.width - 24), 215);
@@ -56,7 +58,10 @@ public class ArduinoJoystickPlayer : MonoBehaviour
     {
         try
         {
-            if (desktopInput == null) desktopInput = new DesktopMovementInput();
+            if (playerInput == null) playerInput = GetComponent<PlayerInput>();
+            if (playerInput == null)
+                throw new InvalidOperationException("Add a PlayerInput component to the player prefab.");
+            if (desktopInput == null) desktopInput = new DesktopMovementInput(playerInput);
             desktopInput.Enable();
         }
         catch (Exception exception)
