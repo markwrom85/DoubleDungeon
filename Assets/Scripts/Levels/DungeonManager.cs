@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Cinemachine;
 
 public class DungeonManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class DungeonManager : MonoBehaviour
     [SerializeField] private Transform[] playerSpawnPoints;
     // Cameras define the movement bounds. Multiple players may share one camera.
     [SerializeField] private Camera[] movementCameras;
+    // Each entry should be the target group followed by the matching Cinemachine camera.
+    [SerializeField] private CinemachineTargetGroup[] cameraTargetGroups;
     // Optional per-player camera mapping. If empty, GetCameraIndex uses playerIndex / 2.
     [SerializeField] private int[] playerCameraIndices;
     private List<ArduinoJoystickPlayer> players = new List<ArduinoJoystickPlayer>();
@@ -143,6 +146,30 @@ public class DungeonManager : MonoBehaviour
         }
 
         player.SetMovementCamera(movementCamera);
+        AssignPlayerTargetGroup(player, cameraIndex);
+    }
+
+    private void AssignPlayerTargetGroup(ArduinoJoystickPlayer player, int cameraIndex)
+    {
+        if (cameraTargetGroups == null || cameraIndex < 0
+            || cameraIndex >= cameraTargetGroups.Length)
+            return;
+
+        CinemachineTargetGroup targetGroup = cameraTargetGroups[cameraIndex];
+        if (targetGroup == null) return;
+
+        Transform target = player.transform.root;
+        foreach (CinemachineTargetGroup.Target groupTarget in targetGroup.Targets)
+        {
+            if (groupTarget.Object == target) return;
+        }
+
+        targetGroup.Targets.Add(new CinemachineTargetGroup.Target
+        {
+            Object = target,
+            Weight = 1f,
+            Radius = 0.5f
+        });
     }
 
     private int GetCameraIndex(int playerIndex)

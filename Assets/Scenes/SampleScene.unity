@@ -251,7 +251,7 @@ Transform:
   m_GameObject: {fileID: 33268431}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9, y: 0, z: -32.159042}
+  m_LocalPosition: {x: 0, y: 0, z: -32.159042}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -299,6 +299,7 @@ GameObject:
   m_Component:
   - component: {fileID: 51281138}
   - component: {fileID: 51281139}
+  - component: {fileID: 51281140}
   m_Layer: 0
   m_Name: LeftCamera
   m_TagString: Untagged
@@ -341,7 +342,7 @@ MonoBehaviour:
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 0}
+    TrackingTarget: {fileID: 639559680}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
@@ -364,6 +365,27 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!114 &51281140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51281137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb4843bae7d24943842ea23130dcd55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineGroupFraming
+  FramingMode: 2
+  FramingSize: 0.01
+  CenterOffset: {x: 0, y: 0}
+  Damping: 1
+  SizeAdjustment: 2
+  LateralAdjustment: 0
+  FovRange: {x: 1, y: 100}
+  DollyRange: {x: -100, y: 100}
+  OrthoSizeRange: {x: 5, y: 5}
 --- !u!1 &54583206
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,6 +425,9 @@ MonoBehaviour:
   movementCameras:
   - {fileID: 1825620352}
   - {fileID: 33268435}
+  cameraTargetGroups:
+  - {fileID: 639559679}
+  - {fileID: 2129854575}
   playerCameraIndices: 00000000010000000000000001000000i
 --- !u!4 &54583208
 Transform:
@@ -463,6 +488,7 @@ GameObject:
   m_Component:
   - component: {fileID: 576367281}
   - component: {fileID: 576367280}
+  - component: {fileID: 576367282}
   m_Layer: 0
   m_Name: RightCamera
   m_TagString: Untagged
@@ -490,7 +516,7 @@ MonoBehaviour:
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 0}
+    TrackingTarget: {fileID: 2129854576}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
@@ -528,6 +554,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1207383481}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &576367282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576367279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb4843bae7d24943842ea23130dcd55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineGroupFraming
+  FramingMode: 2
+  FramingSize: 0.01
+  CenterOffset: {x: 0, y: 0}
+  Damping: 1
+  SizeAdjustment: 2
+  LateralAdjustment: 0
+  FovRange: {x: 1, y: 100}
+  DollyRange: {x: -100, y: 100}
+  OrthoSizeRange: {x: 5, y: 5}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,7 +714,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineTargetGroup
   PositionMode: 0
   RotationMode: 0
-  UpdateMethod: 2
+  UpdateMethod: 1
   Targets: []
   m_LegacyTargets: []
 --- !u!4 &639559680
@@ -1243,7 +1290,7 @@ Transform:
   m_GameObject: {fileID: 1825620348}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9, y: 0, z: -32.159042}
+  m_LocalPosition: {x: 0, y: 0, z: -32.159042}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1512,7 +1559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineTargetGroup
   PositionMode: 0
   RotationMode: 0
-  UpdateMethod: 2
+  UpdateMethod: 1
   Targets: []
   m_LegacyTargets: []
 --- !u!4 &2129854576
