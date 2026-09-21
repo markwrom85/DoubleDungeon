@@ -76,14 +76,14 @@ public class ArduinoJoystickPlayer : MonoBehaviour
             out Vector2 direction, out activeInput))
         {
             direction = Vector2.zero;
-            if (useArduino && IsFresh(stamp))
-            {
-                direction = new Vector2(Axis(x, center.x), Axis(y, center.y));
-                if (swapAxes) direction = new Vector2(direction.y, direction.x);
-                if (invertX) direction.x *= -1;
-                if (invertY) direction.y *= -1;
-                if (direction.sqrMagnitude > 0) activeInput = "Arduino";
-            }
+            // if (useArduino && IsFresh(stamp))
+            // {
+            //     direction = new Vector2(Axis(x, center.x), Axis(y, center.y));
+            //     if (swapAxes) direction = new Vector2(direction.y, direction.x);
+            //     if (invertX) direction.x *= -1;
+            //     if (invertY) direction.y *= -1;
+            //     if (direction.sqrMagnitude > 0) activeInput = "Arduino";
+            // }
         }
         movementDirection = Vector2.ClampMagnitude(direction, 1);
         if (gun != null)
