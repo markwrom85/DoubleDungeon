@@ -40,6 +40,9 @@ public class ArduinoJoystickPlayer : MonoBehaviour
     private volatile bool stopping;
 #endif
 
+
+public bool isPlayable = false;
+
     private void Awake()
     {
         if (gun == null) gun = GetComponentInChildren<CardinalGun>();
@@ -170,6 +173,7 @@ public class ArduinoJoystickPlayer : MonoBehaviour
 
     private void Update()
     {
+        if(!isPlayable) return;
         if (desktopInput == null) return;
         if (!Application.isFocused) { activeInput = "Idle"; return; }
         int x, y; long stamp; bool serialFire;
@@ -203,22 +207,22 @@ public class ArduinoJoystickPlayer : MonoBehaviour
         }
     }
 
-    private void OnGUI()
-    {
-        int x, y; long stamp; string message;
-        lock (gate) { x = rawX; y = rawY; stamp = lastSample; message = status; }
-        GUILayout.BeginArea(OverlayRect, GUI.skin.box);
-        GUILayout.Label("MOVEMENT | " + activeInput);
-        GUILayout.Label("WASD / arrows | Gamepad left stick / D-pad | Hold right mouse to move");
-        GUILayout.Label("Hold fire: left mouse / Space / gamepad right trigger or west button");
-        GUILayout.Label("Arduino: " + message);
-        GUILayout.Label("Raw X: " + x + "   Raw Y: " + y + (IsFresh(stamp) ? "" : "   (no recent data)"));
-        GUI.enabled = useArduino && IsFresh(stamp);
-        if (GUILayout.Button("Calibrate center (release joystick first)")) center = new Vector2(x, y);
-        GUI.enabled = true;
-        GUILayout.Label("Set Port Name on Player in the Inspector. Stop/Play to reconnect.");
-        GUILayout.EndArea();
-    }
+    // private void OnGUI()
+    // {
+    //     int x, y; long stamp; string message;
+    //     lock (gate) { x = rawX; y = rawY; stamp = lastSample; message = status; }
+    //     GUILayout.BeginArea(OverlayRect, GUI.skin.box);
+    //     GUILayout.Label("MOVEMENT | " + activeInput);
+    //     GUILayout.Label("WASD / arrows | Gamepad left stick / D-pad | Hold right mouse to move");
+    //     GUILayout.Label("Hold fire: left mouse / Space / gamepad right trigger or west button");
+    //     GUILayout.Label("Arduino: " + message);
+    //     GUILayout.Label("Raw X: " + x + "   Raw Y: " + y + (IsFresh(stamp) ? "" : "   (no recent data)"));
+    //     GUI.enabled = useArduino && IsFresh(stamp);
+    //     if (GUILayout.Button("Calibrate center (release joystick first)")) center = new Vector2(x, y);
+    //     GUI.enabled = true;
+    //     GUILayout.Label("Set Port Name on Player in the Inspector. Stop/Play to reconnect.");
+    //     GUILayout.EndArea();
+    // }
 
     private void OnDisable()
     {

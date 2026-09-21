@@ -8,6 +8,10 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private PlayerInputManager playerInputManager;
     [SerializeField] private InputAction joinAction;
     [SerializeField] private Transform[] playerSpawnPoints;
+    [SerializeField] private string gameplaySceneName = "SampleScene";
+    [SerializeField] private GameManager gameManager;
+    private readonly System.Collections.Generic.List<PlayerInput> joinedPlayers =
+        new System.Collections.Generic.List<PlayerInput>();
     private bool canJoin = false;
     private GameObject currentMenu;
 
@@ -65,6 +69,8 @@ public class MainMenu : MonoBehaviour
 
     private void OnPlayerJoined(PlayerInput player)
     {
+        if (!joinedPlayers.Contains(player)) joinedPlayers.Add(player);
+
         int spawnIndex = player.playerIndex;
         if (spawnIndex < 0 || spawnIndex >= playerSpawnPoints.Length)
         {
@@ -100,6 +106,22 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
+        if (joinedPlayers.Count == 0)
+        {
+            Debug.LogWarning("Join at least one player before starting the game.", this);
+            return;
+        }
 
+        GameManager manager = gameManager != null ? gameManager : GameManager.Instance;
+        if (manager == null)
+        {
+            Debug.LogError("A GameManager is required to start the gameplay scene.", this);
+            return;
+        }
+
+        foreach (PlayerInput player in joinedPlayers)
+            manager.RegisterPlayer(player);
+
+        manager.LoadGameplayScene(gameplaySceneName);
     }
 }
