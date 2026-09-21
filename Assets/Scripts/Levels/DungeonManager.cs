@@ -6,8 +6,11 @@ public class DungeonManager : MonoBehaviour
 {
     [SerializeField] private bool debugMode = false;
     [SerializeField] private PlayerInputManager playerInputManager;
+    // Spawn points are indexed by PlayerInput.playerIndex.
     [SerializeField] private Transform[] playerSpawnPoints;
+    // Cameras define the movement bounds. Multiple players may share one camera.
     [SerializeField] private Camera[] movementCameras;
+    // Optional per-player camera mapping. If empty, GetCameraIndex uses playerIndex / 2.
     [SerializeField] private int[] playerCameraIndices;
     private List<ArduinoJoystickPlayer> players = new List<ArduinoJoystickPlayer>();
     private bool wasDebugModeEnabled;
@@ -15,7 +18,7 @@ public class DungeonManager : MonoBehaviour
 
     public event System.Action DebugModeEnabled;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // Initializes players that were carried over from the menu scene.
     void Start()
     {
         wasDebugModeEnabled = debugMode;
@@ -25,6 +28,7 @@ public class DungeonManager : MonoBehaviour
         {
             foreach (ArduinoJoystickPlayer player in players)
             {
+                // Players persist across the scene change, so place and configure them here.
                 MovePlayerToSpawnPoint(player);
                 AssignPlayerCamera(player);
                 SetPlayerPlayable(player);
@@ -43,6 +47,7 @@ public class DungeonManager : MonoBehaviour
 
     private void OnEnable()
     {
+        // PlayerInputManager must notify this script when a player joins during gameplay.
         if (playerInputManager == null)
         {
             Debug.LogError("DungeonManager needs a PlayerInputManager reference.", this);
@@ -55,12 +60,14 @@ public class DungeonManager : MonoBehaviour
 
     private void OnDisable()
     {
+        // Unsubscribe to avoid callbacks after this manager is disabled or destroyed.
         if (playerInputManager == null) return;
         playerInputManager.onPlayerJoined -= OnPlayerJoined;
     }
 
     private void OnPlayerJoined(PlayerInput playerInput)
     {
+        // A PlayerInput can be on the root while the movement component is on a child.
         ArduinoJoystickPlayer player = playerInput.transform.root
             .GetComponentInChildren<ArduinoJoystickPlayer>(true);
 
@@ -88,6 +95,7 @@ public class DungeonManager : MonoBehaviour
             return;
         }
 
+        // Player indices provide a stable mapping from a joined player to its spawn.
         int spawnIndex = playerInput.playerIndex;
         if (playerSpawnPoints == null || playerSpawnPoints.Length == 0)
         {
@@ -118,6 +126,7 @@ public class DungeonManager : MonoBehaviour
         PlayerInput playerInput = player.GetComponentInParent<PlayerInput>();
         if (playerInput == null) return;
 
+        // Several players can use the same camera and therefore share its movement area.
         int playerIndex = playerInput.playerIndex;
         int cameraIndex = GetCameraIndex(playerIndex);
         if (movementCameras == null || cameraIndex < 0 || cameraIndex >= movementCameras.Length)
@@ -138,6 +147,8 @@ public class DungeonManager : MonoBehaviour
 
     private int GetCameraIndex(int playerIndex)
     {
+        // Use an explicit mapping when supplied; otherwise group players in pairs:
+        // players 0 and 1 use camera 0, players 2 and 3 use camera 1, and so on.
         if (playerCameraIndices != null && playerIndex >= 0
             && playerIndex < playerCameraIndices.Length)
             return playerCameraIndices[playerIndex];
@@ -150,7 +161,7 @@ public class DungeonManager : MonoBehaviour
         player.isPlayable = true;
     }
 
-    // Update is called once per frame
+    // In debug mode, detect players added after the initial scene setup.
     void Update()
     {
         if (debugMode && !wasDebugModeEnabled)
@@ -172,6 +183,7 @@ public class DungeonManager : MonoBehaviour
 
     private void EnableDebugMode()
     {
+        // Debug mode allows additional players to join after the dungeon starts.
         wasDebugModeEnabled = true;
         playerInputManager.EnableJoining();
         DebugModeEnabled?.Invoke();
