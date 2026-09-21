@@ -23,6 +23,7 @@ public class ArduinoJoystickPlayer : MonoBehaviour
     public bool mouseMovement = true;
     [Header("Shooting")]
     public CardinalGun gun;
+    [SerializeField] private Camera movementCamera;
 
     [SerializeField] private PlayerInput playerInput;
     private Rigidbody2D body;
@@ -189,9 +190,8 @@ public bool isPlayable = false;
         }
         int x, y; long stamp; bool serialFire;
         lock (gate) { x = rawX; y = rawY; stamp = lastSample; serialFire = arduinoFire; }
-        Camera camera = Camera.main;
         float step = Mathf.Max(0, speed) * Time.deltaTime;
-        if (!desktopInput.TryGetMovement(transform.position, camera, step, OverlayRect, mouseMovement,
+        if (!desktopInput.TryGetMovement(transform.position, movementCamera, step, OverlayRect, mouseMovement,
             out Vector2 direction, out activeInput))
         {
             direction = Vector2.zero;
@@ -218,16 +218,24 @@ public bool isPlayable = false;
         }
 
         body.linearVelocity = movementDirection * speed;
-        Camera camera = Camera.main;
+        Camera camera = movementCamera;
         if (camera != null && camera.orthographic)
         {
-            float height = Mathf.Max(0, camera.orthographicSize - 0.5f);
-            float width = Mathf.Max(0, camera.orthographicSize * camera.aspect - 0.5f);
+            float depth = Mathf.Abs(transform.position.z - camera.transform.position.z);
+            Vector3 bottomLeft = camera.ViewportToWorldPoint(new Vector3(0f, 0f, depth));
+            Vector3 topRight = camera.ViewportToWorldPoint(new Vector3(1f, 1f, depth));
+            Collider2D collider = GetComponent<Collider2D>();
+            Vector2 extents = collider != null ? collider.bounds.extents : Vector2.zero;
             Vector3 position = body.position;
-            position.x = Mathf.Clamp(position.x, camera.transform.position.x - width, camera.transform.position.x + width);
-            position.y = Mathf.Clamp(position.y, camera.transform.position.y - height, camera.transform.position.y + height);
+            position.x = Mathf.Clamp(position.x, bottomLeft.x + extents.x, topRight.x - extents.x);
+            position.y = Mathf.Clamp(position.y, bottomLeft.y + extents.y, topRight.y - extents.y);
             body.position = position;
         }
+    }
+
+    public void SetMovementCamera(Camera camera)
+    {
+        movementCamera = camera;
     }
 
     // private void OnGUI()
