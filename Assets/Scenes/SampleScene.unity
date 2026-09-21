@@ -536,6 +536,87 @@ Transform:
   - {fileID: 1458377165}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &882950443
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 882950445}
+  - component: {fileID: 882950444}
+  m_Layer: 0
+  m_Name: Arduino Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &882950444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 882950443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9b514d9cd374912881187cf72859a03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ardunoManager
+  slots:
+  - enabled: 1
+    portName: COM9
+    player: {fileID: 0}
+    center: {x: 512, y: 512}
+    deadZone: 0.15
+    invertX: 0
+    invertY: 0
+    swapAxes: 0
+  - enabled: 1
+    portName: COM10
+    player: {fileID: 0}
+    center: {x: 512, y: 512}
+    deadZone: 0.15
+    invertX: 0
+    invertY: 0
+    swapAxes: 0
+  - enabled: 0
+    portName: COM3
+    player: {fileID: 0}
+    center: {x: 512, y: 512}
+    deadZone: 0.15
+    invertX: 0
+    invertY: 0
+    swapAxes: 0
+  - enabled: 0
+    portName: COM3
+    player: {fileID: 0}
+    center: {x: 512, y: 512}
+    deadZone: 0.15
+    invertX: 0
+    invertY: 0
+    swapAxes: 0
+  pressFireToJoin: 1
+  playerInputManager: {fileID: 0}
+  staleAfterSeconds: 0.5
+  releaseWhenUnfocused: 1
+--- !u!4 &882950445
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 882950443}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &932391661
 GameObject:
   m_ObjectHideFlags: 0
@@ -720,7 +801,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInputManager
   m_NotificationBehavior: 0
   m_MaxPlayerCount: 4
-  m_AllowJoining: 0
+  m_AllowJoining: 1
   m_JoinBehavior: 0
   m_PlayerJoinedEvent:
     m_PersistentCalls:
@@ -852,3 +933,4 @@ SceneRoots:
   - {fileID: 763113953}
   - {fileID: 932391663}
   - {fileID: 2047848297}
+  - {fileID: 882950445}

@@ -50,7 +50,7 @@
                     "name": "Attack",
                     "type": "Button",
                     "id": "6c2ab1b8-8984-453a-af3d-a3c78ae1679a",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false,
@@ -307,6 +307,17 @@
                 },
                 {
                     "name": "",
+                    "id": "3a154b1e-8d5d-431e-ad2b-86cb5800bc8d",
+                    "path": "<ArduinoInputDevice>/move",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Arduino",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "c1f7a91b-d0fd-4a62-997e-7fb9b69bf235",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
@@ -400,6 +411,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d9ebcf36-dd4c-4896-bf9f-b9d995f4dcb9",
+                    "path": "<ArduinoInputDevice>/fire",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Arduino",
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -1186,6 +1208,17 @@
             "devices": [
                 {
                     "devicePath": "<XRController>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Arduino",
+            "bindingGroup": "Arduino",
+            "devices": [
+                {
+                    "devicePath": "<ArduinoInputDevice>",
                     "isOptional": false,
                     "isOR": false
                 }

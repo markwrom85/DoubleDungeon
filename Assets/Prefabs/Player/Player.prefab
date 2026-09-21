@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c01a850f7aa9c346ab205e24040db65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArduinoJoystickPlayer
-  portName: COM3
+  portName: COM9
   speed: 4
   deadZone: 0.15
   center: {x: 512, y: 512}
