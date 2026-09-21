@@ -101,6 +101,12 @@ public class MainMenu : MonoBehaviour
         {
             playerInputManager.DisableJoining();
             joinAction.Disable();
+            foreach (PlayerInput player in joinedPlayers)
+            {
+                if (player != null)
+                    Destroy(player.gameObject);
+            }
+            joinedPlayers.Clear();
         }
     }
 
