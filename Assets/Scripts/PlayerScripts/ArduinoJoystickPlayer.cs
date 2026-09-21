@@ -10,6 +10,7 @@ public class ArduinoJoystickPlayer : MonoBehaviour
     public bool mouseMovement = true;
     [Header("Shooting")]
     public CardinalGun gun;
+    [SerializeField] private Camera movementCamera;
 
     [SerializeField] private PlayerInput playerInput;
     private Rigidbody2D body;
@@ -70,10 +71,20 @@ public class ArduinoJoystickPlayer : MonoBehaviour
             activeInput = "Idle";
             return;
         }
-        Camera camera = Camera.main;
         float step = Mathf.Max(0, speed) * Time.deltaTime;
-        desktopInput.TryGetMovement(transform.position, camera, step, OverlayRect, mouseMovement,
-            out Vector2 direction, out activeInput);
+        if (!desktopInput.TryGetMovement(transform.position, movementCamera, step, OverlayRect, mouseMovement,
+            out Vector2 direction, out activeInput))
+        {
+            direction = Vector2.zero;
+            if (useArduino && IsFresh(stamp))
+            {
+                direction = new Vector2(Axis(x, center.x), Axis(y, center.y));
+                if (swapAxes) direction = new Vector2(direction.y, direction.x);
+                if (invertX) direction.x *= -1;
+                if (invertY) direction.y *= -1;
+                if (direction.sqrMagnitude > 0) activeInput = "Arduino";
+            }
+        }
         movementDirection = Vector2.ClampMagnitude(direction, 1);
         if (gun != null)
             gun.Tick(direction, desktopInput.FireHeld);
@@ -88,17 +99,42 @@ public class ArduinoJoystickPlayer : MonoBehaviour
         }
 
         body.linearVelocity = movementDirection * speed;
-        Camera camera = Camera.main;
+        Camera camera = movementCamera;
         if (camera != null && camera.orthographic)
         {
-            float height = Mathf.Max(0, camera.orthographicSize - 0.5f);
-            float width = Mathf.Max(0, camera.orthographicSize * camera.aspect - 0.5f);
+            float depth = Mathf.Abs(transform.position.z - camera.transform.position.z);
+            Vector3 bottomLeft = camera.ViewportToWorldPoint(new Vector3(0f, 0f, depth));
+            Vector3 topRight = camera.ViewportToWorldPoint(new Vector3(1f, 1f, depth));
+            Collider2D collider = GetComponent<Collider2D>();
+            Vector2 extents = collider != null ? collider.bounds.extents : Vector2.zero;
             Vector3 position = body.position;
-            position.x = Mathf.Clamp(position.x, camera.transform.position.x - width, camera.transform.position.x + width);
-            position.y = Mathf.Clamp(position.y, camera.transform.position.y - height, camera.transform.position.y + height);
+            position.x = Mathf.Clamp(position.x, bottomLeft.x + extents.x, topRight.x - extents.x);
+            position.y = Mathf.Clamp(position.y, bottomLeft.y + extents.y, topRight.y - extents.y);
             body.position = position;
         }
     }
+
+    public void SetMovementCamera(Camera camera)
+    {
+        movementCamera = camera;
+    }
+
+    // private void OnGUI()
+    // {
+    //     int x, y; long stamp; string message;
+    //     lock (gate) { x = rawX; y = rawY; stamp = lastSample; message = status; }
+    //     GUILayout.BeginArea(OverlayRect, GUI.skin.box);
+    //     GUILayout.Label("MOVEMENT | " + activeInput);
+    //     GUILayout.Label("WASD / arrows | Gamepad left stick / D-pad | Hold right mouse to move");
+    //     GUILayout.Label("Hold fire: left mouse / Space / gamepad right trigger or west button");
+    //     GUILayout.Label("Arduino: " + message);
+    //     GUILayout.Label("Raw X: " + x + "   Raw Y: " + y + (IsFresh(stamp) ? "" : "   (no recent data)"));
+    //     GUI.enabled = useArduino && IsFresh(stamp);
+    //     if (GUILayout.Button("Calibrate center (release joystick first)")) center = new Vector2(x, y);
+    //     GUI.enabled = true;
+    //     GUILayout.Label("Set Port Name on Player in the Inspector. Stop/Play to reconnect.");
+    //     GUILayout.EndArea();
+    // }
 
     private void OnDisable()
     {
