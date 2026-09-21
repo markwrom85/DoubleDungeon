@@ -7,6 +7,7 @@ using System.Threading;
 #endif
 
 // First prototype: direct movement on the XY plane, without collisions.
+[RequireComponent(typeof(Rigidbody2D))]
 public class ArduinoJoystickPlayer : MonoBehaviour
 {
     public string portName = "COM3";
@@ -24,6 +25,8 @@ public class ArduinoJoystickPlayer : MonoBehaviour
     public CardinalGun gun;
 
     [SerializeField] private PlayerInput playerInput;
+    private Rigidbody2D body;
+    private Vector2 movementDirection;
     private DesktopMovementInput desktopInput;
     private string activeInput = "Idle";
     private Rect OverlayRect => new Rect(12, 12, Mathf.Min(700, Screen.width - 24), 215);
@@ -45,6 +48,11 @@ public bool isPlayable = false;
 
     private void Awake()
     {
+        body = GetComponent<Rigidbody2D>();
+        body.bodyType = RigidbodyType2D.Dynamic;
+        body.gravityScale = 0f;
+        body.freezeRotation = true;
+        body.interpolation = RigidbodyInterpolation2D.Interpolate;
         if (gun == null) gun = GetComponentInChildren<CardinalGun>();
         var renderer = GetComponent<SpriteRenderer>();
         if (renderer == null) renderer = gameObject.AddComponent<SpriteRenderer>();
@@ -173,9 +181,12 @@ public bool isPlayable = false;
 
     private void Update()
     {
-        if(!isPlayable) return;
-        if (desktopInput == null) return;
-        if (!Application.isFocused) { activeInput = "Idle"; return; }
+        movementDirection = Vector2.zero;
+        if (!isPlayable || desktopInput == null || !Application.isFocused)
+        {
+            activeInput = "Idle";
+            return;
+        }
         int x, y; long stamp; bool serialFire;
         lock (gate) { x = rawX; y = rawY; stamp = lastSample; serialFire = arduinoFire; }
         Camera camera = Camera.main;
@@ -193,17 +204,29 @@ public bool isPlayable = false;
                 if (direction.sqrMagnitude > 0) activeInput = "Arduino";
             }
         }
-        transform.position += (Vector3)Vector2.ClampMagnitude(direction, 1) * step;
+        movementDirection = Vector2.ClampMagnitude(direction, 1);
         if (gun != null)
             gun.Tick(direction, desktopInput.FireHeld || (useArduino && IsFresh(stamp) && serialFire));
+    }
+
+    private void FixedUpdate()
+    {
+        if (!isPlayable)
+        {
+            body.linearVelocity = Vector2.zero;
+            return;
+        }
+
+        body.linearVelocity = movementDirection * speed;
+        Camera camera = Camera.main;
         if (camera != null && camera.orthographic)
         {
             float height = Mathf.Max(0, camera.orthographicSize - 0.5f);
             float width = Mathf.Max(0, camera.orthographicSize * camera.aspect - 0.5f);
-            Vector3 position = transform.position;
+            Vector3 position = body.position;
             position.x = Mathf.Clamp(position.x, camera.transform.position.x - width, camera.transform.position.x + width);
             position.y = Mathf.Clamp(position.y, camera.transform.position.y - height, camera.transform.position.y + height);
-            transform.position = position;
+            body.position = position;
         }
     }
 
