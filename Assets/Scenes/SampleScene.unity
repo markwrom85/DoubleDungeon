@@ -510,7 +510,7 @@ GameObject:
   - component: {fileID: 337832634}
   m_Layer: 0
   m_Name: RightLevelBounds
-  m_TagString: Untagged
+  m_TagString: RightDungeon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1453,7 +1453,7 @@ GameObject:
   - component: {fileID: 1667772021}
   m_Layer: 0
   m_Name: LeftLevelBounds
-  m_TagString: Untagged
+  m_TagString: LeftDungeon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

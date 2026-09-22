@@ -48,4 +48,9 @@ public class Bullet : MonoBehaviour
         if (owner != null && (other.transform == owner || other.transform.IsChildOf(owner))) return;
         ReturnToPool(); // Damage can be added when targets/enemies exist.
     }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        ReturnToPool(); // Return to pool when leaving the trigger area, e.g., for bullets that should not persist.
+    }
 }
