@@ -10,19 +10,21 @@
                     "name": "Button2",
                     "type": "Button",
                     "id": "3819f621-f02b-48ce-b962-5f4e630d16e1",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": false,
+                    "priority": 0
                 },
                 {
                     "name": "SwitchSide",
                     "type": "Button",
                     "id": "28eac72f-0040-4c4a-a91a-9cbb1d2f3dc8",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": false,
+                    "priority": 0
                 },
                 {
                     "name": "MouseMove",

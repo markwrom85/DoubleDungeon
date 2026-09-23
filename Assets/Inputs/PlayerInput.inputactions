@@ -182,6 +182,17 @@
                 },
                 {
                     "name": "",
+                    "id": "e5d0a5a8-46d5-4551-acd3-b8d62c0cad43",
+                    "path": "<ArduinoInputDevice>/switchSide",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "bd0aaaf3-684e-4657-b870-b7af6c98c197",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
@@ -198,6 +209,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
+                    "action": "Special Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c8e698a7-763a-4371-b3b2-da4adf62dff2",
+                    "path": "<ArduinoInputDevice>/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Special Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
