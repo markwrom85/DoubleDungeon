@@ -11,7 +11,7 @@ internal sealed class ArduinoSerialConnection
     internal struct Snapshot
     {
         public int x, y;
-        public bool fire;
+        public bool fire, button2, switchSide;
         public long receivedAt;
         public string status;
     }
@@ -43,7 +43,7 @@ internal sealed class ArduinoSerialConnection
 #if !NET_STANDARD_2_0 && !NET_STANDARD_2_1
         if (firstStop) thread?.Join(250);
 #endif
-        lock (gate) { latest.receivedAt = 0; latest.fire = false; }
+        lock (gate) { latest.receivedAt = 0; latest.fire = latest.button2 = latest.switchSide = false; }
     }
 
     public static bool IsFresh(long stamp, float seconds)
@@ -53,14 +53,30 @@ internal sealed class ArduinoSerialConnection
 
     public static bool TryParse(string line, out int x, out int y, out bool fire)
     {
-        x = y = 0; fire = false;
+        return TryParse(line, out x, out y, out fire, out _, out _);
+    }
+
+    // x,y[,fire[,button2[,switchSide]]]; missing buttons are released.
+    public static bool TryParse(string line, out int x, out int y, out bool fire, out bool button2, out bool switchSide)
+    {
+        x = y = 0; fire = button2 = switchSide = false;
         if (string.IsNullOrEmpty(line)) return false;
         string[] parts = line.Split(',');
-        if ((parts.Length != 2 && parts.Length != 3) || !int.TryParse(parts[0], out x)
+        if ((parts.Length < 2 || parts.Length > 5) || !int.TryParse(parts[0], out x)
             || !int.TryParse(parts[1], out y) || x < 0 || x > 1023 || y < 0 || y > 1023) return false;
         if (parts.Length == 2) return true;
         if (!int.TryParse(parts[2], out int button) || (button != 0 && button != 1)) return false;
         fire = button == 1;
+        if (parts.Length >= 4)
+        {
+            if (!int.TryParse(parts[3], out int second) || (second != 0 && second != 1)) return false;
+            button2 = second == 1;
+        }
+        if (parts.Length == 5)
+        {
+            if (!int.TryParse(parts[4], out int third) || (third != 0 && third != 1)) return false;
+            switchSide = third == 1;
+        }
         return true;
     }
 
@@ -87,9 +103,9 @@ internal sealed class ArduinoSerialConnection
                         if (pending.Length > 64) { pending = ""; discard = true; }
                         continue;
                     }
-                    if (!discard && TryParse(pending, out int x, out int y, out bool fire))
+                    if (!discard && TryParse(pending, out int x, out int y, out bool fire, out bool button2, out bool switchSide))
                     {
-                        lock (gate) latest = new Snapshot { x = x, y = y, fire = fire,
+                        lock (gate) latest = new Snapshot { x = x, y = y, fire = fire, button2 = button2, switchSide = switchSide,
                             receivedAt = Stopwatch.GetTimestamp(), status = "Receiving on " + portName };
                     }
                     pending = ""; discard = false;
@@ -98,7 +114,7 @@ internal sealed class ArduinoSerialConnection
         }
         catch (Exception exception)
         {
-            lock (gate) { latest.receivedAt = 0; latest.fire = false; latest.status = portName + ": " + exception.Message; }
+            lock (gate) { latest.receivedAt = 0; latest.fire = latest.button2 = latest.switchSide = false; latest.status = portName + ": " + exception.Message; }
         }
     }
 #endif

@@ -212,6 +212,8 @@ public class ardunoManager : MonoBehaviour
             {
                 state.move = Calibrate(sample.x, sample.y, slot);
                 state.fire = sample.fire && !slot.suppressFireUntilRelease ? 1 : 0;
+                state.button2 = sample.button2 ? 1 : 0;
+                state.switchSide = sample.switchSide ? 1 : 0;
             }
             InputSystem.QueueStateEvent(slot.device, state);
         }

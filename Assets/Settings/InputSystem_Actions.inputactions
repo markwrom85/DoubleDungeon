@@ -7,6 +7,24 @@
             "id": "df70fa95-8a34-4494-b137-73ab6b9c7d37",
             "actions": [
                 {
+                    "name": "Button2",
+                    "type": "Button",
+                    "id": "3819f621-f02b-48ce-b962-5f4e630d16e1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchSide",
+                    "type": "Button",
+                    "id": "28eac72f-0040-4c4a-a91a-9cbb1d2f3dc8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "MouseMove",
                     "type": "Button",
                     "id": "3fe359d7-9ce8-4a09-baa8-9fe7fa4d458e",
@@ -110,7 +128,7 @@
                     "name": "Sprint",
                     "type": "Button",
                     "id": "641cd816-40e6-41b4-8c3d-04687c349290",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false,
@@ -118,6 +136,28 @@
                 }
             ],
             "bindings": [
+                {
+                    "name": "",
+                    "id": "016a04f0-d243-4dea-98d1-11469ef94d52",
+                    "path": "<ArduinoInputDevice>/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Arduino",
+                    "action": "Button2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7336a924-2b21-4cd0-ad58-d795ae5b4c11",
+                    "path": "<ArduinoInputDevice>/switchSide",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Arduino",
+                    "action": "SwitchSide",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
                 {
                     "name": "",
                     "id": "e2c041f4-f154-4421-a51c-d0e708800c63",

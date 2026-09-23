@@ -22,3 +22,4 @@ axis inversion/swap, old/new serial packet validation and manager shutdown.
 Tests explicitly select gameplay input updates because an unfocused headless editor normally
 routes updates into editor input state. This setting is confined to the temporary test project.
 Physical USB disconnect/reconnect and four real boards still need a hardware playtest.
+Three-button coverage: every button combination, legacy packet compatibility, malformed packets, per-player extra button isolation, release and timeout.

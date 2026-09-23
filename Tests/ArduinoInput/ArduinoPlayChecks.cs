@@ -12,11 +12,11 @@ public class ArduinoPlayChecks : MonoBehaviour {
  void Check(bool value,string label) { if(!value) throw new Exception(label); checks++; }
  void Pump() { typeof(InputSystem).GetMethod("Update",BindingFlags.Static|BindingFlags.NonPublic,null,new[]{typeof(InputUpdateType)},null).Invoke(null,new object[]{InputUpdateType.Manual}); }
  void TickManager(ardunoManager manager) { typeof(ardunoManager).GetMethod("Update",BindingFlags.Instance|BindingFlags.NonPublic).Invoke(manager,null); Pump(); }
- void Seed(ardunoManager.ArduinoSlot slot,int x,int y,bool fire,bool stale=false) {
+ void Seed(ardunoManager.ArduinoSlot slot,int x,int y,bool fire,bool stale=false,bool button2=false,bool switchSide=false) {
   if(slot.connection==null) slot.connection=new ArduinoSerialConnection(slot.portName);
   slot.attemptedPort=slot.portName;
   typeof(ArduinoSerialConnection).GetField("latest",BindingFlags.Instance|BindingFlags.NonPublic).SetValue(slot.connection,
-   new ArduinoSerialConnection.Snapshot {x=x,y=y,fire=fire,receivedAt=System.Diagnostics.Stopwatch.GetTimestamp()-(stale ? System.Diagnostics.Stopwatch.Frequency*2:0),status="Simulated serial data"});
+   new ArduinoSerialConnection.Snapshot {x=x,y=y,fire=fire,button2=button2,switchSide=switchSide,receivedAt=System.Diagnostics.Stopwatch.GetTimestamp()-(stale ? System.Diagnostics.Stopwatch.Frequency*2:0),status="Simulated serial data"});
  }
  IEnumerator Start() {
   yield return null;
@@ -51,7 +51,14 @@ public class ArduinoPlayChecks : MonoBehaviour {
   Seed(manager.slots[0],512,512,false); Seed(manager.slots[1],0,512,true); Seed(manager.slots[2],512,1023,false); Seed(manager.slots[3],512,0,true); TickManager(manager);
   var expected=new[]{Vector2.zero,Vector2.left,Vector2.up,Vector2.down};
   for(int i=0;i<4;i++) Check(Vector2.Distance(players[i].actions.FindAction("Player/Move").ReadValue<Vector2>(),expected[i])<0.001f,"Independent direction "+i);
-  Seed(manager.slots[1],0,512,true,true); TickManager(manager);
+  Seed(manager.slots[1],0,512,true,button2:true); Seed(manager.slots[2],512,1023,false,switchSide:true); TickManager(manager);
+  for(int i=0;i<4;i++) {
+   Check(players[i].actions.FindAction("Player/Button2").IsPressed()==(i==1),"Second button isolation "+i);
+   Check(players[i].actions.FindAction("Player/SwitchSide").IsPressed()==(i==2),"Third button isolation "+i);
+  }
+  Seed(manager.slots[1],0,512,true,true,true,true); Seed(manager.slots[2],512,1023,false); TickManager(manager);
+  Check(!players[1].actions.FindAction("Player/Button2").IsPressed() && !players[1].actions.FindAction("Player/SwitchSide").IsPressed(),"Stale serial releases extra buttons");
+  Check(!players[2].actions.FindAction("Player/SwitchSide").IsPressed(),"Third button releases independently");
   Check(players[1].actions.FindAction("Player/Move").ReadValue<Vector2>()==Vector2.zero && !players[1].actions.FindAction("Player/Attack").IsPressed(),"Stale serial releases move/fire");
   Check(players[3].actions.FindAction("Player/Attack").IsPressed(),"Other Arduino continues after timeout");
   manager.slots[3].enabled=false; TickManager(manager); Check(manager.slots[3].device==null,"Disabled slot removes device");
@@ -67,6 +74,15 @@ public class ArduinoPlayChecks : MonoBehaviour {
   int x,y; bool fire; Check(ArduinoSerialConnection.TryParse("512,512,1\r",out x,out y,out fire)&&fire,"Fire protocol");
   Check(ArduinoSerialConnection.TryParse("512,512",out x,out y,out fire)&&!fire,"Old protocol");
   Check(!ArduinoSerialConnection.TryParse("512,512,9",out x,out y,out fire),"Invalid fire rejected");
+  bool second,third;
+  for(int mask=0;mask<8;mask++) {
+   Check(ArduinoSerialConnection.TryParse("504,512,"+(mask&1)+","+((mask>>1)&1)+","+((mask>>2)&1)+"\r",out x,out y,out fire,out second,out third)
+    && fire==((mask&1)!=0) && second==((mask&2)!=0) && third==((mask&4)!=0),"Three-button protocol combination "+mask);
+  }
+  Check(ArduinoSerialConnection.TryParse("504,512,0,1",out x,out y,out fire,out second,out third)&&second&&!third,"Four-field compatibility");
+  Check(ArduinoSerialConnection.TryParse("504,512,1",out x,out y,out fire,out second,out third)&&fire&&!second&&!third,"Missing buttons released");
+  foreach(var bad in new[]{"512,512,0,2,0","512,512,0,0,2","512,512,0,0,","512,512,0,0,0,0"})
+   Check(!ArduinoSerialConnection.TryParse(bad,out x,out y,out fire,out second,out third),"Reject invalid packet "+bad);
   manager.enabled=false; Pump();
   foreach(var slot in manager.slots) Check(slot.device==null,"Shutdown removes devices");
   UnityEngine.Object.Destroy(managerObject);
