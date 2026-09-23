@@ -15,6 +15,10 @@ public struct ArduinoInputState : IInputStateTypeInfo
     public Vector2 move;
     [InputControl(layout = "Button", format = "FLT")]
     public float fire;
+    [InputControl(layout = "Button", format = "FLT")]
+    public float button2;
+    [InputControl(layout = "Button", format = "FLT")]
+    public float switchSide;
 }
 
 [InputControlLayout(stateType = typeof(ArduinoInputState), displayName = "Arduino Controller")]
@@ -22,12 +26,16 @@ public class ArduinoInputDevice : InputDevice
 {
     public Vector2Control move { get; private set; }
     public ButtonControl fire { get; private set; }
+    public ButtonControl button2 { get; private set; }
+    public ButtonControl switchSide { get; private set; }
 
     protected override void FinishSetup()
     {
         base.FinishSetup();
         move = GetChildControl<Vector2Control>("move");
         fire = GetChildControl<ButtonControl>("fire");
+        button2 = GetChildControl<ButtonControl>("button2");
+        switchSide = GetChildControl<ButtonControl>("switchSide");
     }
 
 #if UNITY_EDITOR
