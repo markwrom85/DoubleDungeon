@@ -18,6 +18,7 @@ public class ArduinoJoystickPlayer : MonoBehaviour
     private DesktopMovementInput desktopInput;
     private string activeInput = "Idle";
     private Rect OverlayRect => new Rect(12, 12, Mathf.Min(700, Screen.width - 24), 215);
+    public bool SwitchTriggered => desktopInput != null && desktopInput.SwitchTriggered;
 
     private Texture2D squareTexture;
     private Sprite squareSprite;
