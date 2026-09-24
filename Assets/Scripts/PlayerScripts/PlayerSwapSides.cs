@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Cinemachine;
+using System.Collections;
 
 public class PlayerSwapSides : MonoBehaviour
 {
@@ -8,8 +9,10 @@ public class PlayerSwapSides : MonoBehaviour
     [SerializeField] private bool isOnLeftSide;
     [SerializeField] private CinemachineTargetGroup leftTargetGroup, rightTargetGroup;
     [SerializeField] private Camera leftCamera, rightCamera;
+    [SerializeField] private float swapDuration = 5f;
     private ArduinoJoystickPlayer player;
-    private bool isSwapping = false;
+    private bool isSwapping = false, canSwap = true;
+    private Coroutine swapTimer;
 
     private void Awake()
     {
@@ -26,6 +29,7 @@ public class PlayerSwapSides : MonoBehaviour
 
     private void Update()
     {
+        if (!canSwap) return;
         if (player == null || !player.SwitchTriggered) return;
 
         if (!isSwapping)
@@ -61,13 +65,29 @@ public class PlayerSwapSides : MonoBehaviour
             leftTargetGroup.AddMember(player.transform, 0.5f, 1f);
             isOnLeftSide = true;
         }
+        swapTimer = StartCoroutine(CompleteSwapAfterDelay());
     }
 
     private void EnableCharacter()
     {
+        if (swapTimer != null)
+        {
+            StopCoroutine(swapTimer);
+            swapTimer = null;
+        }
         playerObj.SetActive(true);
         crosshair.SetActive(false);
         isSwapping = false;
+    }
+
+    private IEnumerator CompleteSwapAfterDelay()
+    {
+        yield return new WaitForSeconds(Mathf.Max(0f, swapDuration));
+        if (isSwapping)
+        {
+            EnableCharacter();
+            Debug.Log("Swap timer expired; enabling character");
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
