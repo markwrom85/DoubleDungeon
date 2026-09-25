@@ -12,7 +12,7 @@ public class CardinalGun : MonoBehaviour
     [Min(1)] public int initialPoolSize = 24;
     [Min(1)] public int maxPoolSize = 128;
     private BulletPool pool;
-
+public bool canShoot = true;
     private void Awake()
     {
         Facing = startingDirection;
@@ -28,6 +28,7 @@ public class CardinalGun : MonoBehaviour
 
     public void Tick(Vector2 movement, bool fireHeld)
     {
+        if (!canShoot) return;
         Facing = CardinalAim.Step(movement.x, movement.y, Facing, fireHeld);
         ApplyFacing();
         if (!fireHeld || Time.timeScale <= 0 || Time.time < nextShotTime) return;

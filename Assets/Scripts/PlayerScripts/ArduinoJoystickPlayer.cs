@@ -34,15 +34,10 @@ public class ArduinoJoystickPlayer : MonoBehaviour
         body.freezeRotation = true;
         body.interpolation = RigidbodyInterpolation2D.Interpolate;
         if (gun == null) gun = GetComponentInChildren<CardinalGun>();
-        var renderer = GetComponent<SpriteRenderer>();
-        if (renderer == null) renderer = gameObject.AddComponent<SpriteRenderer>();
-        if (renderer.sprite != null) return;
         squareTexture = new Texture2D(1, 1);
         squareTexture.SetPixel(0, 0, Color.white);
         squareTexture.Apply();
         squareSprite = Sprite.Create(squareTexture, new Rect(0, 0, 1, 1), Vector2.one * 0.5f, 1);
-        renderer.sprite = squareSprite;
-        renderer.color = new Color(0.2f, 0.9f, 0.65f);
     }
 
     private void OnEnable()

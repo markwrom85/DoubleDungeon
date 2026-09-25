@@ -4,12 +4,14 @@ using System.Collections;
 
 public class PlayerSwapSides : MonoBehaviour
 {
-    [SerializeField] private GameObject playerObj, crosshair;
+    [SerializeField] private GameObject playerObj, crosshair, aoeBurst;
+    [SerializeField] private CardinalGun cardinalGun;
     [SerializeField] private Transform leftCenter, rightCenter;
     [SerializeField] private bool isOnLeftSide;
     [SerializeField] private CinemachineTargetGroup leftTargetGroup, rightTargetGroup;
     [SerializeField] private Camera leftCamera, rightCamera;
     [SerializeField] private float swapDuration = 5f;
+    
     private ArduinoJoystickPlayer player;
     private bool isSwapping = false, canSwap = true;
     private Coroutine swapTimer;
@@ -47,6 +49,7 @@ public class PlayerSwapSides : MonoBehaviour
     private void SwapSides()
     {
         isSwapping = true;
+        cardinalGun.canShoot = false;
         playerObj.SetActive(false);
         crosshair.SetActive(true);
         if (isOnLeftSide)
@@ -78,6 +81,8 @@ public class PlayerSwapSides : MonoBehaviour
         playerObj.SetActive(true);
         crosshair.SetActive(false);
         isSwapping = false;
+        cardinalGun.canShoot = true;
+        StartCoroutine(AOEBurst());
     }
 
     private IEnumerator CompleteSwapAfterDelay()
@@ -101,6 +106,16 @@ public class PlayerSwapSides : MonoBehaviour
         {
             isOnLeftSide = false;
             Debug.Log("Player is on the right side");
+        }
+    }
+
+    private IEnumerator AOEBurst()
+    {
+        aoeBurst.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        if (aoeBurst != null)
+        {
+            aoeBurst.SetActive(false);
         }
     }
 }

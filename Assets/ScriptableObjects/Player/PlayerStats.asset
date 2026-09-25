@@ -15,4 +15,4 @@ MonoBehaviour:
   moveSpeed: 5
   maxHealth: 100
   attackDamage: 5
-  attackRate: 1
+  attackRate: 5
