@@ -4,13 +4,13 @@ using System.Collections;
 
 public class PlayerSwapSides : MonoBehaviour
 {
+    [SerializeField] private PlayerInfo playerInfo;
     [SerializeField] private GameObject playerObj, crosshair, aoeBurst;
     [SerializeField] private CardinalGun cardinalGun;
     [SerializeField] private Transform leftCenter, rightCenter;
     [SerializeField] private bool isOnLeftSide;
     [SerializeField] private CinemachineTargetGroup leftTargetGroup, rightTargetGroup;
     [SerializeField] private Camera leftCamera, rightCamera;
-    [SerializeField] private float swapDuration = 5f;
     
     private ArduinoJoystickPlayer player;
     private bool isSwapping = false, canSwap = true;
@@ -87,7 +87,7 @@ public class PlayerSwapSides : MonoBehaviour
 
     private IEnumerator CompleteSwapAfterDelay()
     {
-        yield return new WaitForSeconds(Mathf.Max(0f, swapDuration));
+        yield return new WaitForSeconds(Mathf.Max(0f, playerInfo.SwapDuration));
         if (isSwapping)
         {
             EnableCharacter();

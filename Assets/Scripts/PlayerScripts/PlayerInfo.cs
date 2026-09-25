@@ -9,6 +9,7 @@ public class PlayerInfo : MonoBehaviour
     public int MaxHealth { get; private set; }
     public float AttackDamage { get; private set; }
     public float AttackRate { get; private set; }
+    public float SwapDuration {get; private set;}
 
     private void Awake()
     {
@@ -16,6 +17,7 @@ public class PlayerInfo : MonoBehaviour
         MaxHealth = baseStats.maxHealth;
         AttackDamage = baseStats.attackDamage;
         AttackRate = baseStats.attackRate;
+        SwapDuration = baseStats.swapDuration;
     }
 
     private void Start(){
@@ -63,5 +65,9 @@ public class PlayerInfo : MonoBehaviour
     public void ChangeAttackRate(float amount)
     {
         AttackRate += amount;
+    }
+    public void ChangeSwapDuration(float amount)
+    {
+        SwapDuration += amount;
     }
 }

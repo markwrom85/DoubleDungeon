@@ -482,6 +482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21fbd76b804844ec1ba2c343944f4fc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSwapSides
+  playerInfo: {fileID: 2629216153815710971}
   playerObj: {fileID: 6998601417813346022}
   crosshair: {fileID: 4093366516997613480}
   aoeBurst: {fileID: 3736683972393683846}
@@ -493,7 +494,6 @@ MonoBehaviour:
   rightTargetGroup: {fileID: 0}
   leftCamera: {fileID: 0}
   rightCamera: {fileID: 0}
-  swapDuration: 5
 --- !u!114 &2629216153815710971
 MonoBehaviour:
   m_ObjectHideFlags: 0
