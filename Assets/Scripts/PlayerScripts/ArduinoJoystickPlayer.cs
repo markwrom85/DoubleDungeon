@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class ArduinoJoystickPlayer : MonoBehaviour
 {
-    public float speed = 4f;
+    [SerializeField] private PlayerInfo playerInfo;
     public bool mouseMovement = true;
     [Header("Shooting")]
     public CardinalGun gun;
@@ -72,7 +72,7 @@ public class ArduinoJoystickPlayer : MonoBehaviour
             activeInput = "Idle";
             return;
         }
-        float step = Mathf.Max(0, speed) * Time.deltaTime;
+        float step = Mathf.Max(0, playerInfo.MoveSpeed) * Time.deltaTime;
         if (!desktopInput.TryGetMovement(transform.position, movementCamera, step, OverlayRect, mouseMovement,
             out Vector2 direction, out activeInput))
         {
@@ -99,7 +99,7 @@ public class ArduinoJoystickPlayer : MonoBehaviour
             return;
         }
 
-        body.linearVelocity = movementDirection * speed;
+        body.linearVelocity = movementDirection * playerInfo.MoveSpeed;
         Camera camera = movementCamera;
         if (camera != null && camera.orthographic)
         {

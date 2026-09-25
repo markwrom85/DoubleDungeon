@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class CardinalGun : MonoBehaviour
 {
+    [SerializeField] private PlayerInfo playerInfo;
     public Bullet bulletPrefab;
     public Transform muzzle;
-    [Min(0.1f)] public float shotsPerSecond = 6;
     public CardinalDirection startingDirection = CardinalDirection.Right;
     public CardinalDirection Facing { get; private set; }
     private float nextShotTime;
@@ -34,7 +34,7 @@ public class CardinalGun : MonoBehaviour
         if (bulletPrefab == null || muzzle == null) return;
         EnsurePool();
         pool.Fire(muzzle.position, transform.rotation, transform.right, transform.root);
-        nextShotTime = Time.time + 1f / Mathf.Max(0.1f, shotsPerSecond);
+        nextShotTime = Time.time + 1f / Mathf.Max(0.1f, playerInfo.AttackRate);
     }
 
     private void ApplyFacing()

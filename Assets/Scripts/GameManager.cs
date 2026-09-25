@@ -36,6 +36,9 @@ public class GameManager : MonoBehaviour
         if (player == null || players.Contains(player)) return;
 
         players.Add(player);
+        PlayerInfo playerInfo = player.transform.root.GetComponentInChildren<PlayerInfo>(true);
+        if (playerInfo != null)
+            playerInfo.SetPlayerId(player.playerIndex + 1);
         DontDestroyOnLoad(player.transform.root.gameObject);
         Debug.Log("Registered player " + player.playerIndex + " using "
             + (player.currentControlScheme ?? "unassigned") + " ("
