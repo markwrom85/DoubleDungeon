@@ -6,6 +6,7 @@ TagManager:
   tags:
   - LeftDungeon
   - RightDungeon
+  - Item
   layers:
   - Default
   - TransparentFX

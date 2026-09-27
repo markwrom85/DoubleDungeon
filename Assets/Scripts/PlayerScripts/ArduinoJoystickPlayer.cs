@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class ArduinoJoystickPlayer : MonoBehaviour
 {
-    public float speed = 4f;
+    [SerializeField] private PlayerInfo playerInfo;
     public bool mouseMovement = true;
     [Header("Shooting")]
     public CardinalGun gun;
@@ -18,6 +18,7 @@ public class ArduinoJoystickPlayer : MonoBehaviour
     private DesktopMovementInput desktopInput;
     private string activeInput = "Idle";
     private Rect OverlayRect => new Rect(12, 12, Mathf.Min(700, Screen.width - 24), 215);
+    public bool SwitchTriggered => desktopInput != null && desktopInput.SwitchTriggered;
 
     private Texture2D squareTexture;
     private Sprite squareSprite;
@@ -33,15 +34,10 @@ public class ArduinoJoystickPlayer : MonoBehaviour
         body.freezeRotation = true;
         body.interpolation = RigidbodyInterpolation2D.Interpolate;
         if (gun == null) gun = GetComponentInChildren<CardinalGun>();
-        var renderer = GetComponent<SpriteRenderer>();
-        if (renderer == null) renderer = gameObject.AddComponent<SpriteRenderer>();
-        if (renderer.sprite != null) return;
         squareTexture = new Texture2D(1, 1);
         squareTexture.SetPixel(0, 0, Color.white);
         squareTexture.Apply();
         squareSprite = Sprite.Create(squareTexture, new Rect(0, 0, 1, 1), Vector2.one * 0.5f, 1);
-        renderer.sprite = squareSprite;
-        renderer.color = new Color(0.2f, 0.9f, 0.65f);
     }
 
     private void OnEnable()
@@ -71,7 +67,7 @@ public class ArduinoJoystickPlayer : MonoBehaviour
             activeInput = "Idle";
             return;
         }
-        float step = Mathf.Max(0, speed) * Time.deltaTime;
+        float step = Mathf.Max(0, playerInfo.MoveSpeed) * Time.deltaTime;
         if (!desktopInput.TryGetMovement(transform.position, movementCamera, step, OverlayRect, mouseMovement,
             out Vector2 direction, out activeInput))
         {
@@ -98,7 +94,7 @@ public class ArduinoJoystickPlayer : MonoBehaviour
             return;
         }
 
-        body.linearVelocity = movementDirection * speed;
+        body.linearVelocity = movementDirection * playerInfo.MoveSpeed;
         Camera camera = movementCamera;
         if (camera != null && camera.orthographic)
         {
