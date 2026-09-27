@@ -50,24 +50,12 @@ public class PlayerInfo : MonoBehaviour
         PlayerId = playerId;
     }
 
-    public void ChangeDamage(float amount)
+    public void ChangeStats(float moveSpeed, int maxHealth, float attackDamage, float attackRate, float swapDuration)
     {
-        AttackDamage += amount;
-    }
-    public void ChangeMoveSpeed(float amount)
-    {
-        MoveSpeed += amount;
-    }
-    public void ChangeMaxHealth(int amount)
-    {
-        MaxHealth += amount;
-    }
-    public void ChangeAttackRate(float amount)
-    {
-        AttackRate += amount;
-    }
-    public void ChangeSwapDuration(float amount)
-    {
-        SwapDuration += amount;
+        MoveSpeed += moveSpeed;
+        MaxHealth += maxHealth;
+        AttackDamage += attackDamage;
+        AttackRate += attackRate;
+        SwapDuration += swapDuration;
     }
 }
