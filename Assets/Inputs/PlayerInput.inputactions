@@ -127,6 +127,17 @@
                 },
                 {
                     "name": "",
+                    "id": "9af20b8f-06ed-49db-a8c0-a8ab6b9b5394",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "34f05f0d-0ef5-48b8-835c-36d778c6a9bd",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
@@ -154,6 +165,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "649ee32b-47f9-4221-84a3-4f5fdd433e8f",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -193,6 +215,17 @@
                 },
                 {
                     "name": "",
+                    "id": "22d2d407-0d4a-4f85-a20e-57c534d6ccdb",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Switch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "bd0aaaf3-684e-4657-b870-b7af6c98c197",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
@@ -206,6 +239,17 @@
                     "name": "",
                     "id": "01193667-6062-4f32-af7c-f300131f4218",
                     "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Special Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9e7079e4-1e28-4069-97c3-fb6fb67aa061",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
