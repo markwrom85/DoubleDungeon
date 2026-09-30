@@ -36,12 +36,10 @@ public class DungeonManager : MonoBehaviour
                 AssignPlayerCamera(player);
                 SetPlayerPlayable(player);
             }
-            Debug.Log(FindObjectsByType<ArduinoJoystickPlayer>().Length + " ArduinoJoystickPlayers found and set to playable.");
         }
         else
         {
             playerInputManager.EnableJoining();
-            Debug.Log("No ArduinoJoystickPlayers found. Players can join by pressing the Join button.");
         }
 
         if (debugMode)
@@ -86,7 +84,6 @@ public class DungeonManager : MonoBehaviour
         AssignPlayerCamera(player);
         knownPlayerCount = playerInputManager.playerCount;
         SetPlayerPlayable(player);
-        Debug.Log("Player " + playerInput.playerIndex + " joined and is now playable.", player);
     }
 
     private void MovePlayerToSpawnPoint(ArduinoJoystickPlayer player)

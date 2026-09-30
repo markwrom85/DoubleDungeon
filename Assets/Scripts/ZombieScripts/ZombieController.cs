@@ -105,8 +105,8 @@ public class ZombieController : MonoBehaviour, IDamageable
     {
         string previousState = CurrentStateName;
         stateMachine.ChangeState(state);
-        if (previousState != CurrentStateName)
-            Debug.Log($"{name}: {previousState} -> {CurrentStateName}", this);
+        // if (previousState != CurrentStateName)
+        //     Debug.Log($"{name}: {previousState} -> {CurrentStateName}", this);
     }
 
     public void TakeDamage(float damage)
@@ -159,7 +159,13 @@ public class ZombieController : MonoBehaviour, IDamageable
     public void CompleteAttack()
     {
         // I check the target again at the strike moment so moving out of range avoids the hit.
-        if (CurrentState == AttackState && IsTargetInRange()) AttackLanded?.Invoke(Target);
+        if (CurrentState == AttackState && IsTargetInRange())
+        {
+            AttackLanded?.Invoke(Target);
+            PlayerInfo playerInfo = Target.transform.root.GetComponentInChildren<PlayerInfo>(true);
+
+            playerInfo?.TakeDamage(10f);
+        }
     }
 
     public void SetVisible(bool visible)

@@ -37,12 +37,10 @@ public class PlayerSwapSides : MonoBehaviour
         if (!isSwapping)
         {
             SwapSides();
-            Debug.Log("Swapping sides");
         }
         else
         {
             EnableCharacter();
-            Debug.Log("Enabling character");
         }
     }
 
@@ -91,7 +89,6 @@ public class PlayerSwapSides : MonoBehaviour
         if (isSwapping)
         {
             EnableCharacter();
-            Debug.Log("Swap timer expired; enabling character");
         }
     }
 
@@ -100,12 +97,10 @@ public class PlayerSwapSides : MonoBehaviour
         if (other.CompareTag("LeftDungeon"))
         {
             isOnLeftSide = true;
-            Debug.Log("Player is on the left side");
         }
         else if (other.CompareTag("RightDungeon"))
         {
             isOnLeftSide = false;
-            Debug.Log("Player is on the right side");
         }
     }
 

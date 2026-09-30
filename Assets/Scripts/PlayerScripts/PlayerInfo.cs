@@ -10,6 +10,7 @@ public class PlayerInfo : MonoBehaviour
     public float AttackDamage { get; private set; }
     public float AttackRate { get; private set; }
     public float SwapDuration {get; private set;}
+    private float currentHealth;
 
     private void Awake()
     {
@@ -18,6 +19,8 @@ public class PlayerInfo : MonoBehaviour
         AttackDamage = baseStats.attackDamage;
         AttackRate = baseStats.attackRate;
         SwapDuration = baseStats.swapDuration;
+
+        currentHealth = MaxHealth;
     }
 
     private void Start(){
@@ -57,5 +60,20 @@ public class PlayerInfo : MonoBehaviour
         AttackDamage += attackDamage;
         AttackRate += attackRate;
         SwapDuration += swapDuration;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        Debug.Log($"Player {PlayerId} took {damage} damage. Current health: {currentHealth}");
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        // Handle player death logic here
     }
 }
