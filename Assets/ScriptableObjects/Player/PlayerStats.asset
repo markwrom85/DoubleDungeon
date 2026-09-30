@@ -16,3 +16,4 @@ MonoBehaviour:
   maxHealth: 100
   attackDamage: 5
   attackRate: 5
+  swapDuration: 1.5

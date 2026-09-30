@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c58d36910da7741598b64af6d0b6a79c, type: 3}
   m_Name: ItemTest
   m_EditorClassIdentifier: Assembly-CSharp::Item
-  moveSpeed: 100
+  moveSpeed: 10
   maxHealth: 0
   attackDamage: 0
   attackRate: 0
