@@ -7,6 +7,7 @@ public class EnemyDungeonSetup : MonoBehaviour
 {
     // I use level-bound colliders to define the two enemy areas.
     [SerializeField] private Collider2D leftBounds, rightBounds;
+    [SerializeField] private Camera leftCamera, rightCamera;
     private static readonly Dictionary<Scene, EnemyDungeonSide> sceneAreas = new Dictionary<Scene, EnemyDungeonSide>();
 
     // I clear the cached areas when Play mode starts.
@@ -32,6 +33,13 @@ public class EnemyDungeonSetup : MonoBehaviour
     {
         EnemyDungeonSide side = GetSide(leftSide);
         return side.GetRandomPosition(edgeMargin);
+    }
+
+    public Camera GetCameraForSide(EnemyDungeonSide side)
+    {
+        EnemyDungeonSide left = EnsureAreas();
+        if (left == null || side == null) return null;
+        return side == left ? leftCamera : rightCamera;
     }
 
     private EnemyDungeonSide EnsureAreas()

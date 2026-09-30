@@ -1196,6 +1196,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1667772021}
     - target: {fileID: 751646646151323810, guid: a3003ef298474ac4bbea4701e499a6d5, type: 3}
+      propertyPath: leftCamera
+      value: 
+      objectReference: {fileID: 1825620352}
+    - target: {fileID: 751646646151323810, guid: a3003ef298474ac4bbea4701e499a6d5, type: 3}
       propertyPath: leftCenter
       value: 
       objectReference: {fileID: 68163743}
@@ -1203,6 +1207,10 @@ PrefabInstance:
       propertyPath: rightBounds
       value: 
       objectReference: {fileID: 337832634}
+    - target: {fileID: 751646646151323810, guid: a3003ef298474ac4bbea4701e499a6d5, type: 3}
+      propertyPath: rightCamera
+      value: 
+      objectReference: {fileID: 33268435}
     - target: {fileID: 751646646151323810, guid: a3003ef298474ac4bbea4701e499a6d5, type: 3}
       propertyPath: rightCenter
       value: 
@@ -2100,6 +2108,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1667772021}
     - target: {fileID: 751646646151323810, guid: a3003ef298474ac4bbea4701e499a6d5, type: 3}
+      propertyPath: leftCamera
+      value: 
+      objectReference: {fileID: 1825620352}
+    - target: {fileID: 751646646151323810, guid: a3003ef298474ac4bbea4701e499a6d5, type: 3}
       propertyPath: leftCenter
       value: 
       objectReference: {fileID: 68163743}
@@ -2107,6 +2119,10 @@ PrefabInstance:
       propertyPath: rightBounds
       value: 
       objectReference: {fileID: 337832634}
+    - target: {fileID: 751646646151323810, guid: a3003ef298474ac4bbea4701e499a6d5, type: 3}
+      propertyPath: rightCamera
+      value: 
+      objectReference: {fileID: 33268435}
     - target: {fileID: 751646646151323810, guid: a3003ef298474ac4bbea4701e499a6d5, type: 3}
       propertyPath: rightCenter
       value: 
@@ -2204,6 +2220,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1667772021}
     - target: {fileID: 751646646151323810, guid: a3003ef298474ac4bbea4701e499a6d5, type: 3}
+      propertyPath: leftCamera
+      value: 
+      objectReference: {fileID: 1825620352}
+    - target: {fileID: 751646646151323810, guid: a3003ef298474ac4bbea4701e499a6d5, type: 3}
       propertyPath: leftCenter
       value: 
       objectReference: {fileID: 68163743}
@@ -2211,6 +2231,10 @@ PrefabInstance:
       propertyPath: rightBounds
       value: 
       objectReference: {fileID: 337832634}
+    - target: {fileID: 751646646151323810, guid: a3003ef298474ac4bbea4701e499a6d5, type: 3}
+      propertyPath: rightCamera
+      value: 
+      objectReference: {fileID: 33268435}
     - target: {fileID: 751646646151323810, guid: a3003ef298474ac4bbea4701e499a6d5, type: 3}
       propertyPath: rightCenter
       value: 
@@ -2446,6 +2470,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1667772021}
     - target: {fileID: 751646646151323810, guid: a3003ef298474ac4bbea4701e499a6d5, type: 3}
+      propertyPath: leftCamera
+      value: 
+      objectReference: {fileID: 1825620352}
+    - target: {fileID: 751646646151323810, guid: a3003ef298474ac4bbea4701e499a6d5, type: 3}
       propertyPath: leftCenter
       value: 
       objectReference: {fileID: 68163743}
@@ -2453,6 +2481,10 @@ PrefabInstance:
       propertyPath: rightBounds
       value: 
       objectReference: {fileID: 337832634}
+    - target: {fileID: 751646646151323810, guid: a3003ef298474ac4bbea4701e499a6d5, type: 3}
+      propertyPath: rightCamera
+      value: 
+      objectReference: {fileID: 33268435}
     - target: {fileID: 751646646151323810, guid: a3003ef298474ac4bbea4701e499a6d5, type: 3}
       propertyPath: rightCenter
       value: 

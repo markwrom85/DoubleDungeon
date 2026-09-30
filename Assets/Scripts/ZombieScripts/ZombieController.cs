@@ -174,8 +174,24 @@ public class ZombieController : MonoBehaviour, IDamageable
     {
         EnemyDungeonSide destination = CurrentSide != null ? CurrentSide.OppositeSide : null;
         if (destination == null) return false;
-        // I add the distance between dungeon centers to the saved death position.
-        Vector2 position = deathPosition + (Vector2)(destination.transform.position - CurrentSide.transform.position);
+        Camera sourceCamera = dungeonSetup != null ? dungeonSetup.GetCameraForSide(CurrentSide) : null;
+        Camera destinationCamera = dungeonSetup != null ? dungeonSetup.GetCameraForSide(destination) : null;
+        Vector2 position;
+        if (sourceCamera != null && destinationCamera != null)
+        {
+            // I preserve the zombie's normalized screen position when moving between side cameras.
+            Vector3 viewportPosition = sourceCamera.WorldToViewportPoint(deathPosition);
+            float depth = Mathf.Abs(transform.position.z - destinationCamera.transform.position.z);
+            Vector3 destinationPosition = destinationCamera.ViewportToWorldPoint(
+                new Vector3(viewportPosition.x, viewportPosition.y, depth));
+            position = destinationPosition;
+        }
+        else
+        {
+            // I fall back to the center-offset transfer when side cameras are not assigned.
+            position = deathPosition
+                + (Vector2)(destination.transform.position - CurrentSide.transform.position);
+        }
         StopMoving();
         // I move the same zombie by updating its physics and transform positions.
         body.position = position;
