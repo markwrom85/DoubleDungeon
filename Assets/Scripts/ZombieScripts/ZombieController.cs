@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,6 +20,9 @@ public class ZombieController : MonoBehaviour, IDamageable
     [SerializeField, Min(0.05f)] private float deathDuration = 0.7f;
     [SerializeField, Min(0f)] private float transferDuration = 1f;
     [SerializeField, Min(0.05f)] private float resurrectionDuration = 0.8f;
+    [Header("Visuals")]
+    [SerializeField] private Color normalColor;
+    [SerializeField] private Color transferColor, dyingColor, colorOnHit, attackingColor;
 
     private Rigidbody2D body;
     private CircleCollider2D hitbox;
@@ -34,6 +38,7 @@ public class ZombieController : MonoBehaviour, IDamageable
     public ZombieResurrectingState ResurrectingState { get; private set; }
     public ZombieDespawnedState DespawnedState { get; private set; }
     public EnemyState CurrentState => stateMachine.CurrentState;
+    public string CurrentStateName => CurrentState?.GetType().Name ?? "None";
     public EnemyDungeonSide CurrentSide { get; private set; }
     public PlayerInput Target { get; private set; }
     public float Health { get; private set; }
@@ -44,6 +49,11 @@ public class ZombieController : MonoBehaviour, IDamageable
     public float TransferDuration => transferDuration;
     public float ResurrectionDuration => resurrectionDuration;
     public bool HasTarget => CurrentSide != null && CurrentSide.IsValidTarget(Target);
+    public Color NormalColor => normalColor;
+    public Color TransferColor => transferColor;
+    public Color DyingColor => dyingColor;
+    public Color ColorOnHit => colorOnHit;
+    public Color AttackingColor => attackingColor;
 
     // I notify listeners when an attack reaches an eligible player in range.
     public event System.Action<PlayerInput> AttackLanded;
@@ -91,7 +101,13 @@ public class ZombieController : MonoBehaviour, IDamageable
         stateMachine.ChangeState(null);
     }
 
-    public void ChangeState(EnemyState state) { stateMachine.ChangeState(state); }
+    public void ChangeState(EnemyState state)
+    {
+        string previousState = CurrentStateName;
+        stateMachine.ChangeState(state);
+        if (previousState != CurrentStateName)
+            Debug.Log($"{name}: {previousState} -> {CurrentStateName}", this);
+    }
 
     public void TakeDamage(float damage)
     {
@@ -99,6 +115,7 @@ public class ZombieController : MonoBehaviour, IDamageable
         // I accept damage only while chasing or attacking.
         if (CurrentState != ChaseState && CurrentState != AttackState) return;
         Health = Mathf.Max(0f, Health - damage);
+        FlashOnHit();
         if (Health <= 0f)
         {
             // I save the death position so resurrection keeps the same offset on the opposite side.
@@ -170,5 +187,27 @@ public class ZombieController : MonoBehaviour, IDamageable
         HasResurrected = true;
         nextTargetTime = Time.time;
         return true;
+    }
+    public void SetColor(Color color)
+    {
+        foreach (SpriteRenderer renderer in spriteRenderers)
+            renderer.color = color;
+    }
+
+    public void FlashOnHit()
+    {
+        StopCoroutine(nameof(HitFlash));
+        StartCoroutine(nameof(HitFlash));
+    }
+
+    private IEnumerator HitFlash()
+    {
+        SetColor(colorOnHit);
+        yield return new WaitForSeconds(0.1f);
+
+        if (CurrentState == AttackState)
+            SetColor(attackingColor);
+        else if (CurrentState == ChaseState)
+            SetColor(normalColor);
     }
 }

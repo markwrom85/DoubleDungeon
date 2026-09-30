@@ -196,3 +196,8 @@ MonoBehaviour:
   deathDuration: 1.5
   transferDuration: 1
   resurrectionDuration: 1.5
+  normalColor: {r: 0.35686275, g: 0.6509804, b: 0.19215687, a: 1}
+  transferColor: {r: 0, g: 0.57379305, b: 1, a: 0.78431374}
+  dyingColor: {r: 1, g: 0, b: 0.7400186, a: 0.78431374}
+  colorOnHit: {r: 1, g: 0, b: 0, a: 1}
+  attackingColor: {r: 1, g: 0.90058327, b: 0, a: 1}

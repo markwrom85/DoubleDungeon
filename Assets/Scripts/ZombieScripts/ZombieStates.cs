@@ -24,6 +24,7 @@ public class ZombieAttackState : EnemyState
     public override void Enter()
     {
         zombie.StopMoving();
+        zombie.SetColor(zombie.AttackingColor);
         hasStruck = false;
         strikeTime = Time.time + zombie.AttackWindup;
         finishTime = strikeTime + zombie.AttackRecovery;
@@ -41,6 +42,7 @@ public class ZombieAttackState : EnemyState
         if (zombie.CurrentState == this && Time.time >= finishTime) zombie.ChangeState(zombie.ChaseState);
     }
     public override void FixedTick() { zombie.StopMoving(); }
+    public override void Exit() { zombie.SetColor(zombie.NormalColor); }
 }
 
 // I keep the zombie visible at its death position until the death delay ends.
@@ -51,6 +53,7 @@ public class ZombieDyingState : EnemyState
     public ZombieDyingState(ZombieController zombie) { this.zombie = zombie; }
     public override void Enter()
     {
+        zombie.SetColor(zombie.DyingColor);
         zombie.StopMoving();
         zombie.SetCollision(false);
         finishTime = Time.time + zombie.DeathDuration;
@@ -72,6 +75,7 @@ public class ZombieResurrectingState : EnemyState
     public ZombieResurrectingState(ZombieController zombie) { this.zombie = zombie; }
     public override void Enter()
     {
+        zombie.SetColor(zombie.TransferColor);
         hasMoved = false;
         zombie.SetVisible(false);
         retryTime = Time.time + zombie.TransferDuration;
@@ -85,6 +89,7 @@ public class ZombieResurrectingState : EnemyState
             retryTime = Time.time + 0.5f;
             if (!zombie.TryResurrect()) return;
             hasMoved = true;
+            zombie.SetColor(zombie.TransferColor);
             zombie.SetVisible(true);
             // I start the movement delay when the zombie reappears on its new side.
             finishTime = Time.time + zombie.ResurrectionDuration;
@@ -92,6 +97,11 @@ public class ZombieResurrectingState : EnemyState
         if (Time.time < finishTime) return;
         zombie.SetCollision(true);
         zombie.ChangeState(zombie.ChaseState);
+    }
+
+    public override void Exit()
+    {
+        zombie.SetColor(zombie.NormalColor);
     }
 }
 
