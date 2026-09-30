@@ -371,6 +371,7 @@ GameObject:
   - component: {fileID: 4857466449093269119}
   - component: {fileID: 2629216153815710971}
   - component: {fileID: 820158281234333774}
+  - component: {fileID: 7349201362178500641}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -598,3 +599,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d81d419c63441c7bb3eabf71183b3ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardinalGun
+--- !u!114 &7349201362178500641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7352079989303448806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db541a183eb64479b16468f25a0c3e50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyTarget
+  character: {fileID: 6998601417813346022}

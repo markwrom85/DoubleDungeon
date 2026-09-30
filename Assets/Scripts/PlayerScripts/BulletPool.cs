@@ -32,7 +32,7 @@ public sealed class BulletPool : IDisposable
         return bullet;
     }
 
-    public Bullet Fire(Vector3 position, Quaternion rotation, Vector2 direction, Transform owner)
+    public Bullet Fire(Vector3 position, Quaternion rotation, Vector2 direction, Transform owner, float damage = 0f)
     {
         if (disposed) return null;
         Bullet bullet = null;
@@ -45,7 +45,8 @@ public sealed class BulletPool : IDisposable
         }
         bullet.transform.SetPositionAndRotation(position, rotation);
         bullet.gameObject.SetActive(true);
-        bullet.Launch(direction, owner);
+        // I pass this shot's damage into the reused projectile.
+        bullet.Launch(direction, owner, damage);
         return bullet;
     }
 

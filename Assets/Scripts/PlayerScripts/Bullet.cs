@@ -8,12 +8,15 @@ public class Bullet : MonoBehaviour
     private Transform owner;
     private Rigidbody2D body;
     private float expiresAt;
+    private float damage;
     public bool IsFlying { get; private set; }
     internal BulletPool Pool { get; set; }
 
-    public void Launch(Vector2 direction, Transform shooter)
+    public void Launch(Vector2 direction, Transform shooter, float shotDamage = 0f)
     {
         owner = shooter;
+        // I reset the damage on each launch so reused bullets receive the current shot's damage.
+        damage = Mathf.Max(0f, shotDamage);
         if (body == null) body = GetComponent<Rigidbody2D>();
         body.position = transform.position;
         body.rotation = transform.eulerAngles.z;
@@ -44,9 +47,14 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (!IsFlying) return;
         if (other.isTrigger || other.GetComponentInParent<Bullet>() != null) return;
         if (owner != null && (other.transform == owner || other.transform.IsChildOf(owner))) return;
-        ReturnToPool(); // Damage can be added when targets/enemies exist.
+        // I look up the damageable target on this collider or its parent.
+        IDamageable target = other.GetComponentInParent<IDamageable>();
+        float hitDamage = damage;
+        ReturnToPool(); // I consume the shot before applying damage so it cannot hit twice.
+        target?.TakeDamage(hitDamage);
     }
 
     void OnTriggerExit2D(Collider2D collision)

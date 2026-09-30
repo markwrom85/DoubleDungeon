@@ -34,7 +34,8 @@ public bool canShoot = true;
         if (!fireHeld || Time.timeScale <= 0 || Time.time < nextShotTime) return;
         if (bulletPrefab == null || muzzle == null) return;
         EnsurePool();
-        pool.Fire(muzzle.position, transform.rotation, transform.right, transform.root);
+        // I capture the player's damage when firing so later stat changes do not alter this shot.
+        pool.Fire(muzzle.position, transform.rotation, transform.right, transform.root, playerInfo.AttackDamage);
         nextShotTime = Time.time + 1f / Mathf.Max(0.1f, playerInfo.AttackRate);
     }
 
