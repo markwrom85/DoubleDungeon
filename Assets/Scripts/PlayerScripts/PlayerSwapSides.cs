@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Unity.Cinemachine;
 using System.Collections;
 
@@ -49,12 +50,15 @@ public class PlayerSwapSides : MonoBehaviour
         isSwapping = true;
         cardinalGun.canShoot = false;
         playerObj.SetActive(false);
-        Transform playerTarget = player.transform.root;
+        PlayerInput playerInput = player.GetComponentInParent<PlayerInput>();
+        if (playerInput == null) return;
+
+        Transform playerTarget = playerInput.transform;
         crosshair.SetActive(true);
         if (isOnLeftSide)
         {
             player.SetMovementCamera(rightCamera);
-            player.transform.position = rightCenter.position;
+            MoveToSideCenter(rightCenter);
             leftTargetGroup.RemoveMember(playerTarget);
             rightTargetGroup.RemoveMember(playerTarget);
             rightTargetGroup.AddMember(playerTarget, 0.5f, 1f);
@@ -63,7 +67,7 @@ public class PlayerSwapSides : MonoBehaviour
         else
         {
             player.SetMovementCamera(leftCamera);
-            player.transform.position = leftCenter.position;
+            MoveToSideCenter(leftCenter);
             rightTargetGroup.RemoveMember(playerTarget);
             leftTargetGroup.RemoveMember(playerTarget);
             leftTargetGroup.AddMember(playerTarget, 0.5f, 1f);
@@ -75,8 +79,17 @@ public class PlayerSwapSides : MonoBehaviour
     public void RepositionForCurrentSide()
     {
         Transform sideCenter = isOnLeftSide ? leftCenter : rightCenter;
-        if (sideCenter != null)
-            player.transform.position = sideCenter.position;
+        MoveToSideCenter(sideCenter);
+    }
+
+    private void MoveToSideCenter(Transform sideCenter)
+    {
+        if (sideCenter == null) return;
+
+        Vector3 position = player.transform.position;
+        position.x = sideCenter.position.x;
+        position.y = sideCenter.position.y;
+        player.transform.position = position;
     }
 
     private void EnableCharacter()

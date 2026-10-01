@@ -80,7 +80,7 @@ public class DungeonManager : MonoBehaviour
         }
 
         if (!players.Contains(player)) players.Add(player);
-    InitializePlayer(player);
+        InitializePlayer(player);
         knownPlayerCount = playerInputManager.playerCount;
     }
 
@@ -114,7 +114,7 @@ public class DungeonManager : MonoBehaviour
             return;
         }
 
-        playerInput.transform.root.SetPositionAndRotation(
+        playerInput.transform.SetPositionAndRotation(
             spawnPoint.position,
             spawnPoint.rotation);
     }
@@ -123,7 +123,14 @@ public class DungeonManager : MonoBehaviour
     {
         if (player == null) return;
 
-        Transform playerRoot = player.transform.root;
+        PlayerInput playerInput = player.GetComponentInParent<PlayerInput>();
+        if (playerInput == null)
+        {
+            Debug.LogWarning("Player has no parent PlayerInput component.", player);
+            return;
+        }
+
+        Transform playerRoot = playerInput.transform;
         if (playersParent != null && playerRoot.parent != playersParent.transform)
             playerRoot.SetParent(playersParent.transform, true);
 
@@ -166,7 +173,10 @@ public class DungeonManager : MonoBehaviour
         CinemachineTargetGroup targetGroup = cameraTargetGroups[cameraIndex];
         if (targetGroup == null) return;
 
-        Transform target = player.transform.root;
+        PlayerInput playerInput = player.GetComponentInParent<PlayerInput>();
+        if (playerInput == null) return;
+
+        Transform target = playerInput.transform;
         foreach (CinemachineTargetGroup.Target groupTarget in targetGroup.Targets)
         {
             if (groupTarget.Object == target) return;
@@ -210,7 +220,9 @@ public class DungeonManager : MonoBehaviour
             knownPlayerCount = playerInputManager.playerCount;
             foreach (ArduinoJoystickPlayer player in FindObjectsByType<ArduinoJoystickPlayer>())
             {
-                if (!players.Contains(player)) players.Add(player);
+                if (players.Contains(player)) continue;
+
+                players.Add(player);
                 InitializePlayer(player);
             }
         }

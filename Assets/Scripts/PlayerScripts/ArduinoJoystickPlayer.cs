@@ -72,14 +72,6 @@ public class ArduinoJoystickPlayer : MonoBehaviour
             out Vector2 direction, out activeInput))
         {
             direction = Vector2.zero;
-            // if (useArduino && IsFresh(stamp))
-            // {
-            //     direction = new Vector2(Axis(x, center.x), Axis(y, center.y));
-            //     if (swapAxes) direction = new Vector2(direction.y, direction.x);
-            //     if (invertX) direction.x *= -1;
-            //     if (invertY) direction.y *= -1;
-            //     if (direction.sqrMagnitude > 0) activeInput = "Arduino";
-            // }
         }
         movementDirection = Vector2.ClampMagnitude(direction, 1);
         if (gun != null)
@@ -127,23 +119,6 @@ public class ArduinoJoystickPlayer : MonoBehaviour
     {
         movementCamera = camera;
     }
-
-    // private void OnGUI()
-    // {
-    //     int x, y; long stamp; string message;
-    //     lock (gate) { x = rawX; y = rawY; stamp = lastSample; message = status; }
-    //     GUILayout.BeginArea(OverlayRect, GUI.skin.box);
-    //     GUILayout.Label("MOVEMENT | " + activeInput);
-    //     GUILayout.Label("WASD / arrows | Gamepad left stick / D-pad | Hold right mouse to move");
-    //     GUILayout.Label("Hold fire: left mouse / Space / gamepad right trigger or west button");
-    //     GUILayout.Label("Arduino: " + message);
-    //     GUILayout.Label("Raw X: " + x + "   Raw Y: " + y + (IsFresh(stamp) ? "" : "   (no recent data)"));
-    //     GUI.enabled = useArduino && IsFresh(stamp);
-    //     if (GUILayout.Button("Calibrate center (release joystick first)")) center = new Vector2(x, y);
-    //     GUI.enabled = true;
-    //     GUILayout.Label("Set Port Name on Player in the Inspector. Stop/Play to reconnect.");
-    //     GUILayout.EndArea();
-    // }
 
     private void OnDisable()
     {
