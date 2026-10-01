@@ -126,7 +126,6 @@ public class ArduinoJoystickPlayer : MonoBehaviour
     public void SetMovementCamera(Camera camera)
     {
         movementCamera = camera;
-        Debug.Log(movementCamera);
     }
 
     // private void OnGUI()

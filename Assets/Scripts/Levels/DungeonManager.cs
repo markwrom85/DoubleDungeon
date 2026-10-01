@@ -11,10 +11,12 @@ public class DungeonManager : MonoBehaviour
     [SerializeField] private Transform[] playerSpawnPoints;
     // Cameras define the movement bounds. Multiple players may share one camera.
     [SerializeField] private Camera[] movementCameras;
+    [SerializeField] private CinemachineCamera leftCinemachineCamera, rightCinemachineCamera;
     // Each entry should be the target group followed by the matching Cinemachine camera.
     [SerializeField] private CinemachineTargetGroup[] cameraTargetGroups;
     // Optional per-player camera mapping. If empty, GetCameraIndex uses playerIndex / 2.
     [SerializeField] private int[] playerCameraIndices;
+    [SerializeField] private GameObject playersParent;
     private List<ArduinoJoystickPlayer> players = new List<ArduinoJoystickPlayer>();
     private bool wasDebugModeEnabled;
     private int knownPlayerCount;
@@ -32,9 +34,7 @@ public class DungeonManager : MonoBehaviour
             foreach (ArduinoJoystickPlayer player in players)
             {
                 // Players persist across the scene change, so place and configure them here.
-                MovePlayerToSpawnPoint(player);
-                AssignPlayerCamera(player);
-                SetPlayerPlayable(player);
+                InitializePlayer(player);
             }
         }
         else
@@ -80,10 +80,8 @@ public class DungeonManager : MonoBehaviour
         }
 
         if (!players.Contains(player)) players.Add(player);
-        MovePlayerToSpawnPoint(player);
-        AssignPlayerCamera(player);
+    InitializePlayer(player);
         knownPlayerCount = playerInputManager.playerCount;
-        SetPlayerPlayable(player);
     }
 
     private void MovePlayerToSpawnPoint(ArduinoJoystickPlayer player)
@@ -119,6 +117,19 @@ public class DungeonManager : MonoBehaviour
         playerInput.transform.root.SetPositionAndRotation(
             spawnPoint.position,
             spawnPoint.rotation);
+    }
+
+    private void InitializePlayer(ArduinoJoystickPlayer player)
+    {
+        if (player == null) return;
+
+        Transform playerRoot = player.transform.root;
+        if (playersParent != null && playerRoot.parent != playersParent.transform)
+            playerRoot.SetParent(playersParent.transform, true);
+
+        MovePlayerToSpawnPoint(player);
+        AssignPlayerCamera(player);
+        SetPlayerPlayable(player);
     }
 
     private void AssignPlayerCamera(ArduinoJoystickPlayer player)
@@ -200,7 +211,7 @@ public class DungeonManager : MonoBehaviour
             foreach (ArduinoJoystickPlayer player in FindObjectsByType<ArduinoJoystickPlayer>())
             {
                 if (!players.Contains(player)) players.Add(player);
-                SetPlayerPlayable(player);
+                InitializePlayer(player);
             }
         }
     }
@@ -212,5 +223,24 @@ public class DungeonManager : MonoBehaviour
         playerInputManager.EnableJoining();
         DebugModeEnabled?.Invoke();
         Debug.Log("Debug mode enabled. Additional players can join.", this);
+    }
+
+    public void ChangeRooms(CinemachineCamera newLeftCamera, CinemachineCamera newRightCamera, Transform newCenter)
+    {
+        leftCinemachineCamera.Priority = 0;
+        rightCinemachineCamera.Priority = 0;
+        newLeftCamera.Priority = 10;
+        newRightCamera.Priority = 10;
+
+        leftCinemachineCamera = newLeftCamera;
+        rightCinemachineCamera = newRightCamera;
+
+        playersParent.transform.position = newCenter.position;
+        foreach (ArduinoJoystickPlayer player in players)
+        {
+            PlayerSwapSides swapSides = player.GetComponentInChildren<PlayerSwapSides>(true);
+            if (swapSides != null)
+                swapSides.RepositionForCurrentSide();
+        }
     }
 }

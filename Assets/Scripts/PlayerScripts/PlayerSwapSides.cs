@@ -72,6 +72,13 @@ public class PlayerSwapSides : MonoBehaviour
         swapTimer = StartCoroutine(CompleteSwapAfterDelay());
     }
 
+    public void RepositionForCurrentSide()
+    {
+        Transform sideCenter = isOnLeftSide ? leftCenter : rightCenter;
+        if (sideCenter != null)
+            player.transform.position = sideCenter.position;
+    }
+
     private void EnableCharacter()
     {
         if (swapTimer != null)
