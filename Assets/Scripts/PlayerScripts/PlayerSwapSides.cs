@@ -25,8 +25,8 @@ public class PlayerSwapSides : MonoBehaviour
         leftTargetGroup = GameObject.Find("LeftPlayers").GetComponent<CinemachineTargetGroup>();
         rightTargetGroup = GameObject.Find("RightPlayers").GetComponent<CinemachineTargetGroup>();
 
-        leftCamera = GameObject.Find("LeftCamera").GetComponent<Camera>();
-        rightCamera = GameObject.Find("RightCamera").GetComponent<Camera>();
+        leftCamera = GameObject.Find("LeftCameraBrain").GetComponent<Camera>();
+        rightCamera = GameObject.Find("RightCameraBrain").GetComponent<Camera>();
     }
 
     private void Update()
