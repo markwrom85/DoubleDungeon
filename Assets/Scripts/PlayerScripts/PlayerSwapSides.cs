@@ -49,21 +49,24 @@ public class PlayerSwapSides : MonoBehaviour
         isSwapping = true;
         cardinalGun.canShoot = false;
         playerObj.SetActive(false);
+        Transform playerTarget = player.transform.root;
         crosshair.SetActive(true);
         if (isOnLeftSide)
         {
             player.SetMovementCamera(rightCamera);
             player.transform.position = rightCenter.position;
-            leftTargetGroup.RemoveMember(player.transform);
-            rightTargetGroup.AddMember(player.transform, 0.5f, 1f);
+            leftTargetGroup.RemoveMember(playerTarget);
+            rightTargetGroup.RemoveMember(playerTarget);
+            rightTargetGroup.AddMember(playerTarget, 0.5f, 1f);
             isOnLeftSide = false;
         }
         else
         {
             player.SetMovementCamera(leftCamera);
             player.transform.position = leftCenter.position;
-            rightTargetGroup.RemoveMember(player.transform);
-            leftTargetGroup.AddMember(player.transform, 0.5f, 1f);
+            rightTargetGroup.RemoveMember(playerTarget);
+            leftTargetGroup.RemoveMember(playerTarget);
+            leftTargetGroup.AddMember(playerTarget, 0.5f, 1f);
             isOnLeftSide = true;
         }
         swapTimer = StartCoroutine(CompleteSwapAfterDelay());
