@@ -5,7 +5,7 @@ using Unity.Cinemachine;
 
 public class DungeonManager : MonoBehaviour
 {
-    [SerializeField] private bool debugMode = false;
+    [SerializeField] private bool debugMode = false, canChangeRooms = true;
     [SerializeField] private PlayerInputManager playerInputManager;
     // Spawn points are indexed by PlayerInput.playerIndex.
     [SerializeField] private Transform[] playerSpawnPoints;
@@ -237,8 +237,17 @@ public class DungeonManager : MonoBehaviour
         Debug.Log("Debug mode enabled. Additional players can join.", this);
     }
 
-    public void ChangeRooms(CinemachineCamera newLeftCamera, CinemachineCamera newRightCamera, Transform newCenter)
+    public void ChangeRooms(CinemachineCamera newLeftCamera, CinemachineCamera newRightCamera, Transform newCenter, Transform playerLeftSpawnPoint, Transform playerRightSpawnPoint)
     {
+        if (!canChangeRooms) return;
+
+        foreach (ArduinoJoystickPlayer player in players)
+        {
+            PlayerSwapSides swapSides = player.GetComponentInChildren<PlayerSwapSides>(true);
+            if (swapSides != null)
+                swapSides.RepositionForCurrentSide();
+        }
+
         leftCinemachineCamera.Priority = 0;
         rightCinemachineCamera.Priority = 0;
         newLeftCamera.Priority = 10;
@@ -248,11 +257,15 @@ public class DungeonManager : MonoBehaviour
         rightCinemachineCamera = newRightCamera;
 
         playersParent.transform.position = newCenter.position;
-        foreach (ArduinoJoystickPlayer player in players)
+
+        foreach(CinemachineTargetGroup.Target playerTarget in cameraTargetGroups[0].Targets)
         {
-            PlayerSwapSides swapSides = player.GetComponentInChildren<PlayerSwapSides>(true);
-            if (swapSides != null)
-                swapSides.RepositionForCurrentSide();
+            playerTarget.Object.transform.position = playerLeftSpawnPoint.position;
+        }
+
+        foreach(CinemachineTargetGroup.Target playerTarget in cameraTargetGroups[1].Targets)
+        {
+            playerTarget.Object.transform.position = playerRightSpawnPoint.position;
         }
     }
 }
