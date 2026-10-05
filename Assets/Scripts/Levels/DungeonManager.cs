@@ -228,6 +228,8 @@ public class DungeonManager : MonoBehaviour
         if(!canChangeRooms)
             return;
         canChangeRooms = false;
+        Debug.Log("LeftCamera: " + newLeftCamera.name + ", RightCamera: " + newRightCamera.name);
+
         StartCoroutine(ChangeRoomsRoutine(newLeftCamera, newRightCamera, playerLeftSpawnPoint, playerRightSpawnPoint));
     }
 

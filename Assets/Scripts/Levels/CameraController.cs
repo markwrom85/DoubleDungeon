@@ -13,6 +13,10 @@ public class CameraController : MonoBehaviour
         oldCameraRight.Priority = 0;
         desiredCamLeft.Priority = 10;
         desiredCamRight.Priority = 10;
+
+        // Set the output channels for the new cameras to ensure they are rendered on the correct display.
+        desiredCamLeft.OutputChannel = OutputChannels.Channel01;
+        desiredCamRight.OutputChannel = OutputChannels.Channel02;
     }
 
     public IEnumerator MoveAndWaitForCameraBlend(CinemachineCamera desiredCamLeft, CinemachineCamera desiredCamRight, CinemachineCamera oldCameraLeft, CinemachineCamera oldCameraRight)

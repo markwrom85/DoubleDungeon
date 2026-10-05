@@ -151,7 +151,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.05, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6137494318950233596}
@@ -173,7 +173,6 @@ MonoBehaviour:
   isOpen: 1
   newLeftCinemachineCamera: {fileID: 0}
   newRightCinemachineCamera: {fileID: 0}
-  newCenter: {fileID: 0}
   playerLeftSpawnPoint: {fileID: 0}
   playerRightSpawnPoint: {fileID: 0}
 --- !u!61 &6165839354083369448
