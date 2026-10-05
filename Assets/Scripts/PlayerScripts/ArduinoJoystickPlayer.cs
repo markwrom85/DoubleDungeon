@@ -87,32 +87,33 @@ public class ArduinoJoystickPlayer : MonoBehaviour
         }
 
         body.linearVelocity = movementDirection * playerInfo.MoveSpeed;
-        Camera camera = movementCamera;
-        if (camera != null && camera.orthographic)
-        {
-            float depth = Mathf.Abs(transform.position.z - camera.transform.position.z);
-            Vector3 bottomLeft = camera.ViewportToWorldPoint(new Vector3(0f, 0f, depth));
-            Vector3 topRight = camera.ViewportToWorldPoint(new Vector3(1f, 1f, depth));
-            Collider2D collider = GetComponentInChildren<Collider2D>(true);
-            Vector2 extents = collider != null ? collider.bounds.extents : Vector2.zero;
-            Vector2 colliderOffset = collider != null
-                ? (Vector2)collider.bounds.center - body.position
-                : Vector2.zero;
-
-            Vector3 position = body.position;
-
-            position.x = Mathf.Clamp(
-                position.x,
-                bottomLeft.x + extents.x - colliderOffset.x,
-                topRight.x - extents.x - colliderOffset.x);
-
-            position.y = Mathf.Clamp(
-                position.y,
-                bottomLeft.y + extents.y - colliderOffset.y,
-                topRight.y - extents.y - colliderOffset.y);
-
-            body.position = position;
-        }
+        // Camera-bounds movement restriction disabled. Level colliders should restrict movement instead.
+        // Camera camera = movementCamera;
+        // if (camera != null && camera.orthographic)
+        // {
+        //     float depth = Mathf.Abs(transform.position.z - camera.transform.position.z);
+        //     Vector3 bottomLeft = camera.ViewportToWorldPoint(new Vector3(0f, 0f, depth));
+        //     Vector3 topRight = camera.ViewportToWorldPoint(new Vector3(1f, 1f, depth));
+        //     Collider2D collider = GetComponentInChildren<Collider2D>(true);
+        //     Vector2 extents = collider != null ? collider.bounds.extents : Vector2.zero;
+        //     Vector2 colliderOffset = collider != null
+        //         ? (Vector2)collider.bounds.center - body.position
+        //         : Vector2.zero;
+        //
+        //     Vector3 position = body.position;
+        //
+        //     position.x = Mathf.Clamp(
+        //         position.x,
+        //         bottomLeft.x + extents.x - colliderOffset.x,
+        //         topRight.x - extents.x - colliderOffset.x);
+        //
+        //     position.y = Mathf.Clamp(
+        //         position.y,
+        //         bottomLeft.y + extents.y - colliderOffset.y,
+        //         topRight.y - extents.y - colliderOffset.y);
+        //
+        //     body.position = position;
+        // }
     }
 
     public void SetMovementCamera(Camera camera)

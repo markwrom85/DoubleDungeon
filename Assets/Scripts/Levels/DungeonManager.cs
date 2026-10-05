@@ -5,10 +5,15 @@ using Unity.Cinemachine;
 
 public class DungeonManager : MonoBehaviour
 {
-    [SerializeField] private bool debugMode = false, canChangeRooms = true;
+    [SerializeField] private bool canChangeRooms = true;
     [SerializeField] private PlayerInputManager playerInputManager;
     // Spawn points are indexed by PlayerInput.playerIndex.
     [SerializeField] private Transform[] playerSpawnPoints;
+
+    [SerializeField] private GameObject playersParent;
+
+    [Header("Camera")]
+    [SerializeField] private CameraController cameraController;
     // Cameras define the movement bounds. Multiple players may share one camera.
     [SerializeField] private Camera[] movementCameras;
     [SerializeField] private CinemachineCamera leftCinemachineCamera, rightCinemachineCamera;
@@ -16,17 +21,14 @@ public class DungeonManager : MonoBehaviour
     [SerializeField] private CinemachineTargetGroup[] cameraTargetGroups;
     // Optional per-player camera mapping. If empty, GetCameraIndex uses playerIndex / 2.
     [SerializeField] private int[] playerCameraIndices;
-    [SerializeField] private GameObject playersParent;
+    
     private List<ArduinoJoystickPlayer> players = new List<ArduinoJoystickPlayer>();
-    private bool wasDebugModeEnabled;
     private int knownPlayerCount;
 
-    public event System.Action DebugModeEnabled;
 
     // Initializes players that were carried over from the menu scene.
     void Start()
     {
-        wasDebugModeEnabled = debugMode;
         knownPlayerCount = playerInputManager != null ? playerInputManager.playerCount : 0;
         players.AddRange(FindObjectsByType<ArduinoJoystickPlayer>());
         if (players.Count > 0)
@@ -41,9 +43,6 @@ public class DungeonManager : MonoBehaviour
         {
             playerInputManager.EnableJoining();
         }
-
-        if (debugMode)
-            EnableDebugMode();
     }
 
     private void OnEnable()
@@ -209,12 +208,7 @@ public class DungeonManager : MonoBehaviour
     // In debug mode, detect players added after the initial scene setup.
     void Update()
     {
-        if (debugMode && !wasDebugModeEnabled)
-            EnableDebugMode();
-
-        wasDebugModeEnabled = debugMode;
-
-        if (debugMode && playerInputManager != null
+        if (playerInputManager != null
             && playerInputManager.playerCount != knownPlayerCount)
         {
             knownPlayerCount = playerInputManager.playerCount;
@@ -227,16 +221,6 @@ public class DungeonManager : MonoBehaviour
             }
         }
     }
-
-    private void EnableDebugMode()
-    {
-        // Debug mode allows additional players to join after the dungeon starts.
-        wasDebugModeEnabled = true;
-        playerInputManager.EnableJoining();
-        DebugModeEnabled?.Invoke();
-        Debug.Log("Debug mode enabled. Additional players can join.", this);
-    }
-
     public void ChangeRooms(CinemachineCamera newLeftCamera, CinemachineCamera newRightCamera, Transform newCenter, Transform playerLeftSpawnPoint, Transform playerRightSpawnPoint)
     {
         if (!canChangeRooms) return;
@@ -258,12 +242,12 @@ public class DungeonManager : MonoBehaviour
 
         playersParent.transform.position = newCenter.position;
 
-        foreach(CinemachineTargetGroup.Target playerTarget in cameraTargetGroups[0].Targets)
+        foreach (CinemachineTargetGroup.Target playerTarget in cameraTargetGroups[0].Targets)
         {
             playerTarget.Object.transform.position = playerLeftSpawnPoint.position;
         }
 
-        foreach(CinemachineTargetGroup.Target playerTarget in cameraTargetGroups[1].Targets)
+        foreach (CinemachineTargetGroup.Target playerTarget in cameraTargetGroups[1].Targets)
         {
             playerTarget.Object.transform.position = playerRightSpawnPoint.position;
         }
