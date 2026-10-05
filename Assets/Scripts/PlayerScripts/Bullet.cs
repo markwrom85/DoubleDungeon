@@ -59,6 +59,7 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D collision)
     {
+        if(collision.CompareTag("Player")) return;
         ReturnToPool(); // Return to pool when leaving the trigger area, e.g., for bullets that should not persist.
     }
 }
