@@ -418,6 +418,7 @@ GameObject:
   m_Component:
   - component: {fileID: 54583208}
   - component: {fileID: 54583207}
+  - component: {fileID: 54583209}
   m_Layer: 0
   m_Name: DungeonManager
   m_TagString: Untagged
@@ -445,7 +446,7 @@ MonoBehaviour:
   - {fileID: 2004998837}
   - {fileID: 939107156}
   playersParent: {fileID: 1849526252}
-  cameraController: {fileID: 0}
+  cameraController: {fileID: 54583209}
   movementCameras:
   - {fileID: 1825620352}
   - {fileID: 33268435}
@@ -470,6 +471,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &54583209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54583206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e5a70e52b57e324aa442076bb2e2378, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraController
+  cinemachineBrainLeft: {fileID: 1825620354}
+  cinemachineBrainRight: {fileID: 33268437}
 --- !u!1 &64563999
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,29 +4,35 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-public void MoveCamera(CinemachineCamera desiredCam, CinemachineCamera oldCamera)
-{
-    oldCamera.Priority = 0;
-    desiredCam.Priority = 10;
-}
+    [SerializeField] private CinemachineBrain cinemachineBrainLeft, cinemachineBrainRight;
 
-public IEnumerator MoveAndWaitForCameraBlend(CinemachineCamera desiredCam, CinemachineCamera oldCamera)
-{
-    if (desiredCam == null)
-        yield break;
-
-    MoveCamera(desiredCam, oldCamera);
-
-    // let Cinemachine process priority change
-    yield return null;
-    yield return new WaitForEndOfFrame();
-
-    // wait for blending to finish, but never hang forever
-    float timeout = 2f;
-    while (desiredCam.GetComponent<CinemachineBrain>().IsBlending && timeout > 0f)
+    public void MoveCamera(CinemachineCamera desiredCamLeft, CinemachineCamera desiredCamRight, CinemachineCamera oldCameraLeft, CinemachineCamera oldCameraRight)
     {
-        timeout -= Time.unscaledDeltaTime;
-        yield return null;
+        // Changing priorities tells each CinemachineBrain to blend to the new room camera.
+        oldCameraLeft.Priority = 0;
+        oldCameraRight.Priority = 0;
+        desiredCamLeft.Priority = 10;
+        desiredCamRight.Priority = 10;
     }
-}
+
+    public IEnumerator MoveAndWaitForCameraBlend(CinemachineCamera desiredCamLeft, CinemachineCamera desiredCamRight, CinemachineCamera oldCameraLeft, CinemachineCamera oldCameraRight)
+    {
+        if (desiredCamLeft == null || desiredCamRight == null)
+            yield break;
+
+        MoveCamera(desiredCamLeft, desiredCamRight, oldCameraLeft, oldCameraRight);
+
+        // Wait for Cinemachine to process the priority change before checking IsBlending.
+        yield return null;
+        yield return new WaitForEndOfFrame();
+
+        // Keep the transition coroutine alive until both camera blends finish, with a timeout
+        // as a safeguard if a brain is disabled or the blend cannot complete.
+        float timeout = 2f;
+        while (cinemachineBrainLeft.IsBlending || cinemachineBrainRight.IsBlending && timeout > 0f)
+        {
+            timeout -= Time.unscaledDeltaTime;
+            yield return null;
+        }
+    }
 }

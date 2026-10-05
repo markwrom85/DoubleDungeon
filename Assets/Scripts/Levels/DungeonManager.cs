@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Cinemachine;
+using System.Collections;
 
 public class DungeonManager : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class DungeonManager : MonoBehaviour
     [SerializeField] private CinemachineTargetGroup[] cameraTargetGroups;
     // Optional per-player camera mapping. If empty, GetCameraIndex uses playerIndex / 2.
     [SerializeField] private int[] playerCameraIndices;
-    
+
     private List<ArduinoJoystickPlayer> players = new List<ArduinoJoystickPlayer>();
     private int knownPlayerCount;
 
@@ -223,33 +224,44 @@ public class DungeonManager : MonoBehaviour
     }
     public void ChangeRooms(CinemachineCamera newLeftCamera, CinemachineCamera newRightCamera, Transform newCenter, Transform playerLeftSpawnPoint, Transform playerRightSpawnPoint)
     {
-        if (!canChangeRooms) return;
+        // Prevent a second door trigger from starting another room transition while this one is running.
+        if(!canChangeRooms)
+            return;
+        canChangeRooms = false;
+        StartCoroutine(ChangeRoomsRoutine(newLeftCamera, newRightCamera, newCenter, playerLeftSpawnPoint, playerRightSpawnPoint));
+    }
 
+    private IEnumerator ChangeRoomsRoutine(
+    CinemachineCamera newLeftCamera,
+    CinemachineCamera newRightCamera,
+    Transform newCenter,
+    Transform playerLeftSpawnPoint,
+    Transform playerRightSpawnPoint)
+    {
+        // Freeze player input while the cameras blend and the room positions are updated.
         foreach (ArduinoJoystickPlayer player in players)
-        {
-            PlayerSwapSides swapSides = player.GetComponentInChildren<PlayerSwapSides>(true);
-            if (swapSides != null)
-                swapSides.RepositionForCurrentSide();
-        }
+            player.isPlayable = false;
 
-        leftCinemachineCamera.Priority = 0;
-        rightCinemachineCamera.Priority = 0;
-        newLeftCamera.Priority = 10;
-        newRightCamera.Priority = 10;
+        // StartCoroutine must be yielded here so the code below waits for the blend to finish.
+        yield return StartCoroutine(cameraController.MoveAndWaitForCameraBlend(
+            newLeftCamera,
+            newRightCamera,
+            leftCinemachineCamera,
+            rightCinemachineCamera));
 
-        leftCinemachineCamera = newLeftCamera;
-        rightCinemachineCamera = newRightCamera;
-
+        // Move the shared parent and players only after the camera transition is complete.
         playersParent.transform.position = newCenter.position;
 
         foreach (CinemachineTargetGroup.Target playerTarget in cameraTargetGroups[0].Targets)
-        {
             playerTarget.Object.transform.position = playerLeftSpawnPoint.position;
-        }
 
         foreach (CinemachineTargetGroup.Target playerTarget in cameraTargetGroups[1].Targets)
-        {
             playerTarget.Object.transform.position = playerRightSpawnPoint.position;
-        }
+
+        foreach (ArduinoJoystickPlayer player in players)
+            player.isPlayable = true;
+
+        // Allow the next room transition after all repositioning is complete.
+        canChangeRooms = true;
     }
 }
