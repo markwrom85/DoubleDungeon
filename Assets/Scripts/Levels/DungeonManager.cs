@@ -17,7 +17,7 @@ public class DungeonManager : MonoBehaviour
     [SerializeField] private CameraController cameraController;
     // Cameras define the movement bounds. Multiple players may share one camera.
     [SerializeField] private Camera[] movementCameras;
-    [SerializeField] private CinemachineCamera leftCinemachineCamera, rightCinemachineCamera;
+    public CinemachineCamera leftCinemachineCamera, rightCinemachineCamera;
     // Each entry should be the target group followed by the matching Cinemachine camera.
     [SerializeField] private CinemachineTargetGroup[] cameraTargetGroups;
     // Optional per-player camera mapping. If empty, GetCameraIndex uses playerIndex / 2.

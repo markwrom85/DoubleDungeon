@@ -5,6 +5,12 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private CinemachineBrain cinemachineBrainLeft, cinemachineBrainRight;
+    private DungeonManager dungeonManager;
+
+    void Start()
+    {
+        dungeonManager = GetComponent<DungeonManager>();
+    }
 
     public void MoveCamera(CinemachineCamera desiredCamLeft, CinemachineCamera desiredCamRight, CinemachineCamera oldCameraLeft, CinemachineCamera oldCameraRight)
     {
@@ -17,6 +23,9 @@ public class CameraController : MonoBehaviour
         // Set the output channels for the new cameras to ensure they are rendered on the correct display.
         desiredCamLeft.OutputChannel = OutputChannels.Channel01;
         desiredCamRight.OutputChannel = OutputChannels.Channel02;
+
+        dungeonManager.leftCinemachineCamera = desiredCamLeft;
+        dungeonManager.rightCinemachineCamera = desiredCamRight;
     }
 
     public IEnumerator MoveAndWaitForCameraBlend(CinemachineCamera desiredCamLeft, CinemachineCamera desiredCamRight, CinemachineCamera oldCameraLeft, CinemachineCamera oldCameraRight)

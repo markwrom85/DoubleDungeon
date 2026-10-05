@@ -12,9 +12,9 @@ public class PlayerSwapSides : MonoBehaviour
     [SerializeField] private bool isOnLeftSide;
     [SerializeField] private CinemachineTargetGroup leftTargetGroup, rightTargetGroup;
     [SerializeField] private Camera leftCamera, rightCamera;
-    
+
     private ArduinoJoystickPlayer player;
-    private bool isSwapping = false, canSwap = true;
+    private bool canSwap = true;
     private Coroutine swapTimer;
 
     private void Awake()
@@ -35,7 +35,7 @@ public class PlayerSwapSides : MonoBehaviour
         if (!canSwap) return;
         if (player == null || !player.SwitchTriggered) return;
 
-        if (!isSwapping)
+        if (!player.isSwapping)
         {
             SwapSides();
         }
@@ -47,7 +47,7 @@ public class PlayerSwapSides : MonoBehaviour
 
     private void SwapSides()
     {
-        isSwapping = true;
+        player.isSwapping = true;
         cardinalGun.canShoot = false;
         playerObj.SetActive(false);
         PlayerInput playerInput = player.GetComponentInParent<PlayerInput>();
@@ -101,7 +101,7 @@ public class PlayerSwapSides : MonoBehaviour
         }
         playerObj.SetActive(true);
         crosshair.SetActive(false);
-        isSwapping = false;
+        player.isSwapping = false;
         cardinalGun.canShoot = true;
         StartCoroutine(AOEBurst());
     }
@@ -109,7 +109,7 @@ public class PlayerSwapSides : MonoBehaviour
     private IEnumerator CompleteSwapAfterDelay()
     {
         yield return new WaitForSeconds(Mathf.Max(0f, playerInfo.SwapDuration));
-        if (isSwapping)
+        if (player.isSwapping)
         {
             EnableCharacter();
         }
