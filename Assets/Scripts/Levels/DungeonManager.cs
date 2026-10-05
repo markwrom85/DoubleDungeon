@@ -222,19 +222,18 @@ public class DungeonManager : MonoBehaviour
             }
         }
     }
-    public void ChangeRooms(CinemachineCamera newLeftCamera, CinemachineCamera newRightCamera, Transform newCenter, Transform playerLeftSpawnPoint, Transform playerRightSpawnPoint)
+    public void ChangeRooms(CinemachineCamera newLeftCamera, CinemachineCamera newRightCamera, Transform playerLeftSpawnPoint, Transform playerRightSpawnPoint)
     {
         // Prevent a second door trigger from starting another room transition while this one is running.
         if(!canChangeRooms)
             return;
         canChangeRooms = false;
-        StartCoroutine(ChangeRoomsRoutine(newLeftCamera, newRightCamera, newCenter, playerLeftSpawnPoint, playerRightSpawnPoint));
+        StartCoroutine(ChangeRoomsRoutine(newLeftCamera, newRightCamera, playerLeftSpawnPoint, playerRightSpawnPoint));
     }
 
     private IEnumerator ChangeRoomsRoutine(
     CinemachineCamera newLeftCamera,
     CinemachineCamera newRightCamera,
-    Transform newCenter,
     Transform playerLeftSpawnPoint,
     Transform playerRightSpawnPoint)
     {
@@ -249,8 +248,7 @@ public class DungeonManager : MonoBehaviour
             leftCinemachineCamera,
             rightCinemachineCamera));
 
-        // Move the shared parent and players only after the camera transition is complete.
-        playersParent.transform.position = newCenter.position;
+        // Move the players only after the camera transition is complete.
 
         foreach (CinemachineTargetGroup.Target playerTarget in cameraTargetGroups[0].Targets)
             playerTarget.Object.transform.position = playerLeftSpawnPoint.position;

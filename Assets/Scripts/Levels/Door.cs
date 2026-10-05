@@ -6,7 +6,7 @@ public class Door : MonoBehaviour
     public bool isOpen = false;
     private DungeonManager dungeonManager;
     [SerializeField] private CinemachineCamera newLeftCinemachineCamera, newRightCinemachineCamera;
-    [SerializeField] private Transform newCenter, playerLeftSpawnPoint, playerRightSpawnPoint;
+    [SerializeField] private Transform playerLeftSpawnPoint, playerRightSpawnPoint;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -24,7 +24,7 @@ public class Door : MonoBehaviour
         ArduinoJoystickPlayer player = other.GetComponentInParent<ArduinoJoystickPlayer>();
         if (player != null && isOpen)
         {
-            dungeonManager.ChangeRooms(newLeftCinemachineCamera, newRightCinemachineCamera, newCenter, playerLeftSpawnPoint, playerRightSpawnPoint);
+            dungeonManager.ChangeRooms(newLeftCinemachineCamera, newRightCinemachineCamera, playerLeftSpawnPoint, playerRightSpawnPoint);
         }
     }
 }
