@@ -251,7 +251,7 @@ Transform:
   m_GameObject: {fileID: 33268431}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.890188, y: 0, z: -32.159042}
+  m_LocalPosition: {x: 8.890785, y: 0, z: -32.159042}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -292,6 +292,11 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
+--- !u!1 &41343397 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8867118270683686026, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
+  m_PrefabInstance: {fileID: 1331049123}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &51281137
 GameObject:
   m_ObjectHideFlags: 0
@@ -10856,12 +10861,16 @@ PrefabInstance:
       objectReference: {fileID: 1342895206}
     - target: {fileID: 7572423956935245995, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
       propertyPath: doorsToDisableAfterTransition.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7572423956935245995, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
       propertyPath: 'doorsToDisableAfterTransition.Array.data[0]'
       value: 
       objectReference: {fileID: 1342895206}
+    - target: {fileID: 7572423956935245995, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
+      propertyPath: 'doorsToDisableAfterTransition.Array.data[1]'
+      value: 
+      objectReference: {fileID: 41343397}
     - target: {fileID: 8867118270683686026, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
       propertyPath: m_Name
       value: DoorEast
@@ -12706,7 +12715,7 @@ Transform:
   m_GameObject: {fileID: 1825620348}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.890188, y: 0, z: -32.159042}
+  m_LocalPosition: {x: -8.890785, y: 0, z: -32.159042}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
