@@ -289,7 +289,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1558879401238498813}
@@ -345,8 +345,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: a1549e5cc8b76af4396df66fa18f889a, type: 3}
-  m_Color: {r: 0.2, g: 0.9, b: 0.65, a: 1}
+  m_Sprite: {fileID: 4809241099459765835, guid: 55fcad31edad3c94a917c630d6efae7b, type: 3}
+  m_Color: {r: 0.7686275, g: 0.7686275, b: 0.7686275, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -510,6 +510,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInfo
   baseStats: {fileID: 11400000, guid: a458eea5f100941b0bf11893d579fb4e, type: 2}
   spriteRenderer: {fileID: 4542872084837076838}
+  upSprite: {fileID: 2644617163358366776, guid: 55fcad31edad3c94a917c630d6efae7b, type: 3}
+  downSprite: {fileID: 4809241099459765835, guid: 55fcad31edad3c94a917c630d6efae7b, type: 3}
+  leftSprite: {fileID: 6309195887318538167, guid: 55fcad31edad3c94a917c630d6efae7b, type: 3}
+  rightSprite: {fileID: -307049703525953426, guid: 55fcad31edad3c94a917c630d6efae7b, type: 3}
 --- !u!114 &820158281234333774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -522,6 +526,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 792ba4d4b747947489ea4b87a5e245ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
+--- !u!114 &7349201362178500641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7352079989303448806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db541a183eb64479b16468f25a0c3e50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyTarget
+  character: {fileID: 6998601417813346022}
 --- !u!1001 &6503544426367294212
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -599,16 +616,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d81d419c63441c7bb3eabf71183b3ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardinalGun
---- !u!114 &7349201362178500641
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7352079989303448806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db541a183eb64479b16468f25a0c3e50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyTarget
-  character: {fileID: 6998601417813346022}
