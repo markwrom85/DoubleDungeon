@@ -29,7 +29,7 @@ public class CameraController : MonoBehaviour
         // Keep the transition coroutine alive until both camera blends finish, with a timeout
         // as a safeguard if a brain is disabled or the blend cannot complete.
         float timeout = 2f;
-        while (cinemachineBrainLeft.IsBlending || cinemachineBrainRight.IsBlending && timeout > 0f)
+        while ((cinemachineBrainLeft.IsBlending || cinemachineBrainRight.IsBlending) && timeout > 0f)
         {
             timeout -= Time.unscaledDeltaTime;
             yield return null;
