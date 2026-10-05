@@ -7,6 +7,7 @@ public class Door : MonoBehaviour
     private DungeonManager dungeonManager;
     [SerializeField] private CinemachineCamera newLeftCinemachineCamera, newRightCinemachineCamera;
     [SerializeField] private Transform playerLeftSpawnPoint, playerRightSpawnPoint;
+    [SerializeField] private GameObject[] doorsToDisableAfterTransition;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -24,7 +25,7 @@ public class Door : MonoBehaviour
         ArduinoJoystickPlayer player = other.GetComponentInParent<ArduinoJoystickPlayer>();
         if (player != null && isOpen)
         {
-            dungeonManager.ChangeRooms(newLeftCinemachineCamera, newRightCinemachineCamera, playerLeftSpawnPoint, playerRightSpawnPoint);
+            dungeonManager.ChangeRooms(newLeftCinemachineCamera, newRightCinemachineCamera, playerLeftSpawnPoint, playerRightSpawnPoint, doorsToDisableAfterTransition);
         }
     }
 }

@@ -22,6 +22,7 @@ public class DungeonManager : MonoBehaviour
     [SerializeField] private CinemachineTargetGroup[] cameraTargetGroups;
     // Optional per-player camera mapping. If empty, GetCameraIndex uses playerIndex / 2.
     [SerializeField] private int[] playerCameraIndices;
+    [SerializeField] private List<GameObject> doorsToEnableAfterTransition;
 
     private List<ArduinoJoystickPlayer> players = new List<ArduinoJoystickPlayer>();
     private int knownPlayerCount;
@@ -222,13 +223,34 @@ public class DungeonManager : MonoBehaviour
             }
         }
     }
-    public void ChangeRooms(CinemachineCamera newLeftCamera, CinemachineCamera newRightCamera, Transform playerLeftSpawnPoint, Transform playerRightSpawnPoint)
+    public void ChangeRooms(CinemachineCamera newLeftCamera, CinemachineCamera newRightCamera, Transform playerLeftSpawnPoint, Transform playerRightSpawnPoint, GameObject[] doorsToDisable)
     {
         // Prevent a second door trigger from starting another room transition while this one is running.
         if(!canChangeRooms)
             return;
         canChangeRooms = false;
         Debug.Log("LeftCamera: " + newLeftCamera.name + ", RightCamera: " + newRightCamera.name);
+
+        foreach(GameObject door in doorsToEnableAfterTransition)
+        {
+            if(door != null)
+            {
+                door.SetActive(true);
+            }
+        }
+        doorsToEnableAfterTransition.Clear();
+
+        if(doorsToDisable != null)
+        {
+            foreach (GameObject door in doorsToDisable)
+            {
+                if (door != null)
+                {
+                    doorsToEnableAfterTransition.Add(door);
+                    door.SetActive(false);
+                }
+            }
+        }
 
         StartCoroutine(ChangeRoomsRoutine(newLeftCamera, newRightCamera, playerLeftSpawnPoint, playerRightSpawnPoint));
     }
