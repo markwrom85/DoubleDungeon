@@ -1,0 +1,630 @@
+fileFormatVersion: 2
+guid: 2757063791061564e8883895a3e04137
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5893522487953257465
+    second: Player Panel_0
+  - first:
+      213: 3319912297108983410
+    second: Player Panel_1
+  - first:
+      213: -5269732015000052203
+    second: Player Panel_2
+  - first:
+      213: -7793975303846428678
+    second: Player Panel_3
+  - first:
+      213: 8311539731980673209
+    second: Player Panel_4
+  - first:
+      213: -6774429459826342947
+    second: Player Panel_5
+  - first:
+      213: 2578153803222835768
+    second: Player Panel_6
+  - first:
+      213: -7976935735282818052
+    second: Player Panel_7
+  - first:
+      213: 862288697874715865
+    second: Player Panel_8
+  - first:
+      213: 6972857826844108063
+    second: Player Panel_9
+  - first:
+      213: 1596439816722647252
+    second: Player Panel_10
+  - first:
+      213: -7988711474820971580
+    second: Player Panel_11
+  - first:
+      213: -2778447689324568389
+    second: Player Panel_12
+  - first:
+      213: -6642007518696666893
+    second: Player Panel_13
+  - first:
+      213: 3628879389643004734
+    second: Player Panel_14
+  - first:
+      213: -7666008744380436174
+    second: Player Panel_15
+  - first:
+      213: 3154812889763064639
+    second: Player Panel_16
+  - first:
+      213: -358037669870481829
+    second: Player Panel_17
+  - first:
+      213: 2946414727825954099
+    second: Player Panel_18
+  - first:
+      213: 8338080624118448449
+    second: Player Panel_19
+  - first:
+      213: -1590511392614762220
+    second: Player Panel_20
+  - first:
+      213: -3454980190111184170
+    second: Player Panel_21
+  - first:
+      213: 6764521919712935268
+    second: Player Panel_22
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Player Panel_Empty
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 270
+        width: 127
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70c05cdb580063ea0800000000000000
+      internalID: -5893522487953257465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Panel_Lightning
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 276
+        width: 117
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27ec1a205a2b21e20800000000000000
+      internalID: 3319912297108983410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Panel_Fire
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 276
+        width: 117
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51e1b6017a62ed6b0800000000000000
+      internalID: -5269732015000052203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Panel_Light
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 277
+        width: 115
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afff01261cc36d390800000000000000
+      internalID: -7793975303846428678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Panel_Water
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 186
+        width: 117
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b0e04d8955885370800000000000000
+      internalID: 8311539731980673209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Panel_Lightning_UI
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 188
+        width: 113
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8326b61793177c320800000000000000
+      internalID: 2578153803222835768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Panel_Fire_UI
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 188
+        width: 113
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d418aa800777fb00800000000000000
+      internalID: 862288697874715865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Panel_Light_UI
+      rect:
+        serializedVersion: 2
+        x: 419
+        y: 188
+        width: 113
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d80b051e81b72610800000000000000
+      internalID: 1596439816722647252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Panel_Water_UI
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 98
+        width: 113
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb0edc22c88f079d0800000000000000
+      internalID: -2778447689324568389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heart_Full
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 107
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f88c944a59d2d3a0800000000000000
+      internalID: -6642007518696666893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heart_Half
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 107
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3b5868049e5c5230800000000000000
+      internalID: 3628879389643004734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heart_Empty_1
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 107
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2317a2ac9addc9590800000000000000
+      internalID: -7666008744380436174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heart_Empty_2
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 107
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3ba62bbb9528cb20800000000000000
+      internalID: 3154812889763064639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heart_Empty_3
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 107
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5e492fd2aef70bf0800000000000000
+      internalID: -358037669870481829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Number_01
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 106
+        width: 20
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3359b0d8594c3e820800000000000000
+      internalID: 2946414727825954099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Number_02
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 106
+        width: 21
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 141c52d8620d6b370800000000000000
+      internalID: 8338080624118448449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Visual
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 39
+        width: 30
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4193cf7b05e5de9e0800000000000000
+      internalID: -1590511392614762220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Number_03
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 16
+        width: 20
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6da496682d17d00d0800000000000000
+      internalID: -3454980190111184170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Number_04
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 16
+        width: 20
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46d35d398d860ed50800000000000000
+      internalID: 6764521919712935268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 74e8cbd055ded3b42ba5f82ec1b18dcb
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      3: -358037669870481829
+      Heart_Empty_1: -7666008744380436174
+      Heart_Empty_2: 3154812889763064639
+      Heart_Empty_3: -358037669870481829
+      Heart_Full: -6642007518696666893
+      Heart_Half: 3628879389643004734
+      Player Number_01: 2946414727825954099
+      Player Number_02: 8338080624118448449
+      Player Number_03: -3454980190111184170
+      Player Number_04: 6764521919712935268
+      Player Panel_11: -7988711474820971580
+      Player Panel_5: -6774429459826342947
+      Player Panel_7: -7976935735282818052
+      Player Panel_9: 6972857826844108063
+      Player Panel_Empty: -5893522487953257465
+      Player Panel_Fire: -5269732015000052203
+      Player Panel_Fire_UI: 862288697874715865
+      Player Panel_Light: -7793975303846428678
+      Player Panel_Light_UI: 1596439816722647252
+      Player Panel_Lightning: 3319912297108983410
+      Player Panel_Lightning_UI: 2578153803222835768
+      Player Panel_Water: 8311539731980673209
+      Player Panel_Water_UI: -2778447689324568389
+      Player_Visual: -1590511392614762220
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
