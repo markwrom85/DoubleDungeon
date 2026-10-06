@@ -130,6 +130,9 @@ public class ZombieController : MonoBehaviour, IDamageable
         if (!HasTarget) Target = null;
         if (Time.time < nextTargetTime) return;
         nextTargetTime = Time.time + Mathf.Max(0.05f, targetInterval);
+        // I finish binding a dormant room when its pair becomes active.
+        if (startingSide == null && dungeonSetup != null && (CurrentSide == null || CurrentSide.OppositeSide == null))
+            CurrentSide = dungeonSetup.GetStartingSide(body.position);
         Target = CurrentSide != null ? CurrentSide.FindTarget(body.position) : null;
     }
 
@@ -180,16 +183,12 @@ public class ZombieController : MonoBehaviour, IDamageable
     {
         EnemyDungeonSide destination = CurrentSide != null ? CurrentSide.OppositeSide : null;
         if (destination == null) return false;
-        Camera sourceCamera = dungeonSetup != null ? dungeonSetup.GetCameraForSide(CurrentSide) : null;
-        Camera destinationCamera = dungeonSetup != null ? dungeonSetup.GetCameraForSide(destination) : null;
         Vector2 position;
-        if (sourceCamera != null && destinationCamera != null)
+        if (dungeonSetup != null)
         {
-            // I preserve the zombie's normalized screen position when moving between side cameras.
-            Vector3 viewportPosition = sourceCamera.WorldToViewportPoint(deathPosition);
-            float depth = Mathf.Abs(transform.position.z - destinationCamera.transform.position.z);
-            Vector3 destinationPosition = destinationCamera.ViewportToWorldPoint(
-                new Vector3(viewportPosition.x, viewportPosition.y, depth));
+            // I map the death position within the original pair even after the display cameras move.
+            if (!dungeonSetup.TryGetOppositePosition(CurrentSide,
+                new Vector3(deathPosition.x, deathPosition.y, transform.position.z), out Vector3 destinationPosition)) return false;
             position = destinationPosition;
         }
         else
