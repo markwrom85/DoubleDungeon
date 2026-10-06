@@ -1,10 +1,46 @@
 fileFormatVersion: 2
-guid: bfe0238525dfbec46991e93fff466c7a
+guid: 166674686d1beb54aab1cd0fcd0c1fd1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4630467212022404075
-    second: Lightning_Beam_01_0
+      213: -1167944727478786785
+    second: Lightning_Beam_01 1_0
+  - first:
+      213: 7891073702571825461
+    second: Lightning_Beam_01 1_1
+  - first:
+      213: 6947252231291739163
+    second: Lightning_Beam_01 1_2
+  - first:
+      213: -7571803559721624117
+    second: Lightning_Beam_01 1_3
+  - first:
+      213: 848257878466505715
+    second: Lightning_Beam_01 1_4
+  - first:
+      213: -399712417097848061
+    second: Lightning_Beam_01 1_5
+  - first:
+      213: -2747761470873740928
+    second: Lightning_Beam_01 1_6
+  - first:
+      213: 225905419574359722
+    second: Lightning_Beam_01 1_7
+  - first:
+      213: -5345836203504239979
+    second: Lightning_Beam_01 1_8
+  - first:
+      213: -8300899687449664853
+    second: Lightning_Beam_01 1_9
+  - first:
+      213: -2131332125044393874
+    second: Lightning_Beam_01 1_10
+  - first:
+      213: -2731304016541536111
+    second: Lightning_Beam_01 1_11
+  - first:
+      213: 7514089951908307757
+    second: Lightning_Beam_01 1_12
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -102,7 +138,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Lightning_Beam_01_0
+      name: Lightning_Beam_01 1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -117,14 +153,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 51caf4b9a964dbfb0800000000000000
-      internalID: -4630467212022404075
+      spriteID: f1526595570aacfe0800000000000000
+      internalID: -1167944727478786785
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01_1
+      name: Lightning_Beam_01 1_1
       rect:
         serializedVersion: 2
         x: 128
@@ -137,16 +173,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: b396270840d172b4880539b264536dfe
-      internalID: -931465971
+      spriteID: 539583a49b9b28d60800000000000000
+      internalID: 7891073702571825461
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01_2
+      name: Lightning_Beam_01 1_2
       rect:
         serializedVersion: 2
         x: 256
@@ -159,16 +195,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: b7770bf6644fabe4eaed4f2aa66ce811
-      internalID: -53600539
+      spriteID: b1c1f23a819996060800000000000000
+      internalID: 6947252231291739163
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01_3
+      name: Lightning_Beam_01 1_3
       rect:
         serializedVersion: 2
         x: 384
@@ -181,16 +217,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: b64a435d639fe0b4895f53f48b757645
-      internalID: -141600191
+      spriteID: bcd11c197cc8be690800000000000000
+      internalID: -7571803559721624117
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01_4
+      name: Lightning_Beam_01 1_4
       rect:
         serializedVersion: 2
         x: 512
@@ -203,16 +239,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 689f92736da135b48abf964c642c0b0c
-      internalID: -403284714
+      spriteID: 3fb2ce3db0e95cb00800000000000000
+      internalID: 848257878466505715
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01_5
+      name: Lightning_Beam_01 1_5
       rect:
         serializedVersion: 2
         x: 640
@@ -225,16 +261,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 086aa1cfdaa485b468ad68251b3ccab3
-      internalID: -73894862
+      spriteID: 30be196acafe37af0800000000000000
+      internalID: -399712417097848061
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01_6
+      name: Lightning_Beam_01 1_6
       rect:
         serializedVersion: 2
         x: 768
@@ -247,16 +283,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: e8460eb462a11f74d95e98880328175f
-      internalID: 211814489
+      spriteID: 089d011208dfdd9d0800000000000000
+      internalID: -2747761470873740928
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01_7
+      name: Lightning_Beam_01 1_7
       rect:
         serializedVersion: 2
         x: 896
@@ -269,16 +305,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 768f820a2993690448d3684a9fb7beee
-      internalID: -1528350300
+      spriteID: aa6b09e38c3922300800000000000000
+      internalID: 225905419574359722
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01_8
+      name: Lightning_Beam_01 1_8
       rect:
         serializedVersion: 2
         x: 1024
@@ -291,16 +327,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: ae779bd67c84e7445bba10c2bd242933
-      internalID: 27602719
+      spriteID: 59af4bedb46cfc5b0800000000000000
+      internalID: -5345836203504239979
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01_9
+      name: Lightning_Beam_01 1_9
       rect:
         serializedVersion: 2
         x: 1152
@@ -313,16 +349,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 247ac20ee1d351c44b89c2e11a4b7610
-      internalID: -583834015
+      spriteID: ba2696dd6b74dcc80800000000000000
+      internalID: -8300899687449664853
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01_10
+      name: Lightning_Beam_01 1_10
       rect:
         serializedVersion: 2
         x: 1280
@@ -335,16 +371,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 63224ff519b98554396e115ad80936c2
-      internalID: -1732821699
+      spriteID: e68b95c79bcfb62e0800000000000000
+      internalID: -2131332125044393874
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01_11
+      name: Lightning_Beam_01 1_11
       rect:
         serializedVersion: 2
         x: 1408
@@ -357,16 +393,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: c5d79165292bf1f4eb5eab0facb69ddc
-      internalID: 1023558770
+      spriteID: 190b170d775781ad0800000000000000
+      internalID: -2731304016541536111
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01_12
+      name: Lightning_Beam_01 1_12
       rect:
         serializedVersion: 2
         x: 1536
@@ -379,10 +415,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: efaedd4fdf153ec40aa634c14da4f4e4
-      internalID: 2014333735
+      spriteID: d23a3d9fff8674860800000000000000
+      internalID: 7514089951908307757
       vertices: []
       indices: 
       edges: []
@@ -391,7 +427,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 9c8ae13817d61a34b903aecc5cde019e
+    spriteID: ef9e65fdd84932747872d5d08a1b0396
     internalID: 0
     vertices: []
     indices: 
@@ -403,19 +439,19 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":128.0,"y":128.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Lightning_Beam_01_0: -4630467212022404075
-      Lightning_Beam_01_1: -931465971
-      Lightning_Beam_01_10: -1732821699
-      Lightning_Beam_01_11: 1023558770
-      Lightning_Beam_01_12: 2014333735
-      Lightning_Beam_01_2: -53600539
-      Lightning_Beam_01_3: -141600191
-      Lightning_Beam_01_4: -403284714
-      Lightning_Beam_01_5: -73894862
-      Lightning_Beam_01_6: 211814489
-      Lightning_Beam_01_7: -1528350300
-      Lightning_Beam_01_8: 27602719
-      Lightning_Beam_01_9: -583834015
+      Lightning_Beam_01 1_0: -1167944727478786785
+      Lightning_Beam_01 1_1: 7891073702571825461
+      Lightning_Beam_01 1_10: -2131332125044393874
+      Lightning_Beam_01 1_11: -2731304016541536111
+      Lightning_Beam_01 1_12: 7514089951908307757
+      Lightning_Beam_01 1_2: 6947252231291739163
+      Lightning_Beam_01 1_3: -7571803559721624117
+      Lightning_Beam_01 1_4: 848257878466505715
+      Lightning_Beam_01 1_5: -399712417097848061
+      Lightning_Beam_01 1_6: -2747761470873740928
+      Lightning_Beam_01 1_7: 225905419574359722
+      Lightning_Beam_01 1_8: -5345836203504239979
+      Lightning_Beam_01 1_9: -8300899687449664853
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
