@@ -10304,7 +10304,8 @@ MonoBehaviour:
   enemySpawns:
   - {fileID: 1978110364}
   - {fileID: 749028010}
-  combatEncounters: 2
+  spawnOnLeftSide: 1
+  spawnOnRightSide: 1
 --- !u!1 &817789109
 GameObject:
   m_ObjectHideFlags: 0
@@ -11243,12 +11244,16 @@ PrefabInstance:
       objectReference: {fileID: 1342895206}
     - target: {fileID: 7572423956935245995, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
       propertyPath: doorsToDisableAfterTransition.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7572423956935245995, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
       propertyPath: 'doorsToDisableAfterTransition.Array.data[0]'
       value: 
       objectReference: {fileID: 1342895206}
+    - target: {fileID: 7572423956935245995, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
+      propertyPath: 'doorsToDisableAfterTransition.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1903731814}
     - target: {fileID: 8867118270683686026, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
       propertyPath: m_Name
       value: DoorEast
@@ -11709,7 +11714,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7572423956935245995, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
   m_PrefabInstance: {fileID: 1331049123}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1903731814}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5eef032c794654115a61955682364bb6, type: 3}
@@ -12097,7 +12102,8 @@ MonoBehaviour:
   enemySpawns:
   - {fileID: 532141433}
   - {fileID: 2071151216}
-  combatEncounters: 1
+  spawnOnLeftSide: 1
+  spawnOnRightSide: 1
 --- !u!1 &1481052373
 GameObject:
   m_ObjectHideFlags: 0
@@ -13120,7 +13126,8 @@ MonoBehaviour:
   - {fileID: 1315479207}
   - {fileID: 1601829835}
   - {fileID: 1965174850}
-  combatEncounters: 1
+  spawnOnLeftSide: 1
+  spawnOnRightSide: 1
 --- !u!1 &1667772019
 GameObject:
   m_ObjectHideFlags: 0
@@ -13931,7 +13938,8 @@ MonoBehaviour:
   roomBounds: {fileID: 1811348247}
   doors: []
   enemySpawns: []
-  combatEncounters: 1
+  spawnOnLeftSide: 1
+  spawnOnRightSide: 1
 --- !u!1001 &1865313224
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14122,6 +14130,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1903731814 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8867118270683686026, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
+  m_PrefabInstance: {fileID: 1331049123}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1930799158
 GameObject:
   m_ObjectHideFlags: 0
@@ -14666,7 +14679,8 @@ MonoBehaviour:
   - {fileID: 841141421}
   - {fileID: 1709987905}
   - {fileID: 1298727000}
-  combatEncounters: 1
+  spawnOnLeftSide: 1
+  spawnOnRightSide: 1
 --- !u!114 &2071151216 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 988862261418752095, guid: 08e0e6d93c8a24908915b835663dfc4a, type: 3}

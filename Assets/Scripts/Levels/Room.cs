@@ -88,7 +88,7 @@ public class Room : MonoBehaviour
             hasSpawnedOnRight = true;
         }
 
-        SpawnEnemies();
+        // SpawnEnemies();
     }
 
     private ScreenSide GetVisibleSide(
