@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 55fcad31edad3c94a917c630d6efae7b
+guid: 2892bf40d20c44d47956c66e44f0b582
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4809241099459765835
-    second: Wizard_4D-Sheet_0
+      213: -1368900902533256610
+    second: Wizard_4D-Sheet (1)_0
   - first:
-      213: 6309195887318538167
-    second: Wizard_4D-Sheet_1
+      213: 9183803990590412154
+    second: Wizard_4D-Sheet (1)_1
   - first:
-      213: 2644617163358366776
-    second: Wizard_4D-Sheet_2
+      213: 278059060499068326
+    second: Wizard_4D-Sheet (1)_2
   - first:
-      213: -307049703525953426
-    second: Wizard_4D-Sheet_3
+      213: 6774695410247242661
+    second: Wizard_4D-Sheet (1)_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -60,7 +60,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -111,89 +111,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Wizard_4D-Sheet_0
+      name: Wizard_4D-Sheet (1)_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 1
         y: 0
-        width: 33
+        width: 30
         height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b46228cac4bddb240800000000000000
-      internalID: 4809241099459765835
+      spriteID: e5a2bc3c1efa00de0800000000000000
+      internalID: -1368900902533256610
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Wizard_4D-Sheet_1
+      name: Wizard_4D-Sheet (1)_1
       rect:
         serializedVersion: 2
         x: 33
         y: 0
-        width: 33
+        width: 30
         height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7b71af16b34ce8750800000000000000
-      internalID: 6309195887318538167
+      spriteID: a75d4f1521d637f70800000000000000
+      internalID: 9183803990590412154
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Wizard_4D-Sheet_2
+      name: Wizard_4D-Sheet (1)_2
       rect:
         serializedVersion: 2
-        x: 66
+        x: 64
         y: 0
         width: 32
         height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 83c60ec5c4193b420800000000000000
-      internalID: 2644617163358366776
+      spriteID: 6a530a70e3ddbd300800000000000000
+      internalID: 278059060499068326
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Wizard_4D-Sheet_3
+      name: Wizard_4D-Sheet (1)_3
       rect:
         serializedVersion: 2
         x: 99
         y: 0
-        width: 33
+        width: 30
         height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e6052f4ebe32dbbf0800000000000000
-      internalID: -307049703525953426
+      spriteID: 5a3914de49d840e50800000000000000
+      internalID: 6774695410247242661
       vertices: []
       indices: 
       edges: []
@@ -202,7 +202,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 9c1e1f576aa73754499db59438cbd6cd
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -212,10 +212,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Wizard_4D-Sheet_0: 4809241099459765835
-      Wizard_4D-Sheet_1: 6309195887318538167
-      Wizard_4D-Sheet_2: 2644617163358366776
-      Wizard_4D-Sheet_3: -307049703525953426
+      Wizard_4D-Sheet (1)_0: -1368900902533256610
+      Wizard_4D-Sheet (1)_1: 9183803990590412154
+      Wizard_4D-Sheet (1)_2: 278059060499068326
+      Wizard_4D-Sheet (1)_3: 6774695410247242661
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
