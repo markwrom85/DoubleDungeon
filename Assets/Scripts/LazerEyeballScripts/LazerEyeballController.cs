@@ -5,10 +5,10 @@ using Unity.Cinemachine;
 [RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D), typeof(SpriteRenderer))]
 [RequireComponent(typeof(EnemyDungeonSetup), typeof(LazerEyeballLaser))]
 // I move inside the outer part of my room and alternate between aiming and a locked laser shot.
-public class LazerEyeballController : MonoBehaviour, IDamageable
+public class LazerEyeballController : EnemyController
 {
     [Header("Health")]
-    [SerializeField, Min(1f)] private float maxHealth = 20f;
+    [SerializeField, Min(1f)] private float eyeMaxHealth = 20f;
     [SerializeField, Min(0f)] private float deathDuration = 1f;
     [Header("Movement")]
     [SerializeField, Min(0.1f)] private float moveSpeed = 2f;
@@ -41,7 +41,6 @@ public class LazerEyeballController : MonoBehaviour, IDamageable
     private EnemyDungeonSetup dungeonSetup;
     private LazerEyeballLaser laser;
     private DungeonManager manager;
-    private readonly EnemyStateMachine stateMachine = new EnemyStateMachine();
     private readonly RaycastHit2D[] obstacleHits = new RaycastHit2D[32];
     private ContactFilter2D obstacleFilter;
     private Rect movementArea;
@@ -53,7 +52,6 @@ public class LazerEyeballController : MonoBehaviour, IDamageable
 
     public EnemyDungeonSide CurrentSide { get; private set; }
     public PlayerInput Target { get; private set; }
-    public float Health { get; private set; }
     public Vector2 Position => body.position;
     public Vector2 Facing { get; private set; }
     public float MoveDuration => moveDuration;
@@ -65,8 +63,6 @@ public class LazerEyeballController : MonoBehaviour, IDamageable
     public bool CanMove => hasEnteredRoom && HasTarget;
     public bool CanShoot => hasEnteredRoom && HasShot(Target);
     public bool IsInMovementArea => movementArea.Contains(body.position);
-    public EnemyState CurrentState => stateMachine.CurrentState;
-    public string CurrentStateName => CurrentState?.GetType().Name ?? "None";
     public LazerEyeballIdleState IdleState { get; private set; }
     public LazerEyeballMoveToSideState MoveToSideState { get; private set; }
     public LazerEyeballMoveState MoveState { get; private set; }
@@ -76,8 +72,10 @@ public class LazerEyeballController : MonoBehaviour, IDamageable
     public LazerEyeballDyingState DyingState { get; private set; }
     public LazerEyeballDespawnedState DespawnedState { get; private set; }
 
-    private void Awake()
+    protected override void Awake()
     {
+        MaxHealth = eyeMaxHealth;
+        base.Awake();
         body = GetComponent<Rigidbody2D>();
         hitbox = GetComponent<CircleCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -102,7 +100,7 @@ public class LazerEyeballController : MonoBehaviour, IDamageable
 
     private void OnEnable()
     {
-        Health = maxHealth;
+        Health = MaxHealth;
         CurrentSide = null;
         Target = null;
         hasEnteredRoom = false;
@@ -115,18 +113,22 @@ public class LazerEyeballController : MonoBehaviour, IDamageable
         ChangeState(IdleState);
     }
 
-    private void Update()
+    protected override void Update()
     {
         // I stop attacking when the cameras leave my original pair, without changing that pair's references.
         if (Health > 0f && CurrentSide != null && !IsRoomActive() && CurrentState != IdleState)
             ChangeState(IdleState);
-        stateMachine.Tick();
+        base.Update();
         if (hitFlashUntil > 0f && Time.time >= hitFlashUntil)
         { hitFlashUntil = 0f; spriteRenderer.color = stateColor; }
     }
-    private void FixedUpdate() { stateMachine.FixedTick(); }
-    private void OnDisable() { StopMoving(); laser.Hide(); stateMachine.ChangeState(null); }
-    public void ChangeState(EnemyState state) { stateMachine.ChangeState(state); }
+    protected override void FixedUpdate() { base.FixedUpdate(); }
+    protected override void OnDisable()
+    {
+        StopMoving();
+        laser.Hide();
+        base.OnDisable();
+    }
 
     public bool PrepareRoom()
     {
@@ -327,7 +329,7 @@ public class LazerEyeballController : MonoBehaviour, IDamageable
         progressTime = Time.time;
     }
     public void StopMoving() { if (body != null) body.linearVelocity = Vector2.zero; }
-    public void TakeDamage(float damage)
+    public override void TakeDamage(float damage)
     {
         if (!isActiveAndEnabled || Health <= 0f || damage <= 0f || float.IsNaN(damage) || float.IsInfinity(damage)) return;
         Health = Mathf.Max(0f, Health - damage);
@@ -349,4 +351,9 @@ public class LazerEyeballController : MonoBehaviour, IDamageable
         SetColor(dyingColor);
     }
     public void Despawn() { spriteRenderer.enabled = false; gameObject.SetActive(false); }
+
+    public void CompleteDeath()
+    {
+        BeginDeath();
+    }
 }

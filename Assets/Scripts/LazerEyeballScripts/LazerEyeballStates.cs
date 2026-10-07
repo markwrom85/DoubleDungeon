@@ -110,5 +110,9 @@ public class LazerEyeballDespawnedState : EnemyState
 {
     private readonly LazerEyeballController eye;
     public LazerEyeballDespawnedState(LazerEyeballController eye) { this.eye = eye; }
-    public override void Enter() { eye.Despawn(); }
+    public override void Enter()
+    {
+        eye.CompleteDeath();
+        eye.Despawn();
+    }
 }

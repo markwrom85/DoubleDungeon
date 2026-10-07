@@ -138,12 +138,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eef032c794654115a61955682364bb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
-  isOpen: 1
+  isOpen: 0
   newLeftCinemachineCamera: {fileID: 0}
   newRightCinemachineCamera: {fileID: 0}
   playerLeftSpawnPoint: {fileID: 0}
   playerRightSpawnPoint: {fileID: 0}
-  doorsToDisable: []
+  doorsToDisableAfterTransition: []
 --- !u!61 &6165839354083369448
 BoxCollider2D:
   m_ObjectHideFlags: 0

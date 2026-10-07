@@ -5,10 +5,6 @@ public class ZombieChaseState : EnemyState
 {
     private readonly ZombieController zombie;
     public ZombieChaseState(ZombieController zombie) { this.zombie = zombie; }
-    public override void Enter()
-    {
-        zombie.RegisterEnemy();
-    }
     public override void Tick()
     {
         zombie.RefreshTarget();
@@ -68,7 +64,7 @@ public class ZombieDyingState : EnemyState
         // I resurrect after the first death and deactivate after the second death.
         if(zombie.HasResurrected)
         {
-            zombie.BeginDeath();
+            zombie.CompleteDeath();
             zombie.ChangeState(zombie.DespawnedState);
         }
         else

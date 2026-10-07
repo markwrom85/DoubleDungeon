@@ -56,6 +56,7 @@ public class ZombieController : EnemyController
 
     protected override void Awake()
     {
+        MaxHealth = zombieMaxHealth;
         base.Awake();
         body = GetComponent<Rigidbody2D>();
         hitbox = GetComponent<CircleCollider2D>();
@@ -73,7 +74,6 @@ public class ZombieController : EnemyController
         DyingState = new ZombieDyingState(this);
         ResurrectingState = new ZombieResurrectingState(this);
         DespawnedState = new ZombieDespawnedState(this);
-        MaxHealth = zombieMaxHealth;
     }
 
     private void OnEnable()
@@ -218,5 +218,10 @@ public class ZombieController : EnemyController
             SetColor(attackingColor);
         else if (CurrentState == ChaseState)
             SetColor(normalColor);
+    }
+
+    public void CompleteDeath()
+    {
+        BeginDeath();
     }
 }

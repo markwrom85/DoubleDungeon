@@ -5,6 +5,7 @@ public class CombatManager : MonoBehaviour
 {
     public List<EnemyController> ActiveEnemies { get; } = new();
     public bool AreAllEnemiesDefeated => ActiveEnemies.Count == 0;
+    public event System.Action AllEnemiesDefeated;
 
     public void RegisterEnemy(EnemyController enemy)
     {
@@ -16,7 +17,9 @@ public class CombatManager : MonoBehaviour
     }
     public void OnEnemyDefeated(EnemyController enemy)
     {
-        ActiveEnemies.Remove(enemy);
+        if (!ActiveEnemies.Remove(enemy)) return;
         Debug.Log($"Enemy defeated: {enemy.name}. Remaining active enemies: {ActiveEnemies.Count}");
+        if (AreAllEnemiesDefeated)
+            AllEnemiesDefeated?.Invoke();
     }
 }

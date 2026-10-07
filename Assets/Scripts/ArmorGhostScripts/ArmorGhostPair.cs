@@ -2,22 +2,26 @@ using UnityEngine;
 
 [RequireComponent(typeof(EnemyDungeonSetup))]
 // I link the two bodies to one health pool and end both lives when the vulnerable body dies.
-public class ArmorGhostPair : MonoBehaviour
+public class ArmorGhostPair : EnemyController
 {
     [SerializeField] private ArmorGhostController firstBody, secondBody;
     [Header("Health")]
-    [SerializeField, Min(1f)] private float maxHealth = 100f;
+    [SerializeField, Min(1f)] private float armorMaxHealth = 100f;
     [SerializeField, Min(0.05f)] private float deathDuration = 1f;
 
     private EnemyDungeonSetup dungeonSetup;
     private float despawnTime, nextRoomCheck;
     private bool hasStarted, waitingForRooms;
-    public float Health { get; private set; }
     public bool IsDying { get; private set; }
     public ArmorGhostController AttackingBody { get; private set; }
     public ArmorGhostController VulnerableBody { get; private set; }
 
-    private void Awake() { dungeonSetup = GetComponent<EnemyDungeonSetup>(); }
+    protected override void Awake()
+    {
+        MaxHealth = armorMaxHealth;
+        base.Awake();
+        dungeonSetup = GetComponent<EnemyDungeonSetup>();
+    }
     private void Start()
     {
         hasStarted = true;
@@ -42,7 +46,7 @@ public class ArmorGhostPair : MonoBehaviour
         secondBody.WaitForRoom();
         AttackingBody = null;
         VulnerableBody = null;
-        Health = maxHealth;
+        Health = MaxHealth;
         IsDying = false;
         waitingForRooms = true;
         nextRoomCheck = Time.time;
@@ -57,7 +61,7 @@ public class ArmorGhostPair : MonoBehaviour
         EnemyDungeonSide destination = source.OppositeSide;
 
         waitingForRooms = false;
-        Health = maxHealth;
+        Health = MaxHealth;
         IsDying = false;
         bool firstAttacks = Random.value < 0.5f;
         AttackingBody = firstAttacks ? firstBody : secondBody;
@@ -80,7 +84,7 @@ public class ArmorGhostPair : MonoBehaviour
         secondBody.ChangeState(secondBody.DyingState);
     }
 
-    private void Update()
+    protected override void Update()
     {
         if (waitingForRooms)
         {
@@ -93,9 +97,16 @@ public class ArmorGhostPair : MonoBehaviour
             return;
         }
         if (!IsDying || Time.time < despawnTime) return;
+
+        CompleteDeath();
         firstBody.ChangeState(firstBody.DespawnedState);
         secondBody.ChangeState(secondBody.DespawnedState);
         // I disable the pair after its visible death delay without clearing its fired bullets.
         gameObject.SetActive(false);
+    }
+
+    public void CompleteDeath()
+    {
+        BeginDeath();
     }
 }
