@@ -64,4 +64,6 @@ public abstract class EnemyController : MonoBehaviour, IDamageable
         combatManager?.OnEnemyDefeated(this);
         Defeated?.Invoke(this);
     }
+
+    public abstract void CompleteDeath();
 }

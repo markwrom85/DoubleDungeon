@@ -352,7 +352,7 @@ public class LazerEyeballController : EnemyController
     }
     public void Despawn() { spriteRenderer.enabled = false; gameObject.SetActive(false); }
 
-    public void CompleteDeath()
+    public override void CompleteDeath()
     {
         BeginDeath();
     }

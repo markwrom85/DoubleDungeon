@@ -105,7 +105,7 @@ public class ArmorGhostPair : EnemyController
         gameObject.SetActive(false);
     }
 
-    public void CompleteDeath()
+    public override void CompleteDeath()
     {
         BeginDeath();
     }

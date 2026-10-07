@@ -7,18 +7,25 @@ public class Room : MonoBehaviour
 
     private void Start()
     {
+        if (combatManager == null)
+            combatManager = FindAnyObjectByType<CombatManager>();
         if (combatManager == null) return;
         combatManager.AllEnemiesDefeated += OnAllEnemiesDefeated;
         if (combatManager.AreAllEnemiesDefeated)
             OnAllEnemiesDefeated();
 
-        combatManager = FindAnyObjectByType<CombatManager>();
+        combatManager.CombatStarted += OnCombatStarted;
+        if (combatManager.IsInCombat)
+            OnCombatStarted();
     }
 
     private void OnDestroy()
     {
         if (combatManager != null)
+        {
             combatManager.AllEnemiesDefeated -= OnAllEnemiesDefeated;
+            combatManager.CombatStarted -= OnCombatStarted;
+        }
     }
 
     private void OnAllEnemiesDefeated()
@@ -27,6 +34,15 @@ public class Room : MonoBehaviour
         {
             door.isOpen = true;
             door.GetComponentInChildren<SpriteRenderer>().color = Color.green;
+        }
+    }
+
+    private void OnCombatStarted()
+    {
+        foreach (Door door in doors)
+        {
+            door.isOpen = false;
+            door.GetComponentInChildren<SpriteRenderer>().color = Color.red;
         }
     }
 }

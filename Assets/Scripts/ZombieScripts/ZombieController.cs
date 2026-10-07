@@ -220,7 +220,7 @@ public class ZombieController : EnemyController
             SetColor(normalColor);
     }
 
-    public void CompleteDeath()
+    public override void CompleteDeath()
     {
         BeginDeath();
     }
