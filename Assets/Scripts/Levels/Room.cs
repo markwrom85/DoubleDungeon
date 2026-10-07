@@ -1,14 +1,23 @@
+using System.Collections.Generic;
 using UnityEngine;
+using Unity.Cinemachine;
 
 public class Room : MonoBehaviour
 {
     [SerializeField] private CombatManager combatManager;
+    private DungeonManager dungeonManager;
+    [Header("Room Settings")]
+    [SerializeField] private Collider2D roomBounds;
     [SerializeField] private Door[] doors;
+    [SerializeField] private EnemySpawn[] enemySpawns;
+    [SerializeField] private int combatEncounters = 1;
 
     private void Start()
     {
         if (combatManager == null)
             combatManager = FindAnyObjectByType<CombatManager>();
+        if (dungeonManager == null)
+            dungeonManager = FindAnyObjectByType<DungeonManager>();
         if (combatManager == null) return;
         combatManager.AllEnemiesDefeated += OnAllEnemiesDefeated;
         if (combatManager.AreAllEnemiesDefeated)
@@ -17,6 +26,14 @@ public class Room : MonoBehaviour
         combatManager.CombatStarted += OnCombatStarted;
         if (combatManager.IsInCombat)
             OnCombatStarted();
+
+        if (dungeonManager != null)
+        {
+            dungeonManager.RoomPairChanged += OnRoomPairChanged;
+            OnRoomPairChanged(
+                dungeonManager.leftCinemachineCamera,
+                dungeonManager.rightCinemachineCamera);
+        }
     }
 
     private void OnDestroy()
@@ -26,11 +43,14 @@ public class Room : MonoBehaviour
             combatManager.AllEnemiesDefeated -= OnAllEnemiesDefeated;
             combatManager.CombatStarted -= OnCombatStarted;
         }
+
+        if (dungeonManager != null)
+            dungeonManager.RoomPairChanged -= OnRoomPairChanged;
     }
 
     private void OnAllEnemiesDefeated()
     {
-        foreach(Door door in doors)
+        foreach (Door door in doors)
         {
             door.isOpen = true;
             door.GetComponentInChildren<SpriteRenderer>().color = Color.green;
@@ -44,5 +64,37 @@ public class Room : MonoBehaviour
             door.isOpen = false;
             door.GetComponentInChildren<SpriteRenderer>().color = Color.red;
         }
+    }
+
+    private void OnRoomPairChanged(CinemachineCamera leftCamera, CinemachineCamera rightCamera)
+    {
+        if (combatEncounters <= 0) return;
+
+        bool roomIsVisible = IsCameraInRoom(leftCamera) || IsCameraInRoom(rightCamera);
+        if (!roomIsVisible) return;
+
+        SpawnEnemies();
+    }
+
+    private bool IsCameraInRoom(CinemachineCamera camera)
+    {
+        if (camera == null || roomBounds == null) return false;
+
+        Transform roomParent = roomBounds.transform.parent;
+        return (roomParent != null && camera.transform.IsChildOf(roomParent))
+            || roomBounds.bounds.Contains(camera.transform.position);
+    }
+
+    private void SpawnEnemies()
+    {
+        if (combatEncounters <= 0) return;
+
+        foreach (EnemySpawn spawn in enemySpawns)
+        {
+            EnemyController enemy = Instantiate(spawn.enemyPrefab, spawn.transform.position, Quaternion.identity);
+            combatManager.RegisterEnemy(enemy);
+        }
+
+        combatEncounters--;
     }
 }

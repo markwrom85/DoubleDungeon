@@ -19,7 +19,6 @@ public abstract class EnemyController : MonoBehaviour, IDamageable
     {
         combatManager = FindAnyObjectByType<CombatManager>();
         Health = maxHealth;
-        combatManager?.RegisterEnemy(this);
     }
 
     public void ChangeState(EnemyState state)
@@ -51,12 +50,6 @@ public abstract class EnemyController : MonoBehaviour, IDamageable
 
         if (Health <= 0f)
             BeginDeath();
-    }
-
-    public void RegisterEnemy()
-    {
-        combatManager?.RegisterEnemy(this);
-        Debug.Log($"Registered enemy: {name}. Total active enemies: {combatManager?.ActiveEnemies.Count}");
     }
 
     protected virtual void BeginDeath()
