@@ -4,13 +4,19 @@ using Unity.Cinemachine;
 
 public class Room : MonoBehaviour
 {
+    private enum ScreenSide { None, Left, Right }
+
     [SerializeField] private CombatManager combatManager;
     private DungeonManager dungeonManager;
     [Header("Room Settings")]
     [SerializeField] private Collider2D roomBounds;
     [SerializeField] private Door[] doors;
     [SerializeField] private EnemySpawn[] enemySpawns;
-    [SerializeField] private int combatEncounters = 1;
+    [SerializeField] private bool spawnOnLeftSide = true;
+    [SerializeField] private bool spawnOnRightSide = true;
+
+    private bool hasSpawnedOnLeft;
+    private bool hasSpawnedOnRight;
 
     private void Start()
     {
@@ -68,12 +74,30 @@ public class Room : MonoBehaviour
 
     private void OnRoomPairChanged(CinemachineCamera leftCamera, CinemachineCamera rightCamera)
     {
-        if (combatEncounters <= 0) return;
+        ScreenSide visibleSide = GetVisibleSide(leftCamera, rightCamera);
+        if (visibleSide == ScreenSide.None) return;
 
-        bool roomIsVisible = IsCameraInRoom(leftCamera) || IsCameraInRoom(rightCamera);
-        if (!roomIsVisible) return;
+        if (visibleSide == ScreenSide.Left)
+        {
+            if (!spawnOnLeftSide || hasSpawnedOnLeft) return;
+            hasSpawnedOnLeft = true;
+        }
+        else
+        {
+            if (!spawnOnRightSide || hasSpawnedOnRight) return;
+            hasSpawnedOnRight = true;
+        }
 
         SpawnEnemies();
+    }
+
+    private ScreenSide GetVisibleSide(
+        CinemachineCamera leftCamera,
+        CinemachineCamera rightCamera)
+    {
+        if (IsCameraInRoom(leftCamera)) return ScreenSide.Left;
+        if (IsCameraInRoom(rightCamera)) return ScreenSide.Right;
+        return ScreenSide.None;
     }
 
     private bool IsCameraInRoom(CinemachineCamera camera)
@@ -87,14 +111,10 @@ public class Room : MonoBehaviour
 
     private void SpawnEnemies()
     {
-        if (combatEncounters <= 0) return;
-
         foreach (EnemySpawn spawn in enemySpawns)
         {
             EnemyController enemy = Instantiate(spawn.enemyPrefab, spawn.transform.position, Quaternion.identity);
             combatManager.RegisterEnemy(enemy);
         }
-
-        combatEncounters--;
     }
 }
