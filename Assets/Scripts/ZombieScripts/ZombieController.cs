@@ -4,12 +4,12 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D))]
 // I store the zombie's health and targeting data, then let its current state control its behavior.
-public class ZombieController : MonoBehaviour, IDamageable
+public class ZombieController : EnemyController
 {
     // I use the assigned starting side when one is provided.
     [SerializeField] private EnemyDungeonSide startingSide;
     [Header("Stats")]
-    [SerializeField, Min(1f)] private float maxHealth = 15f;
+    [SerializeField, Min(1f)] private float zombieMaxHealth = 15f;
     [SerializeField, Min(0f)] private float moveSpeed = 2f;
     [SerializeField, Min(0.1f)] private float attackRange = 1f;
     [Header("Timing")]
@@ -31,17 +31,13 @@ public class ZombieController : MonoBehaviour, IDamageable
     private bool[] rendererVisibility;
     private Vector2 deathPosition;
     private float nextTargetTime;
-    private readonly EnemyStateMachine stateMachine = new EnemyStateMachine();
     public ZombieChaseState ChaseState { get; private set; }
     public ZombieAttackState AttackState { get; private set; }
     public ZombieDyingState DyingState { get; private set; }
     public ZombieResurrectingState ResurrectingState { get; private set; }
     public ZombieDespawnedState DespawnedState { get; private set; }
-    public EnemyState CurrentState => stateMachine.CurrentState;
-    public string CurrentStateName => CurrentState?.GetType().Name ?? "None";
     public EnemyDungeonSide CurrentSide { get; private set; }
     public PlayerInput Target { get; private set; }
-    public float Health { get; private set; }
     public bool HasResurrected { get; private set; }
     public float AttackWindup => attackWindup;
     public float AttackRecovery => attackRecovery;
@@ -58,8 +54,9 @@ public class ZombieController : MonoBehaviour, IDamageable
     // I notify listeners when an attack reaches an eligible player in range.
     public event System.Action<PlayerInput> AttackLanded;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         body = GetComponent<Rigidbody2D>();
         hitbox = GetComponent<CircleCollider2D>();
         body.gravityScale = 0f;
@@ -76,12 +73,13 @@ public class ZombieController : MonoBehaviour, IDamageable
         DyingState = new ZombieDyingState(this);
         ResurrectingState = new ZombieResurrectingState(this);
         DespawnedState = new ZombieDespawnedState(this);
+        MaxHealth = zombieMaxHealth;
     }
 
     private void OnEnable()
     {
         // I reset health, side, and resurrection status whenever the zombie is enabled.
-        Health = maxHealth;
+        Health = MaxHealth;
         HasResurrected = false;
         CurrentSide = startingSide != null ? startingSide
             : dungeonSetup != null ? dungeonSetup.GetStartingSide(transform.position) : null;
@@ -93,23 +91,13 @@ public class ZombieController : MonoBehaviour, IDamageable
         ChangeState(ChaseState);
     }
 
-    private void Update() { stateMachine.Tick(); }
-    private void FixedUpdate() { stateMachine.FixedTick(); }
-    private void OnDisable()
+    protected override void OnDisable()
     {
         StopMoving();
-        stateMachine.ChangeState(null);
+        base.OnDisable();
     }
 
-    public void ChangeState(EnemyState state)
-    {
-        string previousState = CurrentStateName;
-        stateMachine.ChangeState(state);
-        // if (previousState != CurrentStateName)
-        //     Debug.Log($"{name}: {previousState} -> {CurrentStateName}", this);
-    }
-
-    public void TakeDamage(float damage)
+    public override void TakeDamage(float damage)
     {
         if (!isActiveAndEnabled || float.IsNaN(damage) || float.IsInfinity(damage) || damage <= 0f) return;
         // I accept damage only while chasing or attacking.
@@ -203,7 +191,7 @@ public class ZombieController : MonoBehaviour, IDamageable
         transform.position = new Vector3(position.x, position.y, transform.position.z);
         CurrentSide = destination;
         Target = null;
-        Health = maxHealth;
+        Health = MaxHealth;
         // I mark this life as resurrected so its next death is final.
         HasResurrected = true;
         nextTargetTime = Time.time;

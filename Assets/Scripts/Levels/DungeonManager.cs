@@ -229,7 +229,6 @@ public class DungeonManager : MonoBehaviour
         if(!canChangeRooms)
             return;
         canChangeRooms = false;
-        Debug.Log("LeftCamera: " + newLeftCamera.name + ", RightCamera: " + newRightCamera.name);
 
         // Re-enable any doors that were disabled during the previous room transition.
         foreach(GameObject door in doorsToEnableAfterTransition)
