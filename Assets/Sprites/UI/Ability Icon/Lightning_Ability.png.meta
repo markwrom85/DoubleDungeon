@@ -138,7 +138,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Lightning_Beam_01 1_0
+      name: Lightning_Beam_1
       rect:
         serializedVersion: 2
         x: 0
@@ -160,7 +160,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01 1_1
+      name: Lightning_Beam_2
       rect:
         serializedVersion: 2
         x: 128
@@ -182,7 +182,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01 1_2
+      name: Lightning_Beam_3
       rect:
         serializedVersion: 2
         x: 256
@@ -204,7 +204,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01 1_3
+      name: Lightning_Beam_4
       rect:
         serializedVersion: 2
         x: 384
@@ -226,7 +226,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01 1_4
+      name: Lightning_Beam_5
       rect:
         serializedVersion: 2
         x: 512
@@ -248,7 +248,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01 1_5
+      name: Lightning_Beam_6
       rect:
         serializedVersion: 2
         x: 640
@@ -270,7 +270,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01 1_6
+      name: Lightning_Beam_7
       rect:
         serializedVersion: 2
         x: 768
@@ -292,10 +292,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01 1_7
+      name: Lightning_Beam_8
       rect:
         serializedVersion: 2
-        x: 896
+        x: 895
         y: 0
         width: 128
         height: 128
@@ -314,7 +314,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01 1_8
+      name: Lightning_Beam_9
       rect:
         serializedVersion: 2
         x: 1024
@@ -336,7 +336,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01 1_9
+      name: Lightning_Beam_10
       rect:
         serializedVersion: 2
         x: 1152
@@ -358,7 +358,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01 1_10
+      name: Lightning_Beam_11
       rect:
         serializedVersion: 2
         x: 1280
@@ -380,7 +380,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01 1_11
+      name: Lightning_Beam_12
       rect:
         serializedVersion: 2
         x: 1408
@@ -402,7 +402,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lightning_Beam_01 1_12
+      name: Lightning_Beam_13
       rect:
         serializedVersion: 2
         x: 1536
@@ -439,19 +439,20 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":128.0,"y":128.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Lightning_Beam_01 1_0: -1167944727478786785
-      Lightning_Beam_01 1_1: 7891073702571825461
-      Lightning_Beam_01 1_10: -2131332125044393874
-      Lightning_Beam_01 1_11: -2731304016541536111
-      Lightning_Beam_01 1_12: 7514089951908307757
-      Lightning_Beam_01 1_2: 6947252231291739163
-      Lightning_Beam_01 1_3: -7571803559721624117
-      Lightning_Beam_01 1_4: 848257878466505715
-      Lightning_Beam_01 1_5: -399712417097848061
-      Lightning_Beam_01 1_6: -2747761470873740928
-      Lightning_Beam_01 1_7: 225905419574359722
-      Lightning_Beam_01 1_8: -5345836203504239979
-      Lightning_Beam_01 1_9: -8300899687449664853
+      2: 7891073702571825461
+      Lightning_Beam_1: -1167944727478786785
+      Lightning_Beam_10: -8300899687449664853
+      Lightning_Beam_11: -2131332125044393874
+      Lightning_Beam_12: -2731304016541536111
+      Lightning_Beam_13: 7514089951908307757
+      Lightning_Beam_2: 7891073702571825461
+      Lightning_Beam_3: 6947252231291739163
+      Lightning_Beam_4: -7571803559721624117
+      Lightning_Beam_5: 848257878466505715
+      Lightning_Beam_6: -399712417097848061
+      Lightning_Beam_7: -2747761470873740928
+      Lightning_Beam_8: 225905419574359722
+      Lightning_Beam_9: -5345836203504239979
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
