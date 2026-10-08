@@ -1,3 +1,4 @@
+using System.Runtime.Remoting.Lifetime;
 using UnityEngine;
 
 public class PlayerInfo : MonoBehaviour
@@ -8,11 +9,6 @@ public class PlayerInfo : MonoBehaviour
     [Header("Sprite")]
     [SerializeField] private SpriteRenderer spriteRenderer;
 
-    [SerializeField] private Sprite upSprite;
-    [SerializeField] private Sprite downSprite;
-    [SerializeField] private Sprite leftSprite;
-    [SerializeField] private Sprite rightSprite;
-
     public int PlayerId { get; private set; }
     public float MoveSpeed { get; private set; }
     public int MaxHealth { get; private set; }
@@ -21,6 +17,9 @@ public class PlayerInfo : MonoBehaviour
     public float SwapDuration { get; private set; }
 
     private float currentHealth;
+
+    // Animator on the Player Sprite child.
+    private Animator animator;
 
     private void Awake()
     {
@@ -31,6 +30,19 @@ public class PlayerInfo : MonoBehaviour
         SwapDuration = baseStats.swapDuration;
 
         currentHealth = MaxHealth;
+
+        if (spriteRenderer != null)
+        {
+            animator = spriteRenderer.GetComponent<Animator>();
+        }
+
+        if (animator == null)
+        {
+            Debug.LogWarning(
+                "PlayerInfo could not find an Animator on the assigned Sprite Renderer.",
+                this
+            );
+        }
     }
 
     private void Start()
@@ -70,27 +82,44 @@ public class PlayerInfo : MonoBehaviour
 
     public void SetDirection(Vector2 direction)
     {
-        // Do nothing when the player is not moving.
-        // This keeps the player facing their last direction.
-        if (direction.sqrMagnitude <= 0.001f)
+        if (animator == null)
             return;
 
-        // Determine whether horizontal or vertical movement is stronger.
+        bool isMoving = direction.sqrMagnitude > 0.001f;
+
+        // Keep the IsMoving parameter updated.
+        animator.SetBool("IsMoving", isMoving);
+
+        // Play the animation while moving and freeze it when stopped.
+        animator.speed = isMoving ? 1f : 0f;
+
+        // Do not change the direction when the player is stopped.
+        if (!isMoving)
+            return;
+
+        // Determine which of the four cardinal directions
+        // the player is currently moving.
         if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
         {
-            // Moving left or right.
             if (direction.x > 0)
-                spriteRenderer.sprite = rightSprite;
+            {
+                animator.SetInteger("Direction", 3); // Right
+            }
             else
-                spriteRenderer.sprite = leftSprite;
+            {
+                animator.SetInteger("Direction", 2); // Left
+            }
         }
         else
         {
-            // Moving up or down.
             if (direction.y > 0)
-                spriteRenderer.sprite = upSprite;
+            {
+                animator.SetInteger("Direction", 1); // Up
+            }
             else
-                spriteRenderer.sprite = downSprite;
+            {
+                animator.SetInteger("Direction", 0); // Down
+            }
         }
     }
 
