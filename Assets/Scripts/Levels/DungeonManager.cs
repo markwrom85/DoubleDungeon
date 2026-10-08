@@ -23,6 +23,7 @@ public class DungeonManager : MonoBehaviour
     // Optional per-player camera mapping. If empty, GetCameraIndex uses playerIndex / 2.
     [SerializeField] private int[] playerCameraIndices;
     [SerializeField] private List<GameObject> doorsToEnableAfterTransition;
+    public event System.Action<CinemachineCamera, CinemachineCamera> RoomPairChanged;
 
     private List<ArduinoJoystickPlayer> players = new List<ArduinoJoystickPlayer>();
     private int knownPlayerCount;
@@ -229,8 +230,8 @@ public class DungeonManager : MonoBehaviour
         if(!canChangeRooms)
             return;
         canChangeRooms = false;
-        Debug.Log("LeftCamera: " + newLeftCamera.name + ", RightCamera: " + newRightCamera.name);
 
+        // Re-enable any doors that were disabled during the previous room transition.
         foreach(GameObject door in doorsToEnableAfterTransition)
         {
             if(door != null)
@@ -271,6 +272,8 @@ public class DungeonManager : MonoBehaviour
             newRightCamera,
             leftCinemachineCamera,
             rightCinemachineCamera));
+
+        RoomPairChanged?.Invoke(leftCinemachineCamera, rightCinemachineCamera);
 
         // Move the players only after the camera transition is complete.
 

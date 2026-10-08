@@ -14,12 +14,6 @@ public class Door : MonoBehaviour
         dungeonManager = GameObject.Find("DungeonManager").GetComponent<DungeonManager>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void OnTriggerEnter2D(Collider2D other)
     {
         ArduinoJoystickPlayer player = other.GetComponentInParent<ArduinoJoystickPlayer>();
