@@ -316,7 +316,7 @@ Transform:
   m_GameObject: {fileID: 33268431}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.885344, y: 0, z: -32.159042}
+  m_LocalPosition: {x: 8.887906, y: 0, z: -32.159042}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14304,18 +14304,6 @@ PrefabInstance:
       value: Room2NorthSpawn
       objectReference: {fileID: 0}
     - target: {fileID: 4454102525342775427, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.01875
-      objectReference: {fileID: 0}
-    - target: {fileID: 4454102525342775427, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.06125
-      objectReference: {fileID: 0}
-    - target: {fileID: 4454102525342775427, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4454102525342775427, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.035
       objectReference: {fileID: 0}
@@ -14353,10 +14341,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4454102525342775427, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4454102525342775427, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
-      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7572423956935245995, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
@@ -15251,7 +15235,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 428452519}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &1787004190
 TilemapRenderer:
@@ -18907,7 +18891,7 @@ Transform:
   m_GameObject: {fileID: 1825620348}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.885344, y: 0, z: -32.159042}
+  m_LocalPosition: {x: -8.887906, y: 0, z: -32.159042}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -20252,18 +20236,6 @@ PrefabInstance:
       value: Room1NorthSpawn
       objectReference: {fileID: 0}
     - target: {fileID: 4454102525342775427, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.016563613
-      objectReference: {fileID: 0}
-    - target: {fileID: 4454102525342775427, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.08548961
-      objectReference: {fileID: 0}
-    - target: {fileID: 4454102525342775427, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.08548961
-      objectReference: {fileID: 0}
-    - target: {fileID: 4454102525342775427, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.082
       objectReference: {fileID: 0}
@@ -20301,10 +20273,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4454102525342775427, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4454102525342775427, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
-      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7572423956935245995, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
@@ -20371,3 +20339,4 @@ SceneRoots:
   - {fileID: 634227842}
   - {fileID: 1849526253}
   - {fileID: 277156541}
+  - {fileID: 1787004189}
