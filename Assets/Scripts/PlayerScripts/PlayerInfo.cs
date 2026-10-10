@@ -14,6 +14,8 @@ public class PlayerInfo : MonoBehaviour
     public int MaxHealth { get; private set; }
     public float AttackDamage { get; private set; }
     public float AttackRate { get; private set; }
+    public float AOEDamage {get; private set;}
+    public float SwapCooldown {get; private set;}
     public float SwapDuration { get; private set; }
 
     private float currentHealth;
@@ -27,6 +29,8 @@ public class PlayerInfo : MonoBehaviour
         MaxHealth = baseStats.maxHealth;
         AttackDamage = baseStats.attackDamage;
         AttackRate = baseStats.attackRate;
+        AOEDamage = baseStats.AOEDamage;
+        SwapCooldown = baseStats.swapCooldown;
         SwapDuration = baseStats.swapDuration;
 
         currentHealth = MaxHealth;
@@ -128,12 +132,16 @@ public class PlayerInfo : MonoBehaviour
         int maxHealth,
         float attackDamage,
         float attackRate,
+        float aoeDamage,
+        float swapCooldown,
         float swapDuration)
     {
         MoveSpeed += moveSpeed;
         MaxHealth += maxHealth;
         AttackDamage += attackDamage;
         AttackRate += attackRate;
+        AOEDamage += aoeDamage;
+        SwapCooldown += swapCooldown;
         SwapDuration += swapDuration;
     }
 

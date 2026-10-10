@@ -102,6 +102,7 @@ public class PlayerSwapSides : MonoBehaviour
         player.isSwapping = false;
         cardinalGun.canShoot = true;
         StartCoroutine(AOEBurst());
+        StartCoroutine(SwapCooldown());
     }
 
     private IEnumerator CompleteSwapAfterDelay()
@@ -121,5 +122,12 @@ public class PlayerSwapSides : MonoBehaviour
         {
             aoeBurst.SetActive(false);
         }
+    }
+
+    private IEnumerator SwapCooldown()
+    {
+        canSwap = false;
+        yield return new WaitForSeconds(playerInfo.SwapCooldown);
+        canSwap = true;
     }
 }
