@@ -316,7 +316,7 @@ Transform:
   m_GameObject: {fileID: 33268431}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.894687, y: 0, z: -32.159042}
+  m_LocalPosition: {x: 0, y: 0, z: -32.159042}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11023,6 +11023,8 @@ MonoBehaviour:
   - {fileID: 749028010}
   spawnOnLeftSide: 1
   spawnOnRightSide: 1
+  roomCamera: {fileID: 1986080202}
+  roomActive: 0
 --- !u!1 &817789109
 GameObject:
   m_ObjectHideFlags: 0
@@ -13560,6 +13562,8 @@ MonoBehaviour:
   - {fileID: 2071151216}
   spawnOnLeftSide: 1
   spawnOnRightSide: 1
+  roomCamera: {fileID: 576367280}
+  roomActive: 0
 --- !u!114 &1440017415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14708,6 +14712,8 @@ MonoBehaviour:
   - {fileID: 1965174850}
   spawnOnLeftSide: 1
   spawnOnRightSide: 1
+  roomCamera: {fileID: 722331609}
+  roomActive: 0
 --- !u!1 &1667772019
 GameObject:
   m_ObjectHideFlags: 0
@@ -18942,7 +18948,7 @@ Transform:
   m_GameObject: {fileID: 1825620348}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.894687, y: 0, z: -32.159042}
+  m_LocalPosition: {x: 0, y: 0, z: -32.159042}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -19208,6 +19214,8 @@ MonoBehaviour:
   enemySpawns: []
   spawnOnLeftSide: 1
   spawnOnRightSide: 1
+  roomCamera: {fileID: 573207130}
+  roomActive: 0
 --- !u!1001 &1865313224
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20119,6 +20127,8 @@ MonoBehaviour:
   - {fileID: 1298727000}
   spawnOnLeftSide: 1
   spawnOnRightSide: 1
+  roomCamera: {fileID: 51281139}
+  roomActive: 0
 --- !u!114 &2066209106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20131,7 +20141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee1703145c23f4ca7a772661ff7cce0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSpawn
-  combatManager: {fileID: 0}
+  room: {fileID: 2066209105}
   spawnedItems:
   - {fileID: 5074045536615144356, guid: 16bf58f26e26d47608f021ffbadb2742, type: 3}
   spawnPosition: {fileID: 2145246047}

@@ -14,9 +14,13 @@ public class Room : MonoBehaviour
     [SerializeField] private EnemySpawn[] enemySpawns;
     [SerializeField] private bool spawnOnLeftSide = true;
     [SerializeField] private bool spawnOnRightSide = true;
+    [SerializeField] private CinemachineCamera roomCamera;
 
     private bool hasSpawnedOnLeft;
     private bool hasSpawnedOnRight;
+    public bool roomActive = false;
+
+    public System.Action RoomCompleted;
 
     private void Start()
     {
@@ -60,6 +64,11 @@ public class Room : MonoBehaviour
         {
             door.isOpen = true;
             door.GetComponentInChildren<SpriteRenderer>().color = Color.green;
+        }
+
+        if (roomActive)
+        {
+            RoomCompleted?.Invoke();
         }
     }
 
@@ -115,6 +124,11 @@ public class Room : MonoBehaviour
         {
             EnemyController enemy = Instantiate(spawn.enemyPrefab, spawn.transform.position, Quaternion.identity);
             combatManager.RegisterEnemy(enemy);
+        }
+
+        if (IsCameraInRoom(roomCamera))
+        {
+            roomActive = true;
         }
     }
 }
