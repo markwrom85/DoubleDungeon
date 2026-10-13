@@ -23,6 +23,8 @@ public class PlayerInfo : MonoBehaviour
     // Animator on the Player Sprite child.
     private Animator animator;
 
+    private PlayerPanel playerPanel;
+
     private void Awake()
     {
         MoveSpeed = baseStats.moveSpeed;
@@ -51,26 +53,35 @@ public class PlayerInfo : MonoBehaviour
 
     private void Start()
     {
+        ApplyPlayerIdentity();
+    }
+
+    private void ApplyPlayerIdentity()
+    {
         switch (PlayerId)
         {
             case 1:
                 gameObject.name = "Player 1";
-                spriteRenderer.color = Color.cyan;
+                playerPanel = GameObject.Find("Player 1 Panel")?.GetComponent<PlayerPanel>();
+                if (spriteRenderer != null) spriteRenderer.color = Color.cyan;
                 break;
 
             case 2:
                 gameObject.name = "Player 2";
-                spriteRenderer.color = Color.red;
+                playerPanel = GameObject.Find("Player 2 Panel")?.GetComponent<PlayerPanel>();
+                if (spriteRenderer != null) spriteRenderer.color = Color.red;
                 break;
 
             case 3:
                 gameObject.name = "Player 3";
-                spriteRenderer.color = Color.green;
+                playerPanel = GameObject.Find("Player 3 Panel")?.GetComponent<PlayerPanel>();
+                if (spriteRenderer != null) spriteRenderer.color = Color.green;
                 break;
 
             case 4:
                 gameObject.name = "Player 4";
-                spriteRenderer.color = Color.yellow;
+                playerPanel = GameObject.Find("Player 4 Panel")?.GetComponent<PlayerPanel>();
+                if (spriteRenderer != null) spriteRenderer.color = Color.yellow;
                 break;
 
             default:
@@ -81,7 +92,14 @@ public class PlayerInfo : MonoBehaviour
 
     public void SetPlayerId(int playerId)
     {
+        if (playerId < 1)
+        {
+            Debug.LogWarning("Player IDs must start at 1.", this);
+            return;
+        }
+
         PlayerId = playerId;
+        ApplyPlayerIdentity();
     }
 
     public void SetDirection(Vector2 direction)
