@@ -155,7 +155,7 @@ public class ZombieController : EnemyController
             AttackLanded?.Invoke(Target);
             PlayerInfo playerInfo = Target.transform.root.GetComponentInChildren<PlayerInfo>(true);
 
-            playerInfo?.TakeDamage(10f);
+            playerInfo?.TakeDamage(1f);
         }
     }
 

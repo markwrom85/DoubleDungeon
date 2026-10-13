@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerStats
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBaseStats
   moveSpeed: 5
-  maxHealth: 100
+  maxHealth: 6
   attackDamage: 5
   attackRate: 5
   AOEDamage: 10

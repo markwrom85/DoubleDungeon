@@ -20,7 +20,7 @@ public class LazerEyeballController : EnemyController
     [SerializeField, Min(0.1f)] private float obstacleLookAhead = 1f;
     [SerializeField] private LayerMask obstacleLayers = ~0;
     [Header("Laser")]
-    [SerializeField, Min(0f)] private float laserDamage = 10f;
+    [SerializeField, Min(0f)] private float laserDamage = 1f;
     [SerializeField, Min(0.1f)] private float chargeDuration = 1.5f;
     [SerializeField, Min(0.1f)] private float fireDuration = 1f;
     [SerializeField, Min(0f)] private float recoveryDuration = 1f;

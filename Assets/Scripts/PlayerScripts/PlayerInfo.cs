@@ -10,6 +10,7 @@ public class PlayerInfo : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
 
     public int PlayerId { get; private set; }
+    public float CurrentHealth => currentHealth;
     public float MoveSpeed { get; private set; }
     public int MaxHealth { get; private set; }
     public float AttackDamage { get; private set; }
@@ -54,6 +55,7 @@ public class PlayerInfo : MonoBehaviour
     private void Start()
     {
         ApplyPlayerIdentity();
+        RefreshHealthDisplay();
     }
 
     private void ApplyPlayerIdentity()
@@ -100,6 +102,12 @@ public class PlayerInfo : MonoBehaviour
 
         PlayerId = playerId;
         ApplyPlayerIdentity();
+        RefreshHealthDisplay();
+    }
+
+    private void RefreshHealthDisplay()
+    {
+        playerPanel?.ChangeHealthDisplay(currentHealth, MaxHealth);
     }
 
     public void SetDirection(Vector2 direction)
@@ -156,16 +164,21 @@ public class PlayerInfo : MonoBehaviour
     {
         MoveSpeed += moveSpeed;
         MaxHealth += maxHealth;
+        currentHealth = Mathf.Min(currentHealth + maxHealth, MaxHealth);
         AttackDamage += attackDamage;
         AttackRate += attackRate;
         AOEDamage += aoeDamage;
         SwapCooldown += swapCooldown;
         SwapDuration += swapDuration;
+        RefreshHealthDisplay();
     }
 
     public void TakeDamage(float damage)
     {
-        currentHealth -= damage;
+        if (damage <= 0f) return;
+
+        currentHealth = Mathf.Max(0f, currentHealth - damage);
+        RefreshHealthDisplay();
 
         Debug.Log(
             $"Player {PlayerId} took {damage} damage. Current health: {currentHealth}"

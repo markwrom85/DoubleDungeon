@@ -229,6 +229,7 @@ GameObject:
   - component: {fileID: 4420582356662976688}
   - component: {fileID: 2751124594212402432}
   - component: {fileID: 9219964275028049894}
+  - component: {fileID: 8381664722248430255}
   m_Layer: 5
   m_Name: Player 4 Panel
   m_TagString: Untagged
@@ -299,6 +300,28 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8381664722248430255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799415295193303984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4413115d682543b6a8f2ca2df524e91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerPanel
+  heartFull: {fileID: -6642007518696666893, guid: 2757063791061564e8883895a3e04137, type: 3}
+  heartHalf: {fileID: 3628879389643004734, guid: 2757063791061564e8883895a3e04137, type: 3}
+  heartEmpty: {fileID: -7666008744380436174, guid: 2757063791061564e8883895a3e04137, type: 3}
+  heartImages:
+  - {fileID: 2896675137469996277}
+  - {fileID: 3949736109075088162}
+  - {fileID: 3955748709475770700}
+  - {fileID: 2914238728651012115}
+  - {fileID: 5061111246394255616}
+  - {fileID: 6734049761899913842}
 --- !u!1 &1183761165809720428
 GameObject:
   m_ObjectHideFlags: 0
@@ -685,6 +708,7 @@ GameObject:
   - component: {fileID: 611030560104212084}
   - component: {fileID: 5754581688251027314}
   - component: {fileID: 3569051272249985466}
+  - component: {fileID: 6600341639974152681}
   m_Layer: 5
   m_Name: Player 1 Panel
   m_TagString: Untagged
@@ -754,6 +778,28 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6600341639974152681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569615738054281271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4413115d682543b6a8f2ca2df524e91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerPanel
+  heartFull: {fileID: -6642007518696666893, guid: 2757063791061564e8883895a3e04137, type: 3}
+  heartHalf: {fileID: 3628879389643004734, guid: 2757063791061564e8883895a3e04137, type: 3}
+  heartEmpty: {fileID: -7666008744380436174, guid: 2757063791061564e8883895a3e04137, type: 3}
+  heartImages:
+  - {fileID: 166860916954291945}
+  - {fileID: 8416601111770737021}
+  - {fileID: 4791425528183299269}
+  - {fileID: 2982062266249137046}
+  - {fileID: 308537539724225592}
+  - {fileID: 8413308476575203280}
 --- !u!1 &1697685911720403279
 GameObject:
   m_ObjectHideFlags: 0
@@ -1440,6 +1486,7 @@ GameObject:
   - component: {fileID: 1123588802445502180}
   - component: {fileID: 8751141793505574398}
   - component: {fileID: 5588966292146244008}
+  - component: {fileID: 4644621866043118780}
   m_Layer: 5
   m_Name: Player 3 Panel
   m_TagString: Untagged
@@ -1510,6 +1557,28 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4644621866043118780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2862512520244062697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4413115d682543b6a8f2ca2df524e91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerPanel
+  heartFull: {fileID: -6642007518696666893, guid: 2757063791061564e8883895a3e04137, type: 3}
+  heartHalf: {fileID: 3628879389643004734, guid: 2757063791061564e8883895a3e04137, type: 3}
+  heartEmpty: {fileID: -7666008744380436174, guid: 2757063791061564e8883895a3e04137, type: 3}
+  heartImages:
+  - {fileID: 8994204748746048982}
+  - {fileID: 4603216470563878637}
+  - {fileID: 7133811824409137129}
+  - {fileID: 9202610261365441684}
+  - {fileID: 223260198976318486}
+  - {fileID: 5792985703880027699}
 --- !u!1 &3337057142255959881
 GameObject:
   m_ObjectHideFlags: 0
@@ -2515,6 +2584,7 @@ GameObject:
   - component: {fileID: 6945188177137548894}
   - component: {fileID: 630506956084980478}
   - component: {fileID: 2005597821654297085}
+  - component: {fileID: 9151956262655717461}
   m_Layer: 5
   m_Name: Player 2 Panel
   m_TagString: Untagged
@@ -2584,6 +2654,28 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &9151956262655717461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5690935873133517705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4413115d682543b6a8f2ca2df524e91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerPanel
+  heartFull: {fileID: -6642007518696666893, guid: 2757063791061564e8883895a3e04137, type: 3}
+  heartHalf: {fileID: 3628879389643004734, guid: 2757063791061564e8883895a3e04137, type: 3}
+  heartEmpty: {fileID: -7666008744380436174, guid: 2757063791061564e8883895a3e04137, type: 3}
+  heartImages:
+  - {fileID: 992963044437880809}
+  - {fileID: 8440251873903537305}
+  - {fileID: 1205770326769545321}
+  - {fileID: 5727943743888086088}
+  - {fileID: 8790131613454286321}
+  - {fileID: 6189577560553870857}
 --- !u!1 &5806921874217651915
 GameObject:
   m_ObjectHideFlags: 0

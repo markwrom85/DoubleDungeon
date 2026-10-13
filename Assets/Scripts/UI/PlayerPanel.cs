@@ -1,3 +1,4 @@
+using UnityEngine.UI;
 using UnityEngine;
 
 public class PlayerPanel : MonoBehaviour
@@ -5,30 +6,42 @@ public class PlayerPanel : MonoBehaviour
     [SerializeField] private Sprite heartFull;
     [SerializeField] private Sprite heartHalf;
     [SerializeField] private Sprite heartEmpty;
+    [SerializeField] private Image[] heartImages;
 
-    public void ChangeHealthDisplay(int currentHealth, int maxHealth)
+    private void Awake()
     {
-        int fullHearts = currentHealth / 2;
-        bool hasHalfHeart = currentHealth % 2 == 1;
-        int emptyHearts = (maxHealth / 2) - fullHearts - (hasHalfHeart ? 1 : 0);
-
-        // Update the heart display based on the player's health
-        for (int i = 0; i < fullHearts; i++)
+        if (heartImages == null || heartImages.Length == 0)
         {
-            // Set the heart image to full
-            transform.GetChild(i).GetComponent<UnityEngine.UI.Image>().sprite = heartFull;
+            heartImages = GetComponentsInChildren<Image>(true);
+        }
+    }
+
+    public void ChangeHealthDisplay(float currentHealth, int maxHealth)
+    {
+        if (heartImages == null || heartImages.Length == 0)
+        {
+            Debug.LogWarning("PlayerPanel has no heart Image components assigned.", this);
+            return;
         }
 
-        if (hasHalfHeart)
-        {
-            // Set the next heart image to half
-            transform.GetChild(fullHearts).GetComponent<UnityEngine.UI.Image>().sprite = heartHalf;
-        }
+        int currentHealthUnits = Mathf.Clamp(
+            Mathf.RoundToInt(currentHealth),
+            0,
+            Mathf.Max(0, maxHealth));
+        int maxHearts = Mathf.CeilToInt(maxHealth / 2f);
 
-        for (int i = fullHearts + (hasHalfHeart ? 1 : 0); i < fullHearts + emptyHearts + (hasHalfHeart ? 1 : 0); i++)
+        for (int index = 0; index < heartImages.Length; index++)
         {
-            // Set the remaining heart images to empty
-            transform.GetChild(i).GetComponent<UnityEngine.UI.Image>().sprite = heartEmpty;
+            Image heartImage = heartImages[index];
+            if (heartImage == null) continue;
+
+            int healthUnitsForHeart = currentHealthUnits - index * 2;
+            heartImage.enabled = index < maxHearts;
+            heartImage.sprite = healthUnitsForHeart >= 2
+                ? heartFull
+                : healthUnitsForHeart == 1
+                    ? heartHalf
+                    : heartEmpty;
         }
     }
 }
