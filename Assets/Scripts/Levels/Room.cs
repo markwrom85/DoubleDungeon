@@ -97,7 +97,10 @@ public class Room : MonoBehaviour
             hasSpawnedOnRight = true;
         }
 
-        SpawnEnemies();
+        if(!combatManager.stopSpawning)
+        {
+            SpawnEnemies();
+        }
     }
 
     private ScreenSide GetVisibleSide(
