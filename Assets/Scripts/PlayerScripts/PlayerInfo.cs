@@ -1,3 +1,4 @@
+
 using System.Runtime.Remoting.Lifetime;
 using UnityEngine;
 
@@ -121,6 +122,15 @@ public class PlayerInfo : MonoBehaviour
                 animator.SetInteger("Direction", 0); // Down
             }
         }
+    }
+
+    // Set whether the player is shooting.
+    public void SetShooting(bool isShooting)
+    {
+        if (animator == null)
+            return;
+
+        animator.SetBool("IsShooting", isShooting);
     }
 
     public void ChangeStats(
