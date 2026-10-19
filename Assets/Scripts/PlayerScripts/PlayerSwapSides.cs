@@ -16,6 +16,8 @@ public class PlayerSwapSides : MonoBehaviour
     private bool canSwap = true;
     private Coroutine swapTimer;
     private bool IsOnLeftSide => player != null && player.MovementCamera == leftCamera;
+    private bool panelSideInitialized;
+    private bool panelIsOnLeft;
 
     private void Awake()
     {
@@ -32,6 +34,8 @@ public class PlayerSwapSides : MonoBehaviour
 
     private void Update()
     {
+        SyncPanelSide();
+
         if (!canSwap) return;
         if (player == null || !player.SwitchTriggered) return;
 
@@ -54,8 +58,9 @@ public class PlayerSwapSides : MonoBehaviour
         if (playerInput == null) return;
 
         Transform playerTarget = playerInput.transform;
+        bool wasOnLeftSide = IsOnLeftSide;
         crosshair.SetActive(true);
-        if (IsOnLeftSide)
+        if (wasOnLeftSide)
         {
             player.SetMovementCamera(rightCamera);
             MoveToSideCenter(rightCenter);
@@ -71,7 +76,22 @@ public class PlayerSwapSides : MonoBehaviour
             leftTargetGroup.RemoveMember(playerTarget);
             leftTargetGroup.AddMember(playerTarget, 0.5f, 1f);
         }
+        playerInfo.SetPanelSide(!wasOnLeftSide);
+        panelIsOnLeft = !wasOnLeftSide;
+        panelSideInitialized = true;
         swapTimer = StartCoroutine(CompleteSwapAfterDelay());
+    }
+
+    private void SyncPanelSide()
+    {
+        if (player == null || player.MovementCamera == null) return;
+
+        bool isOnLeft = IsOnLeftSide;
+        if (panelSideInitialized && panelIsOnLeft == isOnLeft) return;
+
+        playerInfo.SetPanelSide(isOnLeft);
+        panelIsOnLeft = isOnLeft;
+        panelSideInitialized = true;
     }
 
     public void RepositionForCurrentSide()

@@ -111,6 +111,16 @@ public class PlayerInfo : MonoBehaviour
         playerPanel?.ChangeHealthDisplay(currentHealth, MaxHealth);
     }
 
+    public void ChangePanelSide()
+    {
+        playerPanel?.ChangePanelSide();
+    }
+
+    public void SetPanelSide(bool isLeftSide)
+    {
+        playerPanel?.SetPanelSide(isLeftSide);
+    }
+
     public void SetDirection(Vector2 direction)
     {
         if (animator == null)
