@@ -1,3 +1,4 @@
+
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -99,6 +100,7 @@ public class ArduinoJoystickPlayer : MonoBehaviour
         if (!isPlayable || desktopInput == null || !Application.isFocused)
         {
             activeInput = "Idle";
+            playerInfo.SetShooting(false);
             return;
         }
 
@@ -120,6 +122,9 @@ public class ArduinoJoystickPlayer : MonoBehaviour
 
         // Update the player's sprite based on movement direction.
         playerInfo.SetDirection(movementDirection);
+
+        // Update the shooting animation from the existing fire input.
+        playerInfo.SetShooting(desktopInput.FireHeld);
 
         if (gun != null)
             gun.Tick(direction, desktopInput.FireHeld);
@@ -180,6 +185,9 @@ public class ArduinoJoystickPlayer : MonoBehaviour
 
         if (body != null)
             body.linearVelocity = Vector2.zero;
+
+        if (playerInfo != null)
+            playerInfo.SetShooting(false);
     }
 
     private void OnDestroy()
