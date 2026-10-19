@@ -9,13 +9,13 @@ public class PlayerSwapSides : MonoBehaviour
     [SerializeField] private GameObject playerObj, crosshair, aoeBurst;
     [SerializeField] private CardinalGun cardinalGun;
     [SerializeField] private Transform leftCenter, rightCenter;
-    [SerializeField] private bool isOnLeftSide;
     [SerializeField] private CinemachineTargetGroup leftTargetGroup, rightTargetGroup;
     [SerializeField] private Camera leftCamera, rightCamera;
 
     private ArduinoJoystickPlayer player;
     private bool canSwap = true;
     private Coroutine swapTimer;
+    private bool IsOnLeftSide => player != null && player.MovementCamera == leftCamera;
 
     private void Awake()
     {
@@ -55,14 +55,13 @@ public class PlayerSwapSides : MonoBehaviour
 
         Transform playerTarget = playerInput.transform;
         crosshair.SetActive(true);
-        if (isOnLeftSide)
+        if (IsOnLeftSide)
         {
             player.SetMovementCamera(rightCamera);
             MoveToSideCenter(rightCenter);
             leftTargetGroup.RemoveMember(playerTarget);
             rightTargetGroup.RemoveMember(playerTarget);
             rightTargetGroup.AddMember(playerTarget, 0.5f, 1f);
-            isOnLeftSide = false;
         }
         else
         {
@@ -71,14 +70,13 @@ public class PlayerSwapSides : MonoBehaviour
             rightTargetGroup.RemoveMember(playerTarget);
             leftTargetGroup.RemoveMember(playerTarget);
             leftTargetGroup.AddMember(playerTarget, 0.5f, 1f);
-            isOnLeftSide = true;
         }
         swapTimer = StartCoroutine(CompleteSwapAfterDelay());
     }
 
     public void RepositionForCurrentSide()
     {
-        Transform sideCenter = isOnLeftSide ? leftCenter : rightCenter;
+        Transform sideCenter = IsOnLeftSide ? leftCenter : rightCenter;
         MoveToSideCenter(sideCenter);
     }
 
@@ -112,18 +110,6 @@ public class PlayerSwapSides : MonoBehaviour
         if (player.isSwapping)
         {
             EnableCharacter();
-        }
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("LeftDungeon"))
-        {
-            isOnLeftSide = true;
-        }
-        else if (other.CompareTag("RightDungeon"))
-        {
-            isOnLeftSide = false;
         }
     }
 

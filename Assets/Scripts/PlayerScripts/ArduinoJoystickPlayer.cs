@@ -31,6 +31,7 @@ public class ArduinoJoystickPlayer : MonoBehaviour
 
     public bool SwitchTriggered =>
         desktopInput != null && desktopInput.SwitchTriggered;
+    public Camera MovementCamera => movementCamera;
 
     private Texture2D squareTexture;
     private Sprite squareSprite;

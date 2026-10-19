@@ -8,6 +8,7 @@ public class EnemyDungeonSide : MonoBehaviour
     [SerializeField] private EnemyDungeonSide oppositeSide;
 
     public EnemyDungeonSide OppositeSide => oppositeSide;
+    public Collider2D LevelBounds => levelBounds;
 
     public void SetBounds(Collider2D bounds)
     {

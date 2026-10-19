@@ -62,7 +62,15 @@ public class ZombieDyingState : EnemyState
     {
         if (Time.time < finishTime) return;
         // I resurrect after the first death and deactivate after the second death.
-        zombie.ChangeState(zombie.HasResurrected ? (EnemyState)zombie.DespawnedState : zombie.ResurrectingState);
+        if(zombie.HasResurrected)
+        {
+            zombie.CompleteDeath();
+            zombie.ChangeState(zombie.DespawnedState);
+        }
+        else
+        {
+            zombie.ChangeState(zombie.ResurrectingState);
+        }
     }
 }
 
