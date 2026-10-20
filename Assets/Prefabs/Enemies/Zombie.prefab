@@ -158,7 +158,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.45
+  m_Radius: 0.65
 --- !u!114 &751646646151323810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,9 +171,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4680c17a5fe40f8ba5cfdaed1cf4ea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDungeonSetup
-  leftCenter: {x: -9, y: 0}
-  rightCenter: {x: 9, y: 0}
-  areaSize: {x: 18, y: 10}
+  automaticallyFindRooms: 1
+  leftBounds: {fileID: 0}
+  rightBounds: {fileID: 0}
+  leftCamera: {fileID: 0}
+  rightCamera: {fileID: 0}
 --- !u!114 &6720721342315900766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,8 +188,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18b2ba90e7047d59e431cf8f3fae923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieController
-  startingSide: {fileID: 0}
+  combatManager: {fileID: 0}
   maxHealth: 15
+  startingSide: {fileID: 0}
+  zombieMaxHealth: 15
   moveSpeed: 2
   attackRange: 1
   targetInterval: 0.5

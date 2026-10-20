@@ -6,8 +6,7 @@ using UnityEngine.InputSystem;
 public class LazerEyeballLaser : MonoBehaviour
 {
     [SerializeField] private LineRenderer roomBeam, oppositeBeam;
-    [SerializeField] private Camera leftView, rightView;
-    [SerializeField] private bool alignWithCameras = false;
+    [SerializeField] private Shader roomBeamShader;
     [SerializeField, Range(0.05f, 1f)] private float widthRelativeToBody = 0.6666667f;
     [SerializeField, Range(0.01f, 1f)] private float warningWidth = 0.15f;
     [SerializeField] private Color warningColor = new Color(1f, 0.8f, 0.1f, 0.7f);
@@ -16,10 +15,13 @@ public class LazerEyeballLaser : MonoBehaviour
     private EnemyDungeonSide side;
     private CircleCollider2D bodyCollider;
     private SpriteRenderer bodySprite;
-    private bool onLeft, showing, firing, hasOppositeSegment;
+    private bool onLeft, firing, hasOppositeSegment;
     private Vector2 direction, start, end, oppositeStart, oppositeEnd;
     private float damage, width, oppositeWidth;
     private readonly HashSet<PlayerInput> hitPlayers = new HashSet<PlayerInput>();
+    private Material beamMaterial;
+    private MaterialPropertyBlock beamProperties;
+    private static readonly int RoomBoundsId = Shader.PropertyToID("_RoomBounds");
 
     public bool IsFiring => firing;
     public Vector2 Start => start;
@@ -32,13 +34,8 @@ public class LazerEyeballLaser : MonoBehaviour
     {
         bodyCollider = GetComponent<CircleCollider2D>();
         bodySprite = GetComponent<SpriteRenderer>();
-        // I find the existing split-screen views once and only read their projection during aiming.
-        foreach (Camera view in FindObjectsByType<Camera>(FindObjectsInactive.Include))
-        {
-            if (view.gameObject.scene != gameObject.scene) continue;
-            if (leftView == null && view.name == "LeftCameraBrain") leftView = view;
-            if (rightView == null && view.name == "RightCameraBrain") rightView = view;
-        }
+        beamProperties = new MaterialPropertyBlock();
+        if (roomBeamShader != null) beamMaterial = new Material(roomBeamShader);
         PrepareRenderer(roomBeam);
         PrepareRenderer(oppositeBeam);
         Hide();
@@ -50,6 +47,7 @@ public class LazerEyeballLaser : MonoBehaviour
         beam.useWorldSpace = true;
         beam.positionCount = 2;
         beam.enabled = false;
+        if (beamMaterial != null) beam.sharedMaterial = beamMaterial;
     }
 
     public void Configure(EnemyDungeonSide room, bool isLeft)
@@ -59,37 +57,26 @@ public class LazerEyeballLaser : MonoBehaviour
         onLeft = isLeft;
     }
 
-    private bool CanUseViews()
-    {
-        // I anchor my beam to the rooms unless I explicitly enable camera alignment.
-        if (!alignWithCameras || side == null || side.OppositeSide == null || leftView == null || rightView == null) return false;
-        Camera from = onLeft ? leftView : rightView;
-        Camera to = onLeft ? rightView : leftView;
-        return from.isActiveAndEnabled && to.isActiveAndEnabled && from.orthographic && to.orthographic
-            && from.targetDisplay == to.targetDisplay && from.pixelRect.width > 0f && to.pixelRect.width > 0f
-            && side.Contains(from.transform.position) && side.OppositeSide.Contains(to.transform.position);
-    }
+    private bool HasRoomPair => side != null && side.OppositeSide != null
+        && side.LevelBounds != null && side.OppositeSide.LevelBounds != null
+        && side.LevelBounds.isActiveAndEnabled && side.OppositeSide.LevelBounds.isActiveAndEnabled
+        && side.LevelBounds.bounds.size.x > 0.001f && side.LevelBounds.bounds.size.y > 0.001f
+        && side.OppositeSide.LevelBounds.bounds.size.x > 0.001f
+        && side.OppositeSide.LevelBounds.bounds.size.y > 0.001f;
 
     public Vector2 GetAimDirection(PlayerInput player)
     {
-        if (side == null || player == null) return onLeft ? Vector2.right : Vector2.left;
+        if (!HasRoomPair || player == null) return onLeft ? Vector2.right : Vector2.left;
         Vector2 aim = player.transform.position;
-        if (CanUseViews())
+        if (!side.IsValidTarget(player))
         {
-            Camera from = onLeft ? leftView : rightView;
-            Camera targetView = side.IsValidTarget(player) ? from : onLeft ? rightView : leftView;
-            Vector3 screen = targetView.WorldToScreenPoint(player.transform.position);
-            screen.z = Mathf.Abs(transform.position.z - from.transform.position.z);
-            aim = from.ScreenToWorldPoint(screen);
-        }
-        else if (!side.IsValidTarget(player) && side.OppositeSide != null)
-        {
-            // I place the other room beside mine in a shared aiming plane using their room bounds.
+            // Unfold the destination through the room border, using the same uniform scale as the views.
             Bounds from = side.LevelBounds.bounds, to = side.OppositeSide.LevelBounds.bounds;
-            float x = (aim.x - to.min.x) / to.size.x;
-            float y = (aim.y - to.min.y) / to.size.y;
-            aim = new Vector2((onLeft ? from.max.x : from.min.x - from.size.x) + x * from.size.x,
-                from.min.y + y * from.size.y);
+            float scale = from.size.y / to.size.y;
+            float fromEdge = onLeft ? from.max.x : from.min.x;
+            float toEdge = onLeft ? to.min.x : to.max.x;
+            aim = new Vector2(fromEdge + (aim.x - toEdge) * scale,
+                from.min.y + (aim.y - to.min.y) * scale);
         }
         return (aim - (Vector2)transform.position).normalized;
     }
@@ -101,23 +88,6 @@ public class LazerEyeballLaser : MonoBehaviour
         Bounds bounds = side.LevelBounds.bounds;
         float seam = onLeft ? bounds.max.x : bounds.min.x;
         float low = bounds.min.y + 0.02f, high = bounds.max.y - 0.02f;
-        if (CanUseViews())
-        {
-            Camera from = onLeft ? leftView : rightView;
-            Camera to = onLeft ? rightView : leftView;
-            float depth = Mathf.Abs(transform.position.z - from.transform.position.z);
-            Vector3 edge = from.ViewportToWorldPoint(new Vector3(onLeft ? 1f : 0f, 0.5f, depth));
-            seam = onLeft ? Mathf.Min(seam, edge.x) : Mathf.Max(seam, edge.x);
-            // I keep the seam inside both views so my warning and shot continue into the other room.
-            Bounds other = side.OppositeSide.LevelBounds.bounds;
-            Vector3 bottom = to.WorldToScreenPoint(new Vector3(other.center.x, other.min.y, transform.position.z));
-            Vector3 top = to.WorldToScreenPoint(new Vector3(other.center.x, other.max.y, transform.position.z));
-            bottom.y = Mathf.Max(bottom.y, Mathf.Max(from.pixelRect.yMin, to.pixelRect.yMin));
-            top.y = Mathf.Min(top.y, Mathf.Min(from.pixelRect.yMax, to.pixelRect.yMax));
-            bottom.z = top.z = depth;
-            low = Mathf.Max(low, from.ScreenToWorldPoint(bottom).y + 0.02f);
-            high = Mathf.Min(high, from.ScreenToWorldPoint(top).y - 0.02f);
-        }
         float distance = Mathf.Max(0.05f, (seam - transform.position.x) * inward);
         float slope = desired.x * inward > 0.001f ? desired.y / Mathf.Abs(desired.x) : 0f;
         float minSlope = (low - transform.position.y) / distance;
@@ -128,7 +98,6 @@ public class LazerEyeballLaser : MonoBehaviour
 
     public void ShowWarning(Vector2 aim)
     {
-        showing = true;
         firing = false;
         direction = aim;
         Rebuild();
@@ -136,19 +105,18 @@ public class LazerEyeballLaser : MonoBehaviour
 
     public void BeginFire(Vector2 lockedAim, float shotDamage)
     {
-        // I clear the previous shot's hit list and keep this direction fixed until the shot ends.
+        // Capture both world-space segments once. Camera movement cannot redirect a live shot.
         hitPlayers.Clear();
         direction = lockedAim;
         damage = Mathf.Max(0f, shotDamage);
-        showing = firing = true;
+        firing = true;
         Rebuild();
     }
 
-    private void LateUpdate() { if (showing) Rebuild(); }
     private void FixedUpdate()
     {
         if (!firing) return;
-        Rebuild();
+        if (!HasRoomPair) { Hide(); return; }
         foreach (PlayerInput player in PlayerInput.all)
         {
             if (hitPlayers.Contains(player)) continue;
@@ -185,7 +153,7 @@ public class LazerEyeballLaser : MonoBehaviour
     private void Rebuild()
     {
         hasOppositeSegment = false;
-        if (side == null || side.LevelBounds == null || side.OppositeSide == null || !side.Contains(transform.position))
+        if (!HasRoomPair || !side.Contains(transform.position))
         { Hide(); return; }
         start = transform.position;
         Bounds bounds = side.LevelBounds.bounds;
@@ -197,51 +165,24 @@ public class LazerEyeballLaser : MonoBehaviour
         oppositeWidth = width;
         float inward = onLeft ? 1f : -1f;
         float seam = onLeft ? bounds.max.x : bounds.min.x;
-        bool views = CanUseViews();
-        Camera from = onLeft ? leftView : rightView;
-        Camera to = onLeft ? rightView : leftView;
-        if (views)
-        {
-            float depth = Mathf.Abs(transform.position.z - from.transform.position.z);
-            float screenEdge = from.ViewportToWorldPoint(new Vector3(onLeft ? 1f : 0f, 0.5f, depth)).x;
-            seam = onLeft ? Mathf.Min(seam, screenEdge) : Mathf.Max(seam, screenEdge);
-        }
         if (direction.x * inward > 0.001f)
         {
             float distance = (seam - start.x) / direction.x;
             Vector2 edge = start + direction * distance;
             if (distance >= 0f && edge.y >= bounds.min.y && edge.y <= bounds.max.y)
             {
-                // I retain the full local hit segment while the camera clips its visible portion at the divider.
-                if (!views) end = edge;
+                end = edge;
                 Bounds other = side.OppositeSide.LevelBounds.bounds;
-                Vector2 nextDirection;
-                if (views)
-                {
-                    Vector3 screen = from.WorldToScreenPoint(new Vector3(edge.x, edge.y, transform.position.z));
-                    screen.x = onLeft ? to.pixelRect.xMin : to.pixelRect.xMax;
-                    screen.z = Mathf.Abs(transform.position.z - to.transform.position.z);
-                    oppositeStart = to.ScreenToWorldPoint(screen);
-                    Vector3 delta = from.WorldToScreenPoint(transform.position + (Vector3)direction)
-                        - from.WorldToScreenPoint(transform.position);
-                    Vector3 next = screen + new Vector3(delta.x, delta.y, 0f);
-                    nextDirection = ((Vector2)to.ScreenToWorldPoint(next) - oppositeStart).normalized;
-                    oppositeWidth *= to.orthographicSize / from.orthographicSize;
-                }
-                else
-                {
-                    float y = (edge.y - bounds.min.y) / bounds.size.y;
-                    oppositeStart = new Vector2(onLeft ? other.min.x : other.max.x, other.min.y + y * other.size.y);
-                    nextDirection = new Vector2(direction.x * other.size.x / bounds.size.x,
-                        direction.y * other.size.y / bounds.size.y).normalized;
-                    oppositeWidth *= other.size.y / bounds.size.y;
-                }
-                hasOppositeSegment = ClipEntry(other, ref oppositeStart, nextDirection);
-                if (hasOppositeSegment) oppositeEnd = GetExit(other, oppositeStart, nextDirection);
+                float y = (edge.y - bounds.min.y) / bounds.size.y;
+                oppositeStart = new Vector2(onLeft ? other.min.x : other.max.x, other.min.y + y * other.size.y);
+                oppositeWidth *= other.size.y / bounds.size.y;
+                hasOppositeSegment = ClipEntry(other, ref oppositeStart, direction);
+                if (hasOppositeSegment) oppositeEnd = GetExit(other, oppositeStart, direction);
             }
         }
-        Draw(roomBeam, start, end, width);
-        if (hasOppositeSegment) Draw(oppositeBeam, oppositeStart, oppositeEnd, oppositeWidth);
+        Draw(roomBeam, start, end, width, bounds, false, hasOppositeSegment);
+        if (hasOppositeSegment) Draw(oppositeBeam, oppositeStart, oppositeEnd, oppositeWidth,
+            side.OppositeSide.LevelBounds.bounds, true, false);
         else if (oppositeBeam != null) oppositeBeam.enabled = false;
     }
 
@@ -270,22 +211,37 @@ public class LazerEyeballLaser : MonoBehaviour
         return point + aim * Mathf.Max(0f, Mathf.Min(x, y));
     }
 
-    private void Draw(LineRenderer beam, Vector2 a, Vector2 b, float beamWidth)
+    private void Draw(LineRenderer beam, Vector2 a, Vector2 b, float beamWidth, Bounds bounds,
+        bool extendStart, bool extendEnd)
     {
         if (beam == null) return;
         beam.enabled = true;
-        beam.startWidth = beam.endWidth = beamWidth * (firing ? 1f : warningWidth);
+        float visibleWidth = beamWidth * (firing ? 1f : warningWidth);
+        beam.startWidth = beam.endWidth = visibleWidth;
         beam.startColor = beam.endColor = firing ? firingColor : warningColor;
+        if (beamMaterial != null)
+        {
+            beam.GetPropertyBlock(beamProperties);
+            beamProperties.SetVector(RoomBoundsId, new Vector4(bounds.min.x, bounds.min.y, bounds.max.x, bounds.max.y));
+            beam.SetPropertyBlock(beamProperties);
+            // LineRenderer ends are perpendicular to the ray. Overdraw and clip at the vertical
+            // room border so diagonal beams keep their full thickness through the divider.
+            Vector2 along = (b - a).normalized;
+            float padding = 0.5f * visibleWidth * Mathf.Abs(along.y) / Mathf.Max(0.001f, Mathf.Abs(along.x)) + 0.001f;
+            if (extendStart) a -= along * padding;
+            if (extendEnd) b += along * padding;
+        }
         beam.SetPosition(0, new Vector3(a.x, a.y, transform.position.z));
         beam.SetPosition(1, new Vector3(b.x, b.y, transform.position.z));
     }
 
     public void Hide()
     {
-        showing = firing = hasOppositeSegment = false;
+        firing = hasOppositeSegment = false;
         hitPlayers.Clear();
         if (roomBeam != null) roomBeam.enabled = false;
         if (oppositeBeam != null) oppositeBeam.enabled = false;
     }
     private void OnDisable() { Hide(); }
+    private void OnDestroy() { if (beamMaterial != null) Destroy(beamMaterial); }
 }
