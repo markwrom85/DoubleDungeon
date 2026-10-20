@@ -181,7 +181,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   bulletPrefab: {fileID: 2878009716057067755, guid: fe20cee69a37d474d835b117fa88a1d0, type: 3}
-  projectileDamage: 10
+  projectileDamage: 1
   attackWindup: 0.4
   attackRecovery: 0.5
   aimLead: 0.35
@@ -241,6 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4680c17a5fe40f8ba5cfdaed1cf4ea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDungeonSetup
+  automaticallyFindRooms: 1
   leftBounds: {fileID: 0}
   rightBounds: {fileID: 0}
   leftCamera: {fileID: 0}
@@ -257,9 +258,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 673ad7942a844887ad7057eeb49a9896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArmorGhostPair
+  combatManager: {fileID: 0}
+  maxHealth: 100
   firstBody: {fileID: 8890749037219295299}
   secondBody: {fileID: 6103394051806380903}
-  maxHealth: 100
+  armorMaxHealth: 100
   deathDuration: 1
 --- !u!1 &7457856070535260295
 GameObject:
@@ -442,7 +445,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   bulletPrefab: {fileID: 2878009716057067755, guid: fe20cee69a37d474d835b117fa88a1d0, type: 3}
-  projectileDamage: 10
+  projectileDamage: 1
   attackWindup: 0.4
   attackRecovery: 0.5
   aimLead: 0.35

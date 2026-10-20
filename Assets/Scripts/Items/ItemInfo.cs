@@ -8,5 +8,7 @@ public class ItemInfo : MonoBehaviour
     public int MaxHealth => itemInfo.maxHealth;
     public float AttackDamage => itemInfo.attackDamage;
     public float AttackRate => itemInfo.attackRate;
+    public float AOEDamage => itemInfo.aoeDamage;
+    public float SwapCooldown => itemInfo.swapCooldown;
     public float SwapDuration => itemInfo.swapDuration;
 }

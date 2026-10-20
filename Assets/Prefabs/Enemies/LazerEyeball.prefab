@@ -213,7 +213,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e5996b706694a09bd7af685f9a6decc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LazerEyeballController
+  combatManager: {fileID: 0}
   maxHealth: 20
+  eyeMaxHealth: 20
   deathDuration: 1
   moveSpeed: 2
   roomWidthFraction: 0.3333333
@@ -225,7 +227,7 @@ MonoBehaviour:
   obstacleLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  laserDamage: 10
+  laserDamage: 1
   chargeDuration: 1.5
   fireDuration: 1
   recoveryDuration: 1
