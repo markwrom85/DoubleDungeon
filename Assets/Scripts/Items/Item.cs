@@ -7,5 +7,7 @@ public class Item : ScriptableObject
     public int maxHealth = 0;
     public float attackDamage = 0f;
     public float attackRate = 0f;
+    public float aoeDamage = 0f;
+    public float swapCooldown = 0f;
     public float swapDuration = 0f;
 }

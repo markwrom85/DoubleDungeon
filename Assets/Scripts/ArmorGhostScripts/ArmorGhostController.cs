@@ -17,7 +17,7 @@ public class ArmorGhostController : MonoBehaviour, IDamageable
     [SerializeField] private LayerMask obstacleLayers = ~0;
     [Header("Shooting")]
     [SerializeField] private EnemyBullet bulletPrefab;
-    [SerializeField, Min(0f)] private float projectileDamage = 10f;
+    [SerializeField, Min(0f)] private float projectileDamage = 1f;
     [SerializeField, Min(0f)] private float attackWindup = 0.4f;
     [SerializeField, Min(0.05f)] private float attackRecovery = 0.5f;
     [SerializeField, Range(0f, 1f)] private float aimLead = 0.35f;

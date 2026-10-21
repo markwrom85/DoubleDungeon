@@ -153,9 +153,9 @@ public class ZombieController : EnemyController
         if (CurrentState == AttackState && IsTargetInRange())
         {
             AttackLanded?.Invoke(Target);
-            PlayerInfo playerInfo = Target.transform.root.GetComponentInChildren<PlayerInfo>(true);
+            PlayerInfo playerInfo = Target.GetComponentInChildren<PlayerInfo>(true);
 
-            playerInfo?.TakeDamage(10f);
+            playerInfo?.TakeDamage(1f);
         }
     }
 
