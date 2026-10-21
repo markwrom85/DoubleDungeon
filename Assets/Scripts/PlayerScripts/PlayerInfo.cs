@@ -1,12 +1,9 @@
-
-using System.Runtime.Remoting.Lifetime;
 using UnityEngine;
 
 public class PlayerInfo : MonoBehaviour
 {
     [Header("Player Stats")]
     [SerializeField] private PlayerBaseStats baseStats;
-
     [Header("Sprite")]
     [SerializeField] private SpriteRenderer spriteRenderer;
 
@@ -16,16 +13,18 @@ public class PlayerInfo : MonoBehaviour
     public int MaxHealth { get; private set; }
     public float AttackDamage { get; private set; }
     public float AttackRate { get; private set; }
-    public float AOEDamage {get; private set;}
-    public float SwapCooldown {get; private set;}
+    public float AOEDamage { get; private set; }
+    public float SwapCooldown { get; private set; }
     public float SwapDuration { get; private set; }
 
     private float currentHealth;
-
-    // Animator on the Player Sprite child.
     private Animator animator;
-
     private PlayerPanel playerPanel;
+
+    private int lastDirection;
+    private int shootingDirection;
+    private bool isShooting;
+    private bool isMoving;
 
     private void Awake()
     {
@@ -40,9 +39,7 @@ public class PlayerInfo : MonoBehaviour
         currentHealth = MaxHealth;
 
         if (spriteRenderer != null)
-        {
             animator = spriteRenderer.GetComponent<Animator>();
-        }
 
         if (animator == null)
         {
@@ -50,6 +47,11 @@ public class PlayerInfo : MonoBehaviour
                 "PlayerInfo could not find an Animator on the assigned Sprite Renderer.",
                 this
             );
+        }
+        else
+        {
+            lastDirection = animator.GetInteger("Direction");
+            shootingDirection = lastDirection;
         }
     }
 
@@ -126,51 +128,49 @@ public class PlayerInfo : MonoBehaviour
         if (animator == null)
             return;
 
-        bool isMoving = direction.sqrMagnitude > 0.001f;
+        isMoving = direction.sqrMagnitude > 0.001f;
 
-        // Keep the IsMoving parameter updated.
+        if (isMoving)
+        {
+            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+                lastDirection = direction.x > 0 ? 3 : 2;
+            else
+                lastDirection = direction.y > 0 ? 1 : 0;
+        }
+
         animator.SetBool("IsMoving", isMoving);
 
-        // Play the animation while moving and freeze it when stopped.
-        animator.speed = isMoving ? 1f : 0f;
+        if (!isShooting)
+            animator.SetInteger("Direction", lastDirection);
 
-        // Do not change the direction when the player is stopped.
-        if (!isMoving)
-            return;
-
-        // Determine which of the four cardinal directions
-        // the player is currently moving.
-        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
-        {
-            if (direction.x > 0)
-            {
-                animator.SetInteger("Direction", 3); // Right
-            }
-            else
-            {
-                animator.SetInteger("Direction", 2); // Left
-            }
-        }
-        else
-        {
-            if (direction.y > 0)
-            {
-                animator.SetInteger("Direction", 1); // Up
-            }
-            else
-            {
-                animator.SetInteger("Direction", 0); // Down
-            }
-        }
+        animator.speed = (isMoving || isShooting) ? 1f : 0f;
     }
 
-    // Set whether the player is shooting.
-    public void SetShooting(bool isShooting)
+    public void SetShootingDirection(int direction)
+    {
+        if (animator == null || isShooting)
+            return;
+
+        shootingDirection = direction;
+    }
+
+    public void SetShooting(bool shooting)
     {
         if (animator == null)
             return;
 
+        if (shooting && !isShooting)
+            shootingDirection = lastDirection;
+
+        isShooting = shooting;
+
         animator.SetBool("IsShooting", isShooting);
+        animator.SetInteger(
+            "Direction",
+            isShooting ? shootingDirection : lastDirection
+        );
+
+        animator.speed = (isMoving || isShooting) ? 1f : 0f;
     }
 
     public void ChangeStats(
@@ -205,13 +205,10 @@ public class PlayerInfo : MonoBehaviour
         );
 
         if (currentHealth <= 0)
-        {
             Die();
-        }
     }
 
     private void Die()
     {
-        // Handle player death logic here
     }
 }

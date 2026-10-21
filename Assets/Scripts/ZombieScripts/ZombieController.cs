@@ -23,6 +23,7 @@ public class ZombieController : EnemyController
     [Header("Visuals")]
     [SerializeField] private Color normalColor;
     [SerializeField] private Color transferColor, dyingColor, colorOnHit, attackingColor;
+    [SerializeField] private Animator animator;
 
     private Rigidbody2D body;
     private CircleCollider2D hitbox;
@@ -31,6 +32,7 @@ public class ZombieController : EnemyController
     private bool[] rendererVisibility;
     private Vector2 deathPosition;
     private float nextTargetTime;
+    private int lastFacingDirection = 1;
     public ZombieChaseState ChaseState { get; private set; }
     public ZombieAttackState AttackState { get; private set; }
     public ZombieDyingState DyingState { get; private set; }
@@ -63,6 +65,8 @@ public class ZombieController : EnemyController
         body.gravityScale = 0f;
         body.freezeRotation = true;
         dungeonSetup = GetComponent<EnemyDungeonSetup>();
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>(true);
         // I cache the sprite renderers so I can hide the zombie while its state machine keeps running.
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
         rendererVisibility = new bool[spriteRenderers.Length];
@@ -137,6 +141,17 @@ public class ZombieController : EnemyController
         Vector2 step = direction * moveSpeed * Time.fixedDeltaTime;
         body.linearVelocity = CurrentSide.Contains(body.position + step, hitbox.radius)
             ? direction * moveSpeed : Vector2.zero;
+    }
+
+    public void UpdateWalkAnimation()
+    {
+        if (animator == null) return;
+
+        if (Mathf.Abs(body.linearVelocity.x) > 0.01f)
+            lastFacingDirection = body.linearVelocity.x < 0f ? -1 : 1;
+
+        animator.SetInteger("Direction", lastFacingDirection);
+        animator.SetBool("IsMoving", body.linearVelocity.sqrMagnitude > 0.001f);
     }
 
     public void StopMoving() { if (body != null) body.linearVelocity = Vector2.zero; }
@@ -224,4 +239,5 @@ public class ZombieController : EnemyController
     {
         BeginDeath();
     }
+
 }

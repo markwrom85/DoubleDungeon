@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 132305050048072247}
   - component: {fileID: 751646646151323810}
   - component: {fileID: 6720721342315900766}
+  - component: {fileID: 6830280800952067148}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Untagged
@@ -31,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -12, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -85,8 +86,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: a1549e5cc8b76af4396df66fa18f889a, type: 3}
-  m_Color: {r: 0.35, g: 0.65, b: 0.2, a: 1}
+  m_Sprite: {fileID: 5193795081412147552, guid: 9dcf370422674d84aa2575834abe2e97, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -171,9 +172,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4680c17a5fe40f8ba5cfdaed1cf4ea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDungeonSetup
-  leftCenter: {x: -9, y: 0}
-  rightCenter: {x: 9, y: 0}
-  areaSize: {x: 18, y: 10}
+  automaticallyFindRooms: 1
+  leftBounds: {fileID: 0}
+  rightBounds: {fileID: 0}
+  leftCamera: {fileID: 0}
+  rightCamera: {fileID: 0}
 --- !u!114 &6720721342315900766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,8 +189,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18b2ba90e7047d59e431cf8f3fae923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieController
-  startingSide: {fileID: 0}
+  combatManager: {fileID: 0}
   maxHealth: 15
+  startingSide: {fileID: 0}
+  zombieMaxHealth: 15
   moveSpeed: 2
   attackRange: 1
   targetInterval: 0.5
@@ -201,3 +206,26 @@ MonoBehaviour:
   dyingColor: {r: 1, g: 0, b: 0.7400186, a: 0.78431374}
   colorOnHit: {r: 1, g: 0, b: 0, a: 1}
   attackingColor: {r: 1, g: 0.90058327, b: 0, a: 1}
+  animator: {fileID: 0}
+--- !u!95 &6830280800952067148
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5619277169959799344}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bd1690ad8943fb84dab20d9b37a9532b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
