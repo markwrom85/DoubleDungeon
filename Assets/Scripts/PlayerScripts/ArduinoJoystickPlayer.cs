@@ -127,7 +127,13 @@ public class ArduinoJoystickPlayer : MonoBehaviour
         playerInfo.SetShooting(desktopInput.FireHeld);
 
         if (gun != null)
+        {
             gun.Tick(direction, desktopInput.FireHeld);
+        }
+        if (desktopInput.SpecialAttackTriggered)
+        {
+            playerInfo.TriggerSpecialAttack();
+        }
     }
 
     private void FixedUpdate()

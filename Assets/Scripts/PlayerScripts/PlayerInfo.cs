@@ -210,6 +210,11 @@ public class PlayerInfo : MonoBehaviour
         }
     }
 
+    public void TriggerSpecialAttack()
+    {
+        // trigger stuff in special attack script
+    }
+
     private void Die()
     {
         // Handle player death logic here

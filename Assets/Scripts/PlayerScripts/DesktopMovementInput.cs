@@ -9,8 +9,10 @@ public sealed class DesktopMovementInput : IDisposable
     private readonly InputActionAsset actions;
     private readonly InputAction move;
     private readonly InputAction attack;
+    private readonly InputAction specialAttack;
     private readonly InputAction switchAction;
     public bool FireHeld => attack.IsPressed();
+    public bool SpecialAttackTriggered => specialAttack.triggered;
     public bool SwitchTriggered => switchAction.triggered;
 
     public DesktopMovementInput(PlayerInput owner)
@@ -21,10 +23,12 @@ public sealed class DesktopMovementInput : IDisposable
             throw new InvalidOperationException("Assign InputSystem_Actions to the PlayerInput component.");
         source.FindAction("Player/Move", true);
         source.FindAction("Player/Attack", true);
+        source.FindAction("Player/Special Attack", true);
         source.FindAction("Player/Switch", true);
         actions = source;
         move = actions.FindAction("Player/Move", true);
         attack = actions.FindAction("Player/Attack", true);
+        specialAttack = actions.FindAction("Player/Special Attack", true);
         switchAction = actions.FindAction("Player/Switch", true);
     }
 
