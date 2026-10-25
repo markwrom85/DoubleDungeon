@@ -132,6 +132,12 @@ public class DungeonManager : MonoBehaviour
             return;
         }
 
+        PlayerInfo playerInfo = playerInput.transform.root.GetComponentInChildren<PlayerInfo>(true);
+        if (playerInfo == null)
+            Debug.LogWarning("Player has no PlayerInfo component.", player);
+        else
+            playerInfo.SetPlayerId(playerInput.playerIndex + 1);
+
         Transform playerRoot = playerInput.transform;
         if (playersParent != null && playerRoot.parent != playersParent.transform)
             playerRoot.SetParent(playersParent.transform, true);

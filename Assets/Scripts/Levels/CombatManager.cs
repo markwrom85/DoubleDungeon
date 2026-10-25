@@ -9,6 +9,7 @@ public class CombatManager : MonoBehaviour
     private bool inCombat = false;
     public event System.Action AllEnemiesDefeated;
     public event System.Action CombatStarted;
+    public bool stopSpawning = false;
 
     public void RegisterEnemy(EnemyController enemy)
     {

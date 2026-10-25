@@ -11,10 +11,13 @@ public class PlayerInfo : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
 
     public int PlayerId { get; private set; }
+    public float CurrentHealth => currentHealth;
     public float MoveSpeed { get; private set; }
     public int MaxHealth { get; private set; }
     public float AttackDamage { get; private set; }
     public float AttackRate { get; private set; }
+    public float AOEDamage {get; private set;}
+    public float SwapCooldown {get; private set;}
     public float SwapDuration { get; private set; }
 
     private float currentHealth;
@@ -22,12 +25,16 @@ public class PlayerInfo : MonoBehaviour
     // Animator on the Player Sprite child.
     private Animator animator;
 
+    private PlayerPanel playerPanel;
+
     private void Awake()
     {
         MoveSpeed = baseStats.moveSpeed;
         MaxHealth = baseStats.maxHealth;
         AttackDamage = baseStats.attackDamage;
         AttackRate = baseStats.attackRate;
+        AOEDamage = baseStats.AOEDamage;
+        SwapCooldown = baseStats.swapCooldown;
         SwapDuration = baseStats.swapDuration;
 
         currentHealth = MaxHealth;
@@ -48,26 +55,36 @@ public class PlayerInfo : MonoBehaviour
 
     private void Start()
     {
+        ApplyPlayerIdentity();
+        RefreshHealthDisplay();
+    }
+
+    private void ApplyPlayerIdentity()
+    {
         switch (PlayerId)
         {
             case 1:
                 gameObject.name = "Player 1";
-                spriteRenderer.color = Color.cyan;
+                playerPanel = GameObject.Find("Player 1 Panel")?.GetComponent<PlayerPanel>();
+                if (spriteRenderer != null) spriteRenderer.color = Color.cyan;
                 break;
 
             case 2:
                 gameObject.name = "Player 2";
-                spriteRenderer.color = Color.red;
+                playerPanel = GameObject.Find("Player 2 Panel")?.GetComponent<PlayerPanel>();
+                if (spriteRenderer != null) spriteRenderer.color = Color.red;
                 break;
 
             case 3:
                 gameObject.name = "Player 3";
-                spriteRenderer.color = Color.green;
+                playerPanel = GameObject.Find("Player 3 Panel")?.GetComponent<PlayerPanel>();
+                if (spriteRenderer != null) spriteRenderer.color = Color.green;
                 break;
 
             case 4:
                 gameObject.name = "Player 4";
-                spriteRenderer.color = Color.yellow;
+                playerPanel = GameObject.Find("Player 4 Panel")?.GetComponent<PlayerPanel>();
+                if (spriteRenderer != null) spriteRenderer.color = Color.yellow;
                 break;
 
             default:
@@ -78,7 +95,30 @@ public class PlayerInfo : MonoBehaviour
 
     public void SetPlayerId(int playerId)
     {
+        if (playerId < 1)
+        {
+            Debug.LogWarning("Player IDs must start at 1.", this);
+            return;
+        }
+
         PlayerId = playerId;
+        ApplyPlayerIdentity();
+        RefreshHealthDisplay();
+    }
+
+    private void RefreshHealthDisplay()
+    {
+        playerPanel?.ChangeHealthDisplay(currentHealth, MaxHealth);
+    }
+
+    public void ChangePanelSide()
+    {
+        playerPanel?.ChangePanelSide();
+    }
+
+    public void SetPanelSide(bool isLeftSide)
+    {
+        playerPanel?.SetPanelSide(isLeftSide);
     }
 
     public void SetDirection(Vector2 direction)
@@ -138,18 +178,27 @@ public class PlayerInfo : MonoBehaviour
         int maxHealth,
         float attackDamage,
         float attackRate,
+        float aoeDamage,
+        float swapCooldown,
         float swapDuration)
     {
         MoveSpeed += moveSpeed;
         MaxHealth += maxHealth;
+        currentHealth = Mathf.Min(currentHealth + maxHealth, MaxHealth);
         AttackDamage += attackDamage;
         AttackRate += attackRate;
+        AOEDamage += aoeDamage;
+        SwapCooldown += swapCooldown;
         SwapDuration += swapDuration;
+        RefreshHealthDisplay();
     }
 
     public void TakeDamage(float damage)
     {
-        currentHealth -= damage;
+        if (damage <= 0f) return;
+
+        currentHealth = Mathf.Max(0f, currentHealth - damage);
+        RefreshHealthDisplay();
 
         Debug.Log(
             $"Player {PlayerId} took {damage} damage. Current health: {currentHealth}"

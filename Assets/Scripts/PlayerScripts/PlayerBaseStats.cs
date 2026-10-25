@@ -7,5 +7,7 @@ public class PlayerBaseStats : ScriptableObject
     public int maxHealth = 100;
     public float attackDamage = 6f;
     public float attackRate = 1f;
+    public float AOEDamage = 10f;
+    public float swapCooldown = 3f;
     public float swapDuration = 1.5f;
 }
