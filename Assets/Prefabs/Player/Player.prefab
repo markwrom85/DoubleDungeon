@@ -458,6 +458,7 @@ GameObject:
   - component: {fileID: 7349201362178500641}
   - component: {fileID: 5251293998876446244}
   - component: {fileID: 8950584820399516385}
+  - component: {fileID: 3275841504283209811}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -481,6 +482,7 @@ Transform:
   - {fileID: 6442700957787475046}
   - {fileID: 3713465482239230450}
   - {fileID: 8277312713811284405}
+  - {fileID: 5617972926239004673}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4738333378329519876
@@ -704,6 +706,106 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!114 &3275841504283209811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7352079989303448806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bcaa9b7cb57842f19d39657b14e56c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HyperBeam
+  spDamage: 5
+  spSize: 0
+  spLength: 2
+  spCooldown: 3
+  beamObj: {fileID: 3467784118305780557}
+  hyperBeamCollision: {fileID: 5479988341043853392}
+--- !u!1001 &6142631569820782005
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6140484282804556047}
+    m_Modifications:
+    - target: {fileID: 1785692930283427252, guid: bc8636eb35f494fddbefa55fe21536e6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785692930283427252, guid: bc8636eb35f494fddbefa55fe21536e6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785692930283427252, guid: bc8636eb35f494fddbefa55fe21536e6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785692930283427252, guid: bc8636eb35f494fddbefa55fe21536e6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785692930283427252, guid: bc8636eb35f494fddbefa55fe21536e6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785692930283427252, guid: bc8636eb35f494fddbefa55fe21536e6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785692930283427252, guid: bc8636eb35f494fddbefa55fe21536e6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785692930283427252, guid: bc8636eb35f494fddbefa55fe21536e6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785692930283427252, guid: bc8636eb35f494fddbefa55fe21536e6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785692930283427252, guid: bc8636eb35f494fddbefa55fe21536e6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286553263839641336, guid: bc8636eb35f494fddbefa55fe21536e6, type: 3}
+      propertyPath: m_Name
+      value: HyperBeam
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286553263839641336, guid: bc8636eb35f494fddbefa55fe21536e6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc8636eb35f494fddbefa55fe21536e6, type: 3}
+--- !u!1 &3467784118305780557 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7286553263839641336, guid: bc8636eb35f494fddbefa55fe21536e6, type: 3}
+  m_PrefabInstance: {fileID: 6142631569820782005}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5479988341043853392 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1816030930884097509, guid: bc8636eb35f494fddbefa55fe21536e6, type: 3}
+  m_PrefabInstance: {fileID: 6142631569820782005}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3467784118305780557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a4cd030c49984609a269109a201a6f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HyperBeamCollision
+--- !u!4 &5617972926239004673 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1785692930283427252, guid: bc8636eb35f494fddbefa55fe21536e6, type: 3}
+  m_PrefabInstance: {fileID: 6142631569820782005}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6503544426367294212
 PrefabInstance:
   m_ObjectHideFlags: 0
