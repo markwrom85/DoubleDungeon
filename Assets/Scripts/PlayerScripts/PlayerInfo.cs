@@ -6,7 +6,7 @@ public class PlayerInfo : MonoBehaviour
 {
     [Header("Player Stats")]
     [SerializeField] private PlayerBaseStats baseStats;
-    private SpecialAttack spAttack;
+    public SpecialAttack spAttack;
 
     [Header("Sprite")]
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -58,9 +58,6 @@ public class PlayerInfo : MonoBehaviour
     {
         ApplyPlayerIdentity();
         RefreshHealthDisplay();
-
-        spAttack = GetComponent<SpecialAttack>();
-        Debug.Log(spAttack);
     }
 
     private void ApplyPlayerIdentity()
@@ -216,6 +213,7 @@ public class PlayerInfo : MonoBehaviour
 
     public void TriggerSpecialAttack()
     {
+        if(spAttack == null) return;
         spAttack.StartAttack();
     }
 

@@ -4,11 +4,13 @@ using UnityEngine;
 public class HyperBeam : SpecialAttack
 {
     [SerializeField] private GameObject beamObj;
-    [SerializeField] private HyperBeamCollision hyperBeamCollision;
+    private HyperBeamCollision hyperBeamCollision;
 
     void Start()
     {
+        hyperBeamCollision = beamObj.GetComponent<HyperBeamCollision>();
         hyperBeamCollision.damage = spDamage;
+        GetComponentInParent<PlayerInfo>().spAttack = this;
     }
 
     public override void StartAttack()
