@@ -7,6 +7,7 @@ public class PlayerSwapSides : MonoBehaviour
 {
     [SerializeField] private PlayerInfo playerInfo;
     [SerializeField] private GameObject playerObj, crosshair, aoeBurst;
+    [SerializeField] private TeleportVanishEffect teleportVanishEffect;
     [SerializeField] private CardinalGun cardinalGun;
     [SerializeField] private Transform leftCenter, rightCenter;
     [SerializeField] private CinemachineTargetGroup leftTargetGroup, rightTargetGroup;
@@ -14,7 +15,6 @@ public class PlayerSwapSides : MonoBehaviour
 
     private ArduinoJoystickPlayer player;
     private bool canSwap = true;
-    private Coroutine swapTimer;
     private bool IsOnLeftSide => player != null && player.MovementCamera == leftCamera;
     private bool panelSideInitialized;
     private bool panelIsOnLeft;
@@ -36,30 +36,61 @@ public class PlayerSwapSides : MonoBehaviour
     {
         SyncPanelSide();
 
-        if (!canSwap) return;
-        if (player == null || !player.SwitchTriggered) return;
-
-        if (!player.isSwapping)
-        {
-            SwapSides();
-        }
-        else
-        {
-            EnableCharacter();
-        }
+        if (!canSwap || player == null || player.isSwapping || !player.SwitchTriggered) return;
+        SwapSides();
     }
 
     private void SwapSides()
     {
+        PlayerInput playerInput = player.GetComponentInParent<PlayerInput>();
+        if (playerInput == null)
+        {
+            Debug.LogWarning("Player has no parent PlayerInput component.", player);
+            return;
+        }
+
+        bool wasOnLeftSide = IsOnLeftSide;
+        float totalDuration = Mathf.Max(0f, playerInfo.SwapDuration);
+        float phaseDuration = teleportVanishEffect != null
+            ? Mathf.Min(teleportVanishEffect.PhaseDuration, totalDuration * 0.25f)
+            : 0f;
+
+        canSwap = false;
         player.isSwapping = true;
         cardinalGun.canShoot = false;
-        playerObj.SetActive(false);
-        PlayerInput playerInput = player.GetComponentInParent<PlayerInput>();
-        if (playerInput == null) return;
+        StartCoroutine(SwapSidesRoutine(
+            playerInput.transform,
+            wasOnLeftSide,
+            totalDuration,
+            phaseDuration));
+    }
 
-        Transform playerTarget = playerInput.transform;
-        bool wasOnLeftSide = IsOnLeftSide;
-        crosshair.SetActive(true);
+    private IEnumerator SwapSidesRoutine(
+        Transform playerTarget,
+        bool wasOnLeftSide,
+        float totalDuration,
+        float phaseDuration)
+    {
+        if (teleportVanishEffect != null)
+            yield return teleportVanishEffect.Vanish(phaseDuration);
+
+        // Keep the existing targetability behavior while the player is between sides.
+        playerObj.SetActive(false);
+        TransferToOppositeSide(playerTarget, wasOnLeftSide);
+
+        float destinationHold = Mathf.Max(0f, totalDuration - phaseDuration * 2f);
+        if (destinationHold > 0f)
+            yield return new WaitForSeconds(destinationHold);
+
+        playerObj.SetActive(true);
+        if (teleportVanishEffect != null)
+            yield return teleportVanishEffect.Reappear(phaseDuration);
+
+        CompleteSwap();
+    }
+
+    private void TransferToOppositeSide(Transform playerTarget, bool wasOnLeftSide)
+    {
         if (wasOnLeftSide)
         {
             player.SetMovementCamera(rightCamera);
@@ -76,10 +107,10 @@ public class PlayerSwapSides : MonoBehaviour
             leftTargetGroup.RemoveMember(playerTarget);
             leftTargetGroup.AddMember(playerTarget, 0.5f, 1f);
         }
+        crosshair.SetActive(true);
         playerInfo.SetPanelSide(!wasOnLeftSide);
         panelIsOnLeft = !wasOnLeftSide;
         panelSideInitialized = true;
-        swapTimer = StartCoroutine(CompleteSwapAfterDelay());
     }
 
     private void SyncPanelSide()
@@ -110,28 +141,14 @@ public class PlayerSwapSides : MonoBehaviour
         player.transform.position = position;
     }
 
-    private void EnableCharacter()
+    private void CompleteSwap()
     {
-        if (swapTimer != null)
-        {
-            StopCoroutine(swapTimer);
-            swapTimer = null;
-        }
         playerObj.SetActive(true);
         crosshair.SetActive(false);
         player.isSwapping = false;
         cardinalGun.canShoot = true;
         StartCoroutine(AOEBurst());
         StartCoroutine(SwapCooldown());
-    }
-
-    private IEnumerator CompleteSwapAfterDelay()
-    {
-        yield return new WaitForSeconds(Mathf.Max(0f, playerInfo.SwapDuration));
-        if (player.isSwapping)
-        {
-            EnableCharacter();
-        }
     }
 
     private IEnumerator AOEBurst()

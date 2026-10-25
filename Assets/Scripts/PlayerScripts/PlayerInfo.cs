@@ -26,6 +26,7 @@ public class PlayerInfo : MonoBehaviour
     private Animator animator;
 
     private PlayerPanel playerPanel;
+    private PlayerUnderglow playerUnderglow;
 
     private void Awake()
     {
@@ -38,6 +39,7 @@ public class PlayerInfo : MonoBehaviour
         SwapDuration = baseStats.swapDuration;
 
         currentHealth = MaxHealth;
+        playerUnderglow = GetComponentInChildren<PlayerUnderglow>(true);
 
         if (spriteRenderer != null)
         {
@@ -61,6 +63,8 @@ public class PlayerInfo : MonoBehaviour
 
     private void ApplyPlayerIdentity()
     {
+        playerUnderglow?.SetPlayerId(PlayerId);
+
         switch (PlayerId)
         {
             case 1:
