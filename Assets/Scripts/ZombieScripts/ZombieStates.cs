@@ -10,7 +10,11 @@ public class ZombieChaseState : EnemyState
         zombie.RefreshTarget();
         if (zombie.IsTargetInRange()) zombie.ChangeState(zombie.AttackState);
     }
-    public override void FixedTick() { zombie.MoveTowardsTarget(); }
+    public override void FixedTick()
+    {
+        zombie.MoveTowardsTarget();
+        zombie.UpdateWalkAnimation();
+    }
     public override void Exit() { zombie.StopMoving(); }
 }
 
@@ -62,7 +66,7 @@ public class ZombieDyingState : EnemyState
     {
         if (Time.time < finishTime) return;
         // I resurrect after the first death and deactivate after the second death.
-        if(zombie.HasResurrected)
+        if (zombie.HasResurrected)
         {
             zombie.CompleteDeath();
             zombie.ChangeState(zombie.DespawnedState);
@@ -111,6 +115,7 @@ public class ZombieResurrectingState : EnemyState
     {
         zombie.SetColor(zombie.NormalColor);
     }
+
 }
 
 // I deactivate the zombie when its second death is complete.
