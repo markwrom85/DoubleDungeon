@@ -320,6 +320,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8000100012}
   - {fileID: 817789110}
   - {fileID: 2004998837}
   - {fileID: 939107156}
@@ -554,9 +555,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
   cinemachineBrainLeft: {fileID: 1825620354}
   cinemachineBrainRight: {fileID: 33268437}
-  coordinateRoomViews: 1
-  sharedFramingDamping: 0.3
-  playerFramingPadding: 0.75
 --- !u!114 &54583210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -710,6 +708,7 @@ Transform:
   m_Children:
   - {fileID: 163200962}
   - {fileID: 1832752306}
+  - {fileID: 1688233137}
   m_Father: {fileID: 1390490541}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &119502640
@@ -2359,17 +2358,6 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 3
   m_ColliderType: 1
---- !u!114 &532141433 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 988862261418752095, guid: 7a5b03e7ce9fb465486cb44fbe004f9d, type: 3}
-  m_PrefabInstance: {fileID: 163200961}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95ef80021ae3e4ab69679662bc5fcd21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawn
 --- !u!1 &553369082
 GameObject:
   m_ObjectHideFlags: 0
@@ -11130,17 +11118,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8669963804302649804, guid: 7a5b03e7ce9fb465486cb44fbe004f9d, type: 3}
   m_PrefabInstance: {fileID: 841141419}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &841141421 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 988862261418752095, guid: 7a5b03e7ce9fb465486cb44fbe004f9d, type: 3}
-  m_PrefabInstance: {fileID: 841141419}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95ef80021ae3e4ab69679662bc5fcd21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawn
 --- !u!1 &882950443
 GameObject:
   m_ObjectHideFlags: 0
@@ -13562,8 +13539,8 @@ MonoBehaviour:
   doors:
   - {fileID: 1578513866}
   enemySpawns:
-  - {fileID: 532141433}
   - {fileID: 2071151216}
+  - {fileID: 1688233138}
   spawnOnLeftSide: 1
   spawnOnRightSide: 1
   roomCamera: {fileID: 576367280}
@@ -14796,6 +14773,79 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 4.2}
   m_EdgeRadius: 0
+--- !u!1001 &1688233136
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 108315172}
+    m_Modifications:
+    - target: {fileID: 6159595123552299413, guid: 2e92ff21507e71c4dbbebcebbe56e60a, type: 3}
+      propertyPath: m_Name
+      value: BatSpawn
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669963804302649804, guid: 2e92ff21507e71c4dbbebcebbe56e60a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669963804302649804, guid: 2e92ff21507e71c4dbbebcebbe56e60a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669963804302649804, guid: 2e92ff21507e71c4dbbebcebbe56e60a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669963804302649804, guid: 2e92ff21507e71c4dbbebcebbe56e60a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669963804302649804, guid: 2e92ff21507e71c4dbbebcebbe56e60a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669963804302649804, guid: 2e92ff21507e71c4dbbebcebbe56e60a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669963804302649804, guid: 2e92ff21507e71c4dbbebcebbe56e60a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669963804302649804, guid: 2e92ff21507e71c4dbbebcebbe56e60a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669963804302649804, guid: 2e92ff21507e71c4dbbebcebbe56e60a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669963804302649804, guid: 2e92ff21507e71c4dbbebcebbe56e60a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2e92ff21507e71c4dbbebcebbe56e60a, type: 3}
+--- !u!4 &1688233137 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8669963804302649804, guid: 2e92ff21507e71c4dbbebcebbe56e60a, type: 3}
+  m_PrefabInstance: {fileID: 1688233136}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1688233138 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 988862261418752095, guid: 2e92ff21507e71c4dbbebcebbe56e60a, type: 3}
+  m_PrefabInstance: {fileID: 1688233136}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ef80021ae3e4ab69679662bc5fcd21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawn
 --- !u!1 &1700138456
 GameObject:
   m_ObjectHideFlags: 0
@@ -15000,17 +15050,6 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 3
   m_ColliderType: 1
---- !u!114 &1709987905 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 988862261418752095, guid: c217507721fb04e67810492efd11daf0, type: 3}
-  m_PrefabInstance: {fileID: 1610346113}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95ef80021ae3e4ab69679662bc5fcd21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawn
 --- !u!1001 &1723458382
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19340,6 +19379,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8000100002}
   - {fileID: 68163743}
   - {fileID: 943818236}
   - {fileID: 1753022608}
@@ -20464,7 +20504,6 @@ Transform:
   - {fileID: 1802377878}
   - {fileID: 2145246047}
   - {fileID: 1700138457}
-  - {fileID: 2105000101}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &2066209104
@@ -20511,10 +20550,7 @@ MonoBehaviour:
   doors:
   - {fileID: 1950365760}
   enemySpawns:
-  - {fileID: 841141421}
-  - {fileID: 1709987905}
   - {fileID: 1298727000}
-  - {fileID: 2105000102}
   spawnOnLeftSide: 1
   spawnOnRightSide: 1
   roomCamera: {fileID: 51281139}
@@ -20580,52 +20616,6 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 3
   m_ColliderType: 1
---- !u!1 &2105000100
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2105000101}
-  - component: {fileID: 2105000102}
-  m_Layer: 0
-  m_Name: BatSpawn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2105000101
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2105000100}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6, y: 2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2066209101}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2105000102
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2105000100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95ef80021ae3e4ab69679662bc5fcd21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawn
-  enemyPrefab: {fileID: 6720721342315900766, guid: 9658f9e89a8342068a7e2824afae667d, type: 3}
-  enemyPrefabRound2: {fileID: 6720721342315900766, guid: 9658f9e89a8342068a7e2824afae667d, type: 3}
 --- !u!1 &2129854574
 GameObject:
   m_ObjectHideFlags: 0
@@ -20846,6 +20836,142 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
+--- !u!1 &8000100001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8000100002}
+  - component: {fileID: 8000100003}
+  - component: {fileID: 8000100004}
+  m_Layer: 2
+  m_Name: Portal (Right Edge)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8000100002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8000100001}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.444444, y: 0, z: 32.159042}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1825620353}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &8000100003
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8000100001}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  m_AutoTiling: 0
+  m_Size: {x: 0.1, y: 10}
+  m_EdgeRadius: 0
+--- !u!114 &8000100004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8000100001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e256e21239a3431abf59d92b90293331, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Portal
+  attachedCamera: {fileID: 1825620352}
+  cameraEdge: 1
+  linkedPortal: {fileID: 8000100014}
+  followCamera: 1
+  gameplayZ: 0
+  triggerThickness: 0.1
+--- !u!1 &8000100011
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8000100012}
+  - component: {fileID: 8000100013}
+  - component: {fileID: 8000100014}
+  m_Layer: 2
+  m_Name: Portal (Left Edge)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8000100012
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8000100011}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.444444, y: 0, z: 32.159042}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 33268436}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &8000100013
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8000100011}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  m_AutoTiling: 0
+  m_Size: {x: 0.1, y: 10}
+  m_EdgeRadius: 0
+--- !u!114 &8000100014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8000100011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e256e21239a3431abf59d92b90293331, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Portal
+  attachedCamera: {fileID: 33268435}
+  cameraEdge: -1
+  linkedPortal: {fileID: 8000100004}
+  followCamera: 1
+  gameplayZ: 0
+  triggerThickness: 0.1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

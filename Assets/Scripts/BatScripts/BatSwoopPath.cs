@@ -11,13 +11,15 @@ public sealed class BatSwoopPath
     public Vector2 End => points[6];
     public float Length => distances[Samples];
 
-    public BatSwoopPath(Vector2 start, Vector2 target, Vector2 end, bool enteringFromDivider)
+    public BatSwoopPath(Vector2 start, Vector2 target, Vector2 end, bool enteringFromDivider,
+        Vector2 entryDirection = default)
     {
         float sign = end.x > start.x ? 1f : -1f;
         Vector2 inward = new Vector2(sign, 0f);
         float firstSpan = Mathf.Abs(target.x - start.x), lastSpan = Mathf.Abs(end.x - target.x);
         points[0] = start;
-        points[1] = enteringFromDivider ? start + inward * firstSpan * 0.5f
+        Vector2 entry = entryDirection.sqrMagnitude > 0.0001f ? entryDirection.normalized : inward;
+        points[1] = enteringFromDivider ? start + entry * firstSpan * 0.5f
             : new Vector2(start.x, Mathf.Lerp(start.y, target.y, 0.65f));
         points[2] = target - inward * firstSpan * 0.45f;
         points[3] = target;
@@ -55,5 +57,11 @@ public sealed class BatSwoopPath
         }
         float fraction = Mathf.InverseLerp(distances[low], distances[high], distance);
         return Evaluate((low + fraction) / Samples);
+    }
+
+    public Vector2 DirectionAtDistance(float distance)
+    {
+        float step = Mathf.Max(0.001f, Length * 0.001f);
+        return (AtDistance(distance + step) - AtDistance(distance - step)).normalized;
     }
 }

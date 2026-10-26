@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 132305050048072247}
   - component: {fileID: 751646646151323810}
   - component: {fileID: 6720721342315900766}
-  - component: {fileID: 5385147634294150821}
   m_Layer: 0
   m_Name: Bat
   m_TagString: Untagged
@@ -197,18 +196,6 @@ MonoBehaviour:
   swoopingColor: {r: 1, g: 0.2, b: 0.45, a: 1}
   hitColor: {r: 1, g: 1, b: 1, a: 1}
   dyingColor: {r: 1, g: 0, b: 0, a: 1}
---- !u!114 &5385147634294150821
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5619277169959799344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 668df7331017455583767e708bcdd79b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BatPortalVisual
 --- !u!1 &5619277169959799345
 GameObject:
   m_ObjectHideFlags: 0

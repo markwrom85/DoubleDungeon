@@ -5,54 +5,15 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private CinemachineBrain cinemachineBrainLeft, cinemachineBrainRight;
-    [Header("Connected room views")]
-    [SerializeField] private bool coordinateRoomViews = true;
-    [SerializeField, Min(0f)] private float sharedFramingDamping = 0.3f;
-    [SerializeField, Min(0f)] private float playerFramingPadding = 0.75f;
     private DungeonManager dungeonManager;
 
-    internal bool CoordinateRoomViews => coordinateRoomViews && isActiveAndEnabled;
-    internal float SharedFramingDamping => sharedFramingDamping;
-    internal float PlayerFramingPadding => playerFramingPadding;
-
-    private void Awake()
+    void Start()
     {
         dungeonManager = GetComponent<DungeonManager>();
     }
 
-    void Start()
-    {
-        if (dungeonManager != null)
-            ConfigureRoomViews(dungeonManager.leftCinemachineCamera, dungeonManager.rightCinemachineCamera);
-    }
-
-    private void ConfigureRoomViews(CinemachineCamera left, CinemachineCamera right)
-    {
-        if (!coordinateRoomViews || left == null || right == null || left == right
-            || cinemachineBrainLeft == null || cinemachineBrainRight == null) return;
-
-        Collider2D leftBounds = left.GetComponent<CinemachineConfiner2D>()?.BoundingShape2D;
-        Collider2D rightBounds = right.GetComponent<CinemachineConfiner2D>()?.BoundingShape2D;
-        if (leftBounds == null || rightBounds == null || leftBounds == rightBounds) return;
-
-        var pair = new RoomPairCameraFraming.Pair(this, left, right, leftBounds, rightBounds,
-            cinemachineBrainLeft.OutputCamera, cinemachineBrainRight.OutputCamera);
-        ConfigureView(left, pair, true);
-        ConfigureView(right, pair, false);
-    }
-
-    private static void ConfigureView(CinemachineCamera camera, RoomPairCameraFraming.Pair pair, bool isLeft)
-    {
-        if (!camera.TryGetComponent(out RoomPairCameraFraming framing))
-            framing = camera.gameObject.AddComponent<RoomPairCameraFraming>();
-        framing.Configure(pair, isLeft);
-        camera.PreviousStateIsValid = false;
-    }
-
     public void MoveCamera(CinemachineCamera desiredCamLeft, CinemachineCamera desiredCamRight, CinemachineCamera oldCameraLeft, CinemachineCamera oldCameraRight)
     {
-        ConfigureRoomViews(desiredCamLeft, desiredCamRight);
-
         // Changing priorities tells each CinemachineBrain to blend to the new room camera.
         oldCameraLeft.Priority = 0;
         oldCameraRight.Priority = 0;

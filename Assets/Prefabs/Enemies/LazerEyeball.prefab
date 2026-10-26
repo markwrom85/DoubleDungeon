@@ -194,7 +194,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LazerEyeballLaser
   roomBeam: {fileID: 5841132005083526789}
   oppositeBeam: {fileID: 4561769611581999941}
-  roomBeamShader: {fileID: 4800000, guid: 398e324e9d5d4da697df96b71ab0ef5b, type: 3}
   widthRelativeToBody: 0.6666667
   warningWidth: 0.15
   warningColor: {r: 1, g: 0.8, b: 0.1, a: 0.7}
@@ -227,7 +226,9 @@ MonoBehaviour:
     m_Bits: 4294967295
   laserDamage: 1
   chargeDuration: 1.5
-  fireDuration: 1
+  fireDuration: 0.1
+  burstCount: 3
+  burstGap: 0.1
   recoveryDuration: 1
   rotationSpeed: 5
   oppositeTargetAngle: 20

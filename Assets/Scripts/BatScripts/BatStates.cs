@@ -17,9 +17,6 @@ public sealed class BatSwoopState : EnemyState
     private readonly BatController bat;
     public BatSwoopState(BatController bat) { this.bat = bat; }
     public override void Enter() { bat.BeginSwoop(); }
-    public override void FixedTick()
-    {
-        if (bat.AdvanceSwoop(UnityEngine.Time.fixedDeltaTime)) bat.ChangeState(bat.RoamState);
-    }
+    // BatController advances the swoop after the cameras finish their LateUpdate.
     public override void Exit() { bat.StopMoving(); }
 }

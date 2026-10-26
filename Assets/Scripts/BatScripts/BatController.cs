@@ -5,8 +5,10 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D))]
 [RequireComponent(typeof(EnemyDungeonSetup))]
+[DefaultExecutionOrder(1000)]
 public sealed class BatController : EnemyController
 {
+    private Portal portal;
     [Header("Health")]
     [SerializeField, Min(1f)] private float batMaxHealth = 15f;
     [SerializeField, Min(0f)] private float deathDuration = 0.6f;
@@ -39,7 +41,8 @@ public sealed class BatController : EnemyController
     private DungeonManager manager;
     private Vector3 originalScale;
     private Vector2 position, roamDestination, stagePosition;
-    private float referenceRoomHeight, recoveryUntil, nextDirectionTime, chargeUntil, hitFlashUntil, deathUntil;
+    private float movementScale = 1f;
+    private float recoveryUntil, nextDirectionTime, chargeUntil, hitFlashUntil, deathUntil;
     private float passDistance;
     private bool onLeft, hasRoamDestination, preparingAttack, atEdge, dying, defeatReported;
     private int completedAttacks;
@@ -59,8 +62,8 @@ public sealed class BatController : EnemyController
     public bool IsPreparingAttack => preparingAttack;
     public int PassIndex { get; private set; }
     public int CompletedAttacks => completedAttacks;
-    private float RoomScale => CurrentSide != null && referenceRoomHeight > 0f
-        ? CurrentSide.LevelBounds.bounds.size.y / referenceRoomHeight : 1f;
+    public float PortalRadius => Radius;
+    private float RoomScale => movementScale;
     private float Radius => hitbox.radius * Mathf.Max(Mathf.Abs(transform.lossyScale.x), Mathf.Abs(transform.lossyScale.y));
 
     protected override void Awake()
@@ -93,11 +96,12 @@ public sealed class BatController : EnemyController
         position = body.position;
         Health = MaxHealth;
         CurrentSide = null;
-        referenceRoomHeight = 0f;
+        movementScale = 1f;
         completedAttacks = 0;
         dying = defeatReported = false;
         hitFlashUntil = 0f;
         hitbox.enabled = body.simulated = bodyRenderer.enabled = true;
+        Portal.RegisterBat(this);
         PrepareRoom();
         ChangeState(RoamState);
     }
@@ -129,10 +133,17 @@ public sealed class BatController : EnemyController
         else StopMoving();
     }
 
+    private void LateUpdate()
+    {
+        // Cinemachine finalizes each independent camera before the Bat crosses its edge.
+        if (IsSwooping && AdvanceSwoop(Time.deltaTime)) ChangeState(RoamState);
+    }
+
     protected override void OnDisable()
     {
         StopMoving();
         hitPlayers.Clear();
+        Portal.UnregisterBat(this);
         base.OnDisable();
     }
 
@@ -143,9 +154,10 @@ public sealed class BatController : EnemyController
             CurrentSide = dungeonSetup.GetStartingSide(position);
             if (CurrentSide == null || CurrentSide.OppositeSide == null) return false;
             onLeft = dungeonSetup.GetSide(true) == CurrentSide;
-            if (referenceRoomHeight <= 0f) referenceRoomHeight = CurrentSide.LevelBounds.bounds.size.y;
         }
-        return IsRoomPairActive();
+        if (!IsRoomPairActive()) return false;
+        if (portal == null || !portal.IsValidFor(CurrentSide)) Portal.TryFind(gameObject.scene, CurrentSide, out portal);
+        return portal != null;
     }
 
     public bool IsRoomPairActive()
@@ -171,6 +183,7 @@ public sealed class BatController : EnemyController
     public void BeginRecovery()
     {
         StopMoving();
+        body.interpolation = RigidbodyInterpolation2D.Interpolate;
         preparingAttack = atEdge = hasRoamDestination = false;
         Target = null;
         CurrentPass = null;
@@ -256,6 +269,7 @@ public sealed class BatController : EnemyController
     public void BeginSwoop()
     {
         StopMoving();
+        body.interpolation = RigidbodyInterpolation2D.None;
         preparingAttack = atEdge = false;
         hitPlayers.Clear();
         PassIndex = 0;
@@ -263,7 +277,7 @@ public sealed class BatController : EnemyController
         BuildPass(false);
     }
 
-    private void BuildPass(bool enteringFromDivider)
+    private void BuildPass(bool enteringFromDivider, Vector2 entryDirection = default)
     {
         Bounds bounds = CurrentSide.LevelBounds.bounds;
         Target = CurrentSide.FindTarget(position);
@@ -281,30 +295,55 @@ public sealed class BatController : EnemyController
         float lowX = Mathf.Min(position.x, endX), highX = Mathf.Max(position.x, endX);
         float inset = Mathf.Min((highX - lowX) * 0.1f, Radius + 0.05f);
         aim.x = Mathf.Clamp(aim.x, lowX + inset, highX - inset);
-        CurrentPass = new BatSwoopPath(position, aim, new Vector2(endX, endY), enteringFromDivider);
+        CurrentPass = new BatSwoopPath(position, aim, new Vector2(endX, endY), enteringFromDivider, entryDirection);
         passDistance = 0f;
     }
 
     public bool AdvanceSwoop(float seconds)
     {
         if (!IsSwooping || !IsRoomPairActive() || CurrentPass == null || seconds <= 0f) return false;
+        if (portal == null || !portal.IsValidFor(CurrentSide))
+        {
+            ChangeState(RoamState);
+            return false;
+        }
         float timeLeft = seconds;
         for (int pass = 0; pass < 2 && timeLeft > 0f; pass++)
         {
+            // A moving entrance can pass over the Bat between frames.
+            if (PassIndex == 0 && portal.TryCrossing(position, position, out _, out _))
+            {
+                DamageSwoopSegment(position, position);
+                if (!portal.TryTransfer(this, position, CurrentPass.DirectionAtDistance(passDistance), out _))
+                {
+                    ChangeState(RoamState);
+                    return false;
+                }
+                continue;
+            }
             float speed = Mathf.Max(0.1f, swoopSpeed * RoomScale);
             float travel = Mathf.Min(speed * timeLeft, CurrentPass.Length - passDistance);
             int steps = Mathf.Clamp(Mathf.CeilToInt(travel / Mathf.Max(0.05f, Radius * 0.5f)), 1, 128);
             Vector2 previous = position;
+            bool crossed = false;
             for (int index = 1; index <= steps; index++)
             {
                 Vector2 next = CurrentPass.AtDistance(passDistance + travel * index / steps);
-                DamageAlongPath(CurrentSide, previous, next, Radius);
-                // The visible portion straddling the portal can hit a player just across the border.
-                DamageAlongPath(CurrentSide.OppositeSide, MapAcross(previous), MapAcross(next),
-                    Radius * CurrentSide.OppositeSide.LevelBounds.bounds.size.y / CurrentSide.LevelBounds.bounds.size.y);
+                if (PassIndex == 0 && portal.TryCrossing(previous, next, out float fraction, out Vector2 crossing))
+                {
+                    float used = travel * (index - 1 + fraction) / steps;
+                    DamageSwoopSegment(previous, crossing);
+                    Vector2 tangent = CurrentPass.DirectionAtDistance(passDistance + used);
+                    timeLeft = Mathf.Max(0f, timeLeft - used / speed);
+                    crossed = portal.TryTransfer(this, crossing, tangent, out _);
+                    if (!crossed) { ChangeState(RoamState); return false; }
+                    break;
+                }
+                DamageSwoopSegment(previous, next);
                 previous = next;
             }
-            MoveTo(previous);
+            if (crossed) continue;
+            WarpTo(previous);
             passDistance += travel;
             timeLeft -= travel / speed;
             if (passDistance < CurrentPass.Length - 0.0001f) return false;
@@ -313,40 +352,49 @@ public sealed class BatController : EnemyController
                 completedAttacks++;
                 return true;
             }
-            Vector2 destination = MapAcross(CurrentPass.End);
-            CurrentSide = CurrentSide.OppositeSide;
-            onLeft = !onLeft;
-            transform.localScale = originalScale * RoomScale;
-            WarpTo(destination);
-            PassIndex = 1;
-            BuildPass(true); // Select and lock the second room's target only at the crossing.
+            // Reaching a room wall does not teleport through an offscreen portal.
+            ChangeState(RoamState);
+            return false;
         }
         return false;
     }
 
-    public Vector2 MapAcross(Vector2 point)
+    internal void ReceivePortalTransfer(Portal.Transit transit)
     {
-        Bounds from = CurrentSide.LevelBounds.bounds, to = CurrentSide.OppositeSide.LevelBounds.bounds;
-        float scale = to.size.y / from.size.y;
-        float fromEdge = onLeft ? from.max.x : from.min.x, toEdge = onLeft ? to.min.x : to.max.x;
-        return new Vector2(toEdge + (point.x - fromEdge) * scale, to.min.y + (point.y - from.min.y) * scale);
+        CurrentSide = CurrentSide.OppositeSide;
+        onLeft = !onLeft;
+        movementScale *= transit.Scale;
+        portal = transit.Exit;
+        position = transit.Position;
+        PassIndex = 1;
+        BuildPass(true, transit.Direction);
     }
 
-    private void DamageAlongPath(EnemyDungeonSide side, Vector2 from, Vector2 to, float radius)
+    private void DamageSwoopSegment(Vector2 from, Vector2 to)
+    {
+        if (portal == null || !portal.IsValidFor(CurrentSide)) return;
+        bool reachesOtherRoom = portal.TravelSegments(this, from, to, out Portal.Segment source, out Portal.Segment other);
+        DamageAlongPath(source);
+        if (reachesOtherRoom) DamageAlongPath(other);
+    }
+
+    private void DamageAlongPath(Portal.Segment segment)
     {
         if (contactDamage <= 0f) return;
-        Vector2 delta = to - from;
+        Vector2 delta = segment.End - segment.Start;
+        float radius = segment.Width * 0.5f;
         foreach (PlayerInput player in PlayerInput.all)
         {
-            if (hitPlayers.Contains(player) || !side.IsValidTarget(player)) continue;
+            if (hitPlayers.Contains(player) || !segment.Room.IsValidTarget(player)) continue;
             player.GetComponentsInChildren(false, playerColliders);
             foreach (Collider2D collider in playerColliders)
             {
                 if (!collider.enabled || collider.isTrigger) continue;
                 float along = delta.sqrMagnitude > 0f
-                    ? Mathf.Clamp01(Vector2.Dot((Vector2)collider.bounds.center - from, delta) / delta.sqrMagnitude) : 0f;
-                Vector2 closest = from + delta * along;
-                if ((collider.ClosestPoint(closest) - closest).sqrMagnitude > radius * radius) continue;
+                    ? Mathf.Clamp01(Vector2.Dot((Vector2)collider.bounds.center - segment.Start, delta) / delta.sqrMagnitude) : 0f;
+                Vector2 closest = segment.Start + delta * along;
+                Vector2 contact = collider.ClosestPoint(closest);
+                if (!segment.AllowsContact(contact) || (contact - closest).sqrMagnitude > radius * radius) continue;
                 PlayerInfo info = player.GetComponentInChildren<PlayerInfo>(true);
                 if (info != null) { hitPlayers.Add(player); info.TakeDamage(contactDamage); }
                 break;
@@ -371,7 +419,6 @@ public sealed class BatController : EnemyController
     {
         position = next;
         body.position = next;
-        body.MovePosition(next);
         transform.position = new Vector3(next.x, next.y, transform.position.z);
     }
 

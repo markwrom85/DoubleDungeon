@@ -68,15 +68,37 @@ public class LazerEyeballChargeState : EnemyState
     public override void Exit() { eye.HideLaser(); }
 }
 
-// I keep my aim fixed for this firing cycle, even when the target moves or teleports away.
+// One charge launches a sequence of short bursts with the same locked aim.
 public class LazerEyeballFireState : EnemyState
 {
     private readonly LazerEyeballController eye;
-    private float finishTime;
+    private double phaseEndsAt;
+    private float burstDuration, burstGap;
+    private int burstsRemaining;
+    private bool firingBurst;
     public LazerEyeballFireState(LazerEyeballController eye) { this.eye = eye; }
     public override void Enter()
-    { eye.SetFiringColor(); eye.BeginFire(); finishTime = Time.time + eye.FireDuration; }
-    public override void Tick() { if (Time.time >= finishTime) eye.ChangeState(eye.RecoveryState); }
+    {
+        burstsRemaining = eye.BurstCount;
+        burstDuration = eye.FireDuration;
+        burstGap = eye.BurstGap;
+        BeginBurst();
+    }
+    private void BeginBurst()
+    {
+        eye.SetFiringColor(); eye.BeginFire(); firingBurst = true;
+        phaseEndsAt = Time.timeAsDouble + burstDuration;
+    }
+    public override void Tick()
+    {
+        if (Time.timeAsDouble < phaseEndsAt) return;
+        if (!firingBurst) { BeginBurst(); return; }
+        eye.HideLaser();
+        if (--burstsRemaining == 0) { eye.ChangeState(eye.RecoveryState); return; }
+        firingBurst = false;
+        eye.SetChargingColor();
+        phaseEndsAt = Time.timeAsDouble + burstGap;
+    }
     public override void Exit() { eye.HideLaser(); }
 }
 

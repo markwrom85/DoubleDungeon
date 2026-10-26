@@ -22,7 +22,9 @@ public class LazerEyeballController : EnemyController
     [Header("Laser")]
     [SerializeField, Min(0f)] private float laserDamage = 1f;
     [SerializeField, Min(0.1f)] private float chargeDuration = 1.5f;
-    [SerializeField, Min(0.1f)] private float fireDuration = 1f;
+    [SerializeField, Min(0.1f), InspectorName("Burst Duration")] private float fireDuration = 0.1f;
+    [SerializeField, Min(1)] private int burstCount = 3;
+    [SerializeField, Min(0.01f), Tooltip("Time with the beam off between bursts.")] private float burstGap = 0.1f;
     [SerializeField, Min(0f)] private float recoveryDuration = 1f;
     [SerializeField, Min(1f)] private float rotationSpeed = 120f;
     [SerializeField, Range(0f, 90f)] private float oppositeTargetAngle = 20f;
@@ -56,7 +58,9 @@ public class LazerEyeballController : EnemyController
     public Vector2 Facing { get; private set; }
     public float MoveDuration => moveDuration;
     public float ChargeDuration => chargeDuration;
-    public float FireDuration => fireDuration;
+    public float FireDuration => Mathf.Max(0.1f, fireDuration);
+    public int BurstCount => Mathf.Max(1, burstCount);
+    public float BurstGap => Mathf.Max(0.01f, burstGap);
     public float RecoveryDuration => recoveryDuration;
     public float DeathDuration => deathDuration;
     public bool HasTarget => IsValidTarget(Target);
