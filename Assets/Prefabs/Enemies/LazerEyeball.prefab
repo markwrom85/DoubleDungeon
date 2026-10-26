@@ -162,7 +162,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.45
+  m_Radius: 0.65
 --- !u!114 &8544449421794733258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,9 +194,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LazerEyeballLaser
   roomBeam: {fileID: 5841132005083526789}
   oppositeBeam: {fileID: 4561769611581999941}
-  leftView: {fileID: 0}
-  rightView: {fileID: 0}
-  alignWithCameras: 0
   widthRelativeToBody: 0.6666667
   warningWidth: 0.15
   warningColor: {r: 1, g: 0.8, b: 0.1, a: 0.7}
@@ -229,7 +226,9 @@ MonoBehaviour:
     m_Bits: 4294967295
   laserDamage: 1
   chargeDuration: 1.5
-  fireDuration: 1
+  fireDuration: 0.1
+  burstCount: 3
+  burstGap: 0.1
   recoveryDuration: 1
   rotationSpeed: 5
   oppositeTargetAngle: 20
