@@ -9,6 +9,13 @@ public class PlayerInfo : MonoBehaviour
     [Header("Sprite")]
     [SerializeField] private SpriteRenderer spriteRenderer;
 
+    [Header("Underglow Sprites")]
+    [SerializeField] private SpriteRenderer underglowRenderer;
+    [SerializeField] private Sprite player1UnderglowSprite;
+    [SerializeField] private Sprite player2UnderglowSprite;
+    [SerializeField] private Sprite player3UnderglowSprite;
+    [SerializeField] private Sprite player4UnderglowSprite;
+
     public int PlayerId { get; private set; }
     public float CurrentHealth => currentHealth;
     public float MoveSpeed { get; private set; }
@@ -71,24 +78,28 @@ public class PlayerInfo : MonoBehaviour
                 gameObject.name = "Player 1";
                 playerPanel = GameObject.Find("Player 1 Panel")?.GetComponent<PlayerPanel>();
                 if (spriteRenderer != null) spriteRenderer.color = Color.cyan;
+                if (underglowRenderer != null) underglowRenderer.sprite = player1UnderglowSprite;
                 break;
 
             case 2:
                 gameObject.name = "Player 2";
                 playerPanel = GameObject.Find("Player 2 Panel")?.GetComponent<PlayerPanel>();
                 if (spriteRenderer != null) spriteRenderer.color = Color.red;
+                if (underglowRenderer != null) underglowRenderer.sprite = player2UnderglowSprite;
                 break;
 
             case 3:
                 gameObject.name = "Player 3";
                 playerPanel = GameObject.Find("Player 3 Panel")?.GetComponent<PlayerPanel>();
                 if (spriteRenderer != null) spriteRenderer.color = Color.green;
+                if (underglowRenderer != null) underglowRenderer.sprite = player3UnderglowSprite;
                 break;
 
             case 4:
                 gameObject.name = "Player 4";
                 playerPanel = GameObject.Find("Player 4 Panel")?.GetComponent<PlayerPanel>();
                 if (spriteRenderer != null) spriteRenderer.color = Color.yellow;
+                if (underglowRenderer != null) underglowRenderer.sprite = player4UnderglowSprite;
                 break;
 
             default:
@@ -123,6 +134,11 @@ public class PlayerInfo : MonoBehaviour
     public void SetPanelSide(bool isLeftSide)
     {
         playerPanel?.SetPanelSide(isLeftSide);
+    }
+
+    public void SetTeleportCooldownProgress(float progress)
+    {
+        playerPanel?.SetTeleportCooldownProgress(progress);
     }
 
     public void SetDirection(Vector2 direction)

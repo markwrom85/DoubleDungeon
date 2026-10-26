@@ -7,6 +7,7 @@ public class PlayerPanel : MonoBehaviour
     [SerializeField] private Sprite heartHalf;
     [SerializeField] private Sprite heartEmpty;
     [SerializeField] private Image[] heartImages;
+    [SerializeField] private Image[] teleportBarSegments;
     [SerializeField] private RectTransform[] panelSides;
     [SerializeField, Min(0.01f)] private float sideTransitionDuration = 0.35f;
     private RectTransform currentPanelSide;
@@ -16,6 +17,8 @@ public class PlayerPanel : MonoBehaviour
 
     private void Awake()
     {
+        SetTeleportCooldownProgress(1f);
+
         if (heartImages == null || heartImages.Length == 0)
         {
             heartImages = GetComponentsInChildren<Image>(true);
@@ -67,6 +70,21 @@ public class PlayerPanel : MonoBehaviour
                 : healthUnitsForHeart == 1
                     ? heartHalf
                     : heartEmpty;
+        }
+    }
+
+    public void SetTeleportCooldownProgress(float progress)
+    {
+        if (teleportBarSegments == null || teleportBarSegments.Length == 0) return;
+
+        float filledSegments = Mathf.Clamp01(progress) * teleportBarSegments.Length;
+        for (int index = 0; index < teleportBarSegments.Length; index++)
+        {
+            Image segment = teleportBarSegments[index];
+            if (segment != null)
+            {
+                segment.fillAmount = Mathf.Clamp01(filledSegments - index);
+            }
         }
     }
 
