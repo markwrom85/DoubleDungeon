@@ -56,6 +56,7 @@ public class PlayerSwapSides : MonoBehaviour
             : 0f;
 
         canSwap = false;
+        playerInfo?.SetTeleportCooldownProgress(0f);
         player.isSwapping = true;
         cardinalGun.canShoot = false;
         StartCoroutine(SwapSidesRoutine(
@@ -164,7 +165,23 @@ public class PlayerSwapSides : MonoBehaviour
     private IEnumerator SwapCooldown()
     {
         canSwap = false;
-        yield return new WaitForSeconds(playerInfo.SwapCooldown);
+        float cooldownDuration = Mathf.Max(0f, playerInfo.SwapCooldown);
+        if (cooldownDuration <= 0f)
+        {
+            playerInfo?.SetTeleportCooldownProgress(1f);
+            canSwap = true;
+            yield break;
+        }
+
+        float elapsed = 0f;
+        while (elapsed < cooldownDuration)
+        {
+            playerInfo?.SetTeleportCooldownProgress(elapsed / cooldownDuration);
+            yield return null;
+            elapsed += Time.deltaTime;
+        }
+
+        playerInfo?.SetTeleportCooldownProgress(1f);
         canSwap = true;
     }
 }

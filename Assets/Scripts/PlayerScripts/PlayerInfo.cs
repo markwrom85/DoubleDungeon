@@ -132,6 +132,11 @@ public class PlayerInfo : MonoBehaviour
         playerPanel?.SetPanelSide(isLeftSide);
     }
 
+    public void SetTeleportCooldownProgress(float progress)
+    {
+        playerPanel?.SetTeleportCooldownProgress(progress);
+    }
+
     public void SetDirection(Vector2 direction)
     {
         if (animator == null)
