@@ -646,6 +646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c04c13b8551746268a193a6d97ea8560, type: 3}
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::PortalTraveller
+  mode: 1
   allowTravel: 1
   automatic: 0
   scaleWithPortal: 1

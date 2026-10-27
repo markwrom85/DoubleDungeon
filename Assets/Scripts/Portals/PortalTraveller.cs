@@ -13,6 +13,8 @@ public interface IPortalUser
 [DefaultExecutionOrder(1200)]
 public sealed class PortalTraveller : MonoBehaviour
 {
+    public enum TravelMode { MovingObject = 0, ImobileObject = 1 }
+    [SerializeField] private TravelMode mode;
     [SerializeField] private bool allowTravel = true;
     [SerializeField, Tooltip("Check Rigidbody or transform movement automatically. Disable for rays or custom movement.")]
     private bool automatic = true;
@@ -28,6 +30,8 @@ public sealed class PortalTraveller : MonoBehaviour
     private double lastTravelPhysicsTime = double.NegativeInfinity;
     private readonly List<IPortalUser> listeners = new List<IPortalUser>();
     private readonly Dictionary<Portal, Portal.OpeningPose> openings = new Dictionary<Portal, Portal.OpeningPose>();
+    private readonly PortalBeam beam = new PortalBeam();
+    public PortalBeam Beam => beam;
     internal bool StopAtExit => stopAtExit;
     public Vector2 Position => body != null ? body.position : (Vector2)transform.position;
     public bool RecentlyTravelled => Time.fixedTimeAsDouble - lastTravelPhysicsTime <= Time.fixedDeltaTime * 1.1;
@@ -51,10 +55,32 @@ public sealed class PortalTraveller : MonoBehaviour
         ResetTracking();
     }
 
+    // Restore the authored sprite and hide its routed sections when an attack or object is disabled.
+    private void OnDisable() { beam.Hide(); }
+
+    // Release only the beam renderers owned by this traveller; their shared assets remain untouched.
+    private void OnDestroy() { beam.Dispose(); }
+
     // Ordinary physics and transform movement use the same crossing process as custom paths.
     private void LateUpdate()
     {
-        if (automatic) CheckCrossing();
+        if (mode == TravelMode.ImobileObject)
+        {
+            if (automatic) beam.UpdateSprite(this);
+        }
+        else
+        {
+            beam.Hide();
+            if (automatic) CheckCrossing();
+        }
+    }
+
+    // Beam attacks use the same routing whether their geometry comes from a sprite or their own controller.
+    public bool TraceBeam(Vector2 origin, Vector2 direction, float range, float width,
+        Collider2D sourceArea = null, Collider2D destinationArea = null)
+    {
+        if (mode != TravelMode.ImobileObject) { beam.Clear(); return false; }
+        return beam.Trace(this, origin, direction, range, width, sourceArea, destinationArea);
     }
 
     // Check this object's permission plus optional state restrictions supplied by its controller.
@@ -79,6 +105,7 @@ public sealed class PortalTraveller : MonoBehaviour
     // Detect physics movement before a projectile collision/exit callback can retire it.
     public bool CheckCrossing()
     {
+        if (mode != TravelMode.MovingObject) return false;
         Vector2 direction = body != null ? body.linearVelocity : Position - sampledPosition;
         bool crossed = Portal.TryTravel(this, sampledPosition, Position, direction, out _);
         ResetTracking();
@@ -88,6 +115,7 @@ public sealed class PortalTraveller : MonoBehaviour
     // Custom movement submits a desired position; the portal owns crossing detection and transfer.
     public bool MoveTo(Vector2 destination, Vector2 direction, out Portal.Transit transit)
     {
+        if (mode != TravelMode.MovingObject) { transit = default; return false; }
         Vector2 from = Position;
         SetPosition(destination);
         bool crossed = Portal.TryTravel(this, from, destination, direction, out transit);

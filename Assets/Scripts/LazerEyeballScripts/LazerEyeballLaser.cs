@@ -17,29 +17,17 @@ public class LazerEyeballLaser : MonoBehaviour
     private bool onLeft, showing, firing;
     private Vector2 direction;
     private float damage;
-    private BeamPath path;
     private PortalTraveller traveller;
-    private struct Segment
-    {
-        public Vector2 Start, End;
-        public float Width;
-        public Portal Gate;
-    }
-    private struct BeamPath
-    {
-        public Segment Source, Destination;
-        public bool HasDestination;
-        public float Z;
-    }
+    private PortalBeam Path => traveller.Beam;
     private readonly HashSet<PlayerInput> hitPlayers = new HashSet<PlayerInput>();
     private readonly List<Collider2D> colliders = new List<Collider2D>(8);
 
     public bool IsFiring => firing;
-    public Vector2 Start => path.Source.Start;
-    public Vector2 End => path.Source.End;
-    public Vector2 OppositeStart => path.Destination.Start;
-    public Vector2 OppositeEnd => path.Destination.End;
-    public bool HasOppositeSegment => showing && path.HasDestination;
+    public Vector2 Start => Path.Segments.Count > 0 ? Path.Segments[0].Start : Vector2.zero;
+    public Vector2 End => Path.Segments.Count > 0 ? Path.Segments[0].End : Vector2.zero;
+    public Vector2 OppositeStart => Path.Segments.Count > 1 ? Path.Segments[1].Start : Vector2.zero;
+    public Vector2 OppositeEnd => Path.Segments.Count > 1 ? Path.Segments[1].End : Vector2.zero;
+    public bool HasOppositeSegment => showing && Path.Segments.Count > 1;
 
     private void Awake()
     {
@@ -85,13 +73,14 @@ public class LazerEyeballLaser : MonoBehaviour
     {
         float diameter = bodySprite != null && bodySprite.sprite != null ? bodySprite.sprite.bounds.size.x * Mathf.Abs(transform.lossyScale.x)
             : bodyCollider != null ? bodyCollider.radius * 2f * Mathf.Abs(transform.lossyScale.x) : 0.5f;
-        if (!FindPortal() || !BuildPath(diameter * widthRelativeToBody))
+        if (!FindPortal() || !side.Contains(transform.position) || traveller == null
+            || !traveller.TraceBeam(transform.position, direction, float.PositiveInfinity,
+                diameter * widthRelativeToBody, side.LevelBounds, side.OppositeSide.LevelBounds))
         { Hide(); return false; }
         Color color = firing ? firingColor : warningColor;
         float widthFactor = firing ? 1f : warningWidth;
-        DrawSegment(roomBeam, path.Source, color, widthFactor, true);
-        if (path.HasDestination) DrawSegment(oppositeBeam, path.Destination, color, widthFactor, false);
-        else if (oppositeBeam != null) oppositeBeam.enabled = false;
+        Path.DrawLine(roomBeam, 0, transform.position.z, color, widthFactor);
+        Path.DrawLine(oppositeBeam, 1, transform.position.z, color, widthFactor);
         return true;
     }
 
@@ -101,31 +90,27 @@ public class LazerEyeballLaser : MonoBehaviour
         {
             if (hitPlayers.Contains(player)) continue;
             bool local = side.IsValidTarget(player);
-            if (!local && (!path.HasDestination || !side.OppositeSide.IsValidTarget(player))) continue;
-            if (!Touches(player, local ? path.Source : path.Destination)) continue;
+            if (!local && (!HasOppositeSegment || !side.OppositeSide.IsValidTarget(player))) continue;
+            if (!Touches(player, Path.Segments[local ? 0 : 1])) continue;
             PlayerInfo info = player.GetComponentInChildren<PlayerInfo>(true);
             if (info == null) continue;
             hitPlayers.Add(player); info.TakeDamage(damage);
         }
     }
 
-    private bool Touches(PlayerInput player, Segment segment)
+    // Player selection and the per-burst hit limit belong to this attack; geometry belongs to the traveller.
+    private bool Touches(PlayerInput player, PortalBeam.Segment segment)
     {
-        Vector2 delta = segment.End - segment.Start;
         player.GetComponentsInChildren(false, colliders);
         foreach (Collider2D collider in colliders)
-        {
-            if (!collider.enabled || collider.isTrigger) continue;
-            float along = delta.sqrMagnitude > 0f ? Mathf.Clamp01(Vector2.Dot((Vector2)collider.bounds.center - segment.Start, delta) / delta.sqrMagnitude) : 0f;
-            Vector2 point = segment.Start + delta * along, contact = collider.ClosestPoint(point);
-            if ((segment.Gate == null || segment.Gate.ContainsVisible(contact)) && (contact - point).sqrMagnitude <= segment.Width * segment.Width * 0.25f) return true;
-        }
+            if (segment.Touches(collider)) return true;
         return false;
     }
 
     public void Hide()
     {
-        showing = firing = false; path = default; hitPlayers.Clear();
+        showing = firing = false; hitPlayers.Clear();
+        if (traveller != null) Path.Clear();
         if (roomBeam != null) roomBeam.enabled = false;
         if (oppositeBeam != null) oppositeBeam.enabled = false;
     }
@@ -173,104 +158,6 @@ public class LazerEyeballLaser : MonoBehaviour
         float extent = Mathf.Abs(axis.x) * bounds.extents.x + Mathf.Abs(axis.y) * bounds.extents.y;
         low = center - extent;
         high = center + extent;
-    }
-
-    // Limit this attack to its room bounds and ask the portal to route the ray when permitted.
-    private bool BuildPath(float width)
-    {
-        path = default;
-        Vector2 origin = transform.position;
-        if (!side.Contains(origin) || direction.sqrMagnitude < 0.0001f) return false;
-        path.Z = transform.position.z;
-        path.Source = new Segment { Start = origin, End = RoomExit(side.LevelBounds.bounds, origin, direction), Width = width };
-        float range = Vector2.Distance(path.Source.Start, path.Source.End);
-        if (portal.TryMapRay(traveller, origin, direction, range, out Vector2 hit, out Vector2 entry, out Vector2 exitDirection))
-        {
-            path.Source.End = hit;
-            path.Source.Gate = portal;
-            Vector2 unclipped = entry;
-            if (ClipEntry(side.OppositeSide.LevelBounds.bounds, ref entry, exitDirection))
-            {
-                path.HasDestination = true;
-                path.Destination = new Segment { Start = entry,
-                    End = RoomExit(side.OppositeSide.LevelBounds.bounds, entry, exitDirection),
-                    Width = width * portal.ExitScale,
-                    Gate = Vector2.Distance(entry, unclipped) < 0.001f ? portal.LinkedPortal : null };
-            }
-        }
-        return true;
-    }
-
-    // Draw the attack's straight segment with a small extension to cover the edge.
-    private void DrawSegment(LineRenderer renderer, Segment segment, Color color, float widthFactor, bool source)
-    {
-        if (renderer == null)
-            return;
-
-        float z = path.Z;
-        float width = segment.Width * widthFactor;
-        Vector2 a = segment.Start, b = segment.End;
-
-        if (segment.Gate != null)
-        {
-            Vector2 along = (source ? b - a : a - b).normalized;
-            Portal gate = segment.Gate;
-            float padding = 0.5f * width * Mathf.Abs(Vector2.Dot(along, gate.Up))
-                / Mathf.Max(0.0001f, Mathf.Abs(Vector2.Dot(along, gate.Normal))) + (gate.AttachedCamera != null && gate.AttachedCamera.pixelHeight > 0 ? gate.Height / gate.AttachedCamera.pixelHeight : 0.002f);
-
-            if (source)
-                b += along * padding;
-            else
-                a += along * padding;
-        }
-
-        renderer.enabled = true;
-        renderer.useWorldSpace = true;
-        renderer.positionCount = 2;
-        renderer.numCornerVertices = 0;
-        renderer.startWidth = renderer.endWidth = width;
-        renderer.startColor = renderer.endColor = color;
-        renderer.SetPosition(0, new Vector3(a.x, a.y, z));
-        renderer.SetPosition(1, new Vector3(b.x, b.y, z));
-    }
-
-    // Stop this attack at the room boundary.
-    private static Vector2 RoomExit(Bounds bounds, Vector2 point, Vector2 direction)
-    {
-        float x = Mathf.Abs(direction.x) > 0.00001f
-            ? ((direction.x > 0f ? bounds.max.x : bounds.min.x) - point.x) / direction.x
-            : float.PositiveInfinity;
-        float y = Mathf.Abs(direction.y) > 0.00001f
-            ? ((direction.y > 0f ? bounds.max.y : bounds.min.y) - point.y) / direction.y
-            : float.PositiveInfinity;
-
-        return point + direction * Mathf.Max(0f, Mathf.Min(x, y));
-    }
-
-    // Trim a mapped ray to the destination room.
-    private static bool ClipEntry(Bounds bounds, ref Vector2 point, Vector2 direction)
-    {
-        float near = 0f, far = float.PositiveInfinity;
-        for (int axis = 0; axis < 2; axis++)
-        {
-            if (Mathf.Abs(direction[axis]) < 0.00001f)
-            {
-                if (point[axis] < bounds.min[axis] || point[axis] > bounds.max[axis])
-                    return false;
-
-                continue;
-            }
-
-            float a = (bounds.min[axis] - point[axis]) / direction[axis], b = (bounds.max[axis] - point[axis]) / direction[axis];
-            near = Mathf.Max(near, Mathf.Min(a, b));
-            far = Mathf.Min(far, Mathf.Max(a, b));
-        }
-
-        if (near > far || far < 0f)
-            return false;
-
-        point += direction * near;
-        return true;
     }
 
     private void OnDisable() { Hide(); }

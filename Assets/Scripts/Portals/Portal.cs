@@ -162,6 +162,29 @@ public sealed class Portal : MonoBehaviour
         return true;
     }
 
+    // Pick the first permitted opening along any beam, optionally restricted to a supplied pair of areas.
+    public static bool TryFindRay(PortalTraveller user, Vector2 origin, Vector2 direction, float range,
+        out Portal portal, out Vector2 entrance, out Vector2 exit, out Vector2 exitDirection,
+        Collider2D sourceArea = null, Collider2D destinationArea = null)
+    {
+        portal = null;
+        entrance = exit = exitDirection = default;
+        float nearest = float.PositiveInfinity;
+        foreach (Portal candidate in portals)
+        {
+            if (sourceArea != null && destinationArea != null && !candidate.IsValidFor(sourceArea, destinationArea)) continue;
+            if (!candidate.TryMapRay(user, origin, direction, range, out Vector2 hit, out Vector2 mapped, out Vector2 aim)) continue;
+            float distance = Vector2.Distance(origin, hit);
+            if (distance >= nearest) continue;
+            nearest = distance;
+            portal = candidate;
+            entrance = hit;
+            exit = mapped;
+            exitDirection = aim;
+        }
+        return portal != null;
+    }
+
     // Find the first permitted opening crossed by a movement, including fast shots and moving entrances.
     internal static bool TryTravel(PortalTraveller user, Vector2 from, Vector2 to, Vector2 direction, out Transit transit)
     {
