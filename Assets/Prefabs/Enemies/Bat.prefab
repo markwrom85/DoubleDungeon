@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 132305050048072247}
   - component: {fileID: 751646646151323810}
   - component: {fileID: 6720721342315900766}
+  - component: {fileID: 901010001}
   m_Layer: 0
   m_Name: Bat
   m_TagString: Untagged
@@ -237,3 +238,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5619277169959799345}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &901010001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5619277169959799344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c04c13b8551746268a193a6d97ea8560, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::PortalTraveller
+  allowTravel: 1
+  automatic: 0
+  scaleWithPortal: 1
+  stopAtExit: 1

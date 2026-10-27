@@ -119,6 +119,7 @@ public class DungeonManager : MonoBehaviour
         playerInput.transform.SetPositionAndRotation(
             spawnPoint.position,
             spawnPoint.rotation);
+        playerInput.GetComponent<PortalTraveller>()?.ResetTracking();
     }
 
     private void InitializePlayer(ArduinoJoystickPlayer player)
@@ -290,7 +291,10 @@ public class DungeonManager : MonoBehaviour
             playerTarget.Object.transform.position = playerRightSpawnPoint.position;
 
         foreach (ArduinoJoystickPlayer player in players)
+        {
+            player.GetComponent<PortalTraveller>()?.ResetTracking();
             player.isPlayable = true;
+        }
 
         // Allow the next room transition after all repositioning is complete.
         canChangeRooms = true;

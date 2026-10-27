@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 using Unity.Cinemachine;
 using System.Collections;
 
-public class PlayerSwapSides : MonoBehaviour
+public class PlayerSwapSides : MonoBehaviour, IPortalUser
 {
     [SerializeField] private PlayerInfo playerInfo;
     [SerializeField] private GameObject playerObj, crosshair, aoeBurst;
@@ -38,6 +38,25 @@ public class PlayerSwapSides : MonoBehaviour
 
         if (!canSwap || player == null || player.isSwapping || !player.SwitchTriggered) return;
         SwapSides();
+    }
+
+    // Physical portal travel is independent of the button-based swap and its cooldown.
+    public bool CanUsePortal(Portal entrance) => player != null && player.isPlayable && !player.isSwapping
+        && entrance.AttachedCamera == player.MovementCamera && entrance.LinkedPortal != null
+        && (entrance.LinkedPortal.AttachedCamera == leftCamera || entrance.LinkedPortal.AttachedCamera == rightCamera);
+
+    // The portal already moved the player; update only the camera group and UI assignment.
+    public void OnPortalTravel(Portal.Transit transit)
+    {
+        Transform target = player.GetComponentInParent<PlayerInput>().transform;
+        bool onLeft = transit.Exit.AttachedCamera == leftCamera;
+        leftTargetGroup.RemoveMember(target);
+        rightTargetGroup.RemoveMember(target);
+        (onLeft ? leftTargetGroup : rightTargetGroup).AddMember(target, 0.5f, 1f);
+        player.SetMovementCamera(transit.Exit.AttachedCamera);
+        playerInfo.SetPanelSide(onLeft);
+        panelIsOnLeft = onLeft;
+        panelSideInitialized = true;
     }
 
     private void SwapSides()
