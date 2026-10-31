@@ -6,7 +6,7 @@ public class HyperBeam : SpecialAttack
     [SerializeField] private GameObject beamObj;
     private HyperBeamCollision hyperBeamCollision;
 
-    void Start()
+    void Awake()
     {
         hyperBeamCollision = beamObj.GetComponent<HyperBeamCollision>();
         hyperBeamCollision.damage = spDamage;

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eca2bf2161f4d914683127d0ea28abdc, type: 3}
+  m_Name: LightningTome
+  m_EditorClassIdentifier: Assembly-CSharp::TomeDefinition
+  element: 2
+  abilityPrefab: {fileID: 2454701294041050721, guid: 9211ecb08d6b3ee41a89293f6d0807dd, type: 3}
+  panelOutline: {fileID: 2578153803222835768, guid: 2757063791061564e8883895a3e04137, type: 3}
+  panelBackground: {fileID: 3319912297108983410, guid: 2757063791061564e8883895a3e04137, type: 3}
+  abilityIcon: {fileID: -1167944727478786785, guid: 166674686d1beb54aab1cd0fcd0c1fd1, type: 3}
+  abilityAnimation: {fileID: 9100000, guid: 7083e148debe6d749bb56e09e3d890b6, type: 2}

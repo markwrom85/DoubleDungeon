@@ -3,6 +3,30 @@ using UnityEngine;
 
 public class PlayerPanel : MonoBehaviour
 {
+    [Header("Tome Appearance")]
+    [SerializeField] private Image tomeOutline;
+    [SerializeField] private Image tomeBackground;
+    [SerializeField] private Image specialAbilityIcon;
+    [SerializeField] private Animator specialAbilityAnimator;
+    private TomeDefinition displayedTome;
+
+    public void ApplyTome(TomeDefinition tome)
+    {
+        if (tome == null || displayedTome == tome) return;
+        displayedTome = tome;
+        if (tomeOutline != null && tome.panelOutline != null) tomeOutline.sprite = tome.panelOutline;
+        if (tomeBackground != null && tome.panelBackground != null) tomeBackground.sprite = tome.panelBackground;
+        if (specialAbilityAnimator != null)
+        {
+            specialAbilityAnimator.runtimeAnimatorController = tome.abilityAnimation;
+            specialAbilityAnimator.enabled = tome.abilityAnimation != null;
+        }
+        if (specialAbilityIcon != null)
+        {
+            specialAbilityIcon.sprite = tome.abilityIcon;
+            specialAbilityIcon.enabled = tome.abilityIcon != null;
+        }
+    }
     [SerializeField] private Sprite heartFull;
     [SerializeField] private Sprite heartHalf;
     [SerializeField] private Sprite heartEmpty;
