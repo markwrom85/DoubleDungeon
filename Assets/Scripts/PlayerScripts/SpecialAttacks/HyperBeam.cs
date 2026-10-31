@@ -25,7 +25,8 @@ public class HyperBeam : SpecialAttack
 
     private IEnumerator BeamAttack()
     {
-        canAttack = false;
+        // The beam cannot be used during its active duration or its recovery.
+        BeginCooldown(Mathf.Max(0f, spLength) + Mathf.Max(0f, spCooldown));
         beamObj.SetActive(true);
         Debug.Log("starting beam");
         yield return new WaitForSeconds(spLength);

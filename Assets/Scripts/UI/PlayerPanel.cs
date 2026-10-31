@@ -1,5 +1,6 @@
 using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
 
 public class PlayerPanel : MonoBehaviour
 {
@@ -9,6 +10,82 @@ public class PlayerPanel : MonoBehaviour
     [SerializeField] private Image specialAbilityIcon;
     [SerializeField] private Animator specialAbilityAnimator;
     private TomeDefinition displayedTome;
+    [Header("Special Ability Cooldown")]
+    [SerializeField] private Vector2 abilitySlotCenter = new Vector2(33.3f, 5.8f);
+    [SerializeField] private Vector2 abilitySlotSize = new Vector2(28f, 28f);
+    private Image cooldownOverlay;
+    private TextMeshProUGUI cooldownNumber;
+    private bool abilityWasReady = true;
+    private static Sprite cooldownShape;
+
+    private void CreateCooldownDisplay()
+    {
+        if (cooldownOverlay != null) return;
+        // Fit the entire HUD slot independently of the icon's transparent padding.
+        var overlayObject = new GameObject("Special Cooldown Sweep", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        overlayObject.transform.SetParent(transform, false);
+        cooldownOverlay = overlayObject.GetComponent<Image>();
+        cooldownOverlay.rectTransform.anchoredPosition = abilitySlotCenter;
+        cooldownOverlay.rectTransform.sizeDelta = abilitySlotSize;
+        if (cooldownShape == null)
+        {
+            var texture = new Texture2D(32, 32, TextureFormat.RGBA32, false) { name = "Ability slot cooldown mask", filterMode = FilterMode.Point, hideFlags = HideFlags.HideAndDontSave };
+            var pixels = new Color[32 * 32];
+            for (int y = 0; y < 32; y++)
+                for (int x = 0; x < 32; x++)
+                {
+                    int cornerDistance = Mathf.Min(x, 31 - x) + Mathf.Min(y, 31 - y);
+                    pixels[y * 32 + x] = cornerDistance < 3 ? Color.clear : Color.white;
+                }
+            texture.SetPixels(pixels);
+            texture.Apply();
+            cooldownShape = Sprite.Create(texture, new Rect(0, 0, 32, 32), Vector2.one * 0.5f);
+            cooldownShape.hideFlags = HideFlags.HideAndDontSave;
+        }
+        cooldownOverlay.sprite = cooldownShape;
+        cooldownOverlay.color = new Color(0.14f, 0.14f, 0.14f, 0.88f);
+        cooldownOverlay.type = Image.Type.Filled;
+        cooldownOverlay.fillMethod = Image.FillMethod.Radial360;
+        cooldownOverlay.fillOrigin = (int)Image.Origin360.Top;
+        // The remaining covered sector shrinks as the revealed sector sweeps clockwise.
+        cooldownOverlay.fillClockwise = false;
+        cooldownOverlay.raycastTarget = false;
+        cooldownOverlay.enabled = false;
+
+        var numberObject = new GameObject("Special Cooldown Seconds", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+        numberObject.transform.SetParent(overlayObject.transform, false);
+        cooldownNumber = numberObject.GetComponent<TextMeshProUGUI>();
+        cooldownNumber.rectTransform.anchorMin = Vector2.zero;
+        cooldownNumber.rectTransform.anchorMax = Vector2.one;
+        cooldownNumber.rectTransform.sizeDelta = Vector2.zero;
+        cooldownNumber.alignment = TextAlignmentOptions.Center;
+        cooldownNumber.fontSize = 13;
+        cooldownNumber.fontStyle = FontStyles.Bold;
+        cooldownNumber.color = Color.white;
+        cooldownNumber.raycastTarget = false;
+        cooldownNumber.enabled = false;
+    }
+
+    public void SetSpecialAbilityCooldown(SpecialAttack ability)
+    {
+        CreateCooldownDisplay();
+        bool ready = ability == null || ability.IsReady;
+        cooldownOverlay.enabled = !ready;
+        cooldownNumber.enabled = !ready;
+        if (!ready)
+        {
+            cooldownOverlay.fillAmount = ability.CooldownDuration > 0f
+                ? Mathf.Clamp01(ability.CooldownRemaining / ability.CooldownDuration) : 1f;
+            cooldownNumber.SetText("{0}", Mathf.Max(1, Mathf.CeilToInt(ability.CooldownRemaining)));
+        }
+        if (specialAbilityAnimator != null)
+        {
+            specialAbilityAnimator.speed = ready ? 1f : 0f;
+            if (ready && !abilityWasReady && specialAbilityAnimator.isActiveAndEnabled && specialAbilityAnimator.runtimeAnimatorController != null)
+                specialAbilityAnimator.Play(0, 0, 0f);
+        }
+        abilityWasReady = ready;
+    }
 
     public void ApplyTome(TomeDefinition tome)
     {
@@ -25,6 +102,10 @@ public class PlayerPanel : MonoBehaviour
         {
             specialAbilityIcon.sprite = tome.abilityIcon;
             specialAbilityIcon.enabled = tome.abilityIcon != null;
+            // Keep every element's icon centered in the same full-size ability slot.
+            specialAbilityIcon.rectTransform.localScale = Vector3.one;
+            specialAbilityIcon.rectTransform.anchoredPosition = abilitySlotCenter;
+            specialAbilityIcon.rectTransform.sizeDelta = abilitySlotSize;
         }
     }
     [SerializeField] private Sprite heartFull;
@@ -41,6 +122,7 @@ public class PlayerPanel : MonoBehaviour
 
     private void Awake()
     {
+        CreateCooldownDisplay();
         SetTeleportCooldownProgress(1f);
 
         if (heartImages == null || heartImages.Length == 0)
