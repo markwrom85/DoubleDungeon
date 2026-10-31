@@ -23390,6 +23390,14 @@ PrefabInstance:
       propertyPath: combatManager
       value: 
       objectReference: {fileID: 54583210}
+    - target: {fileID: 6324334852978636750, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+      propertyPath: 'doors.Array.data[2]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6324334852978636750, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+      propertyPath: 'doors.Array.data[3]'
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 5604113239609739099, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}

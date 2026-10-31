@@ -29,8 +29,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6659597499983695372}
   - {fileID: 500837992505521134}
+  - {fileID: 6659597499983695372}
   - {fileID: 1480512934823952572}
   - {fileID: 7131424666282938164}
   m_Father: {fileID: 1031564408350812838}
@@ -1505,7 +1505,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4454102525342775427, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.83
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 4454102525342775427, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
       propertyPath: m_LocalPosition.z
