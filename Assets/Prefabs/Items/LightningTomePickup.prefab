@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 1703443772491523815}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.34, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.179, z: 0}
+  m_LocalScale: {x: 0.6403682, y: 0.6403682, z: 0.6403682}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 438434032541465134}
@@ -125,6 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4131292766785890803}
   - component: {fileID: 7797585961945360041}
+  - component: {fileID: 9075781612793676181}
   m_Layer: 0
   m_Name: Pedestal
   m_TagString: Untagged
@@ -207,6 +208,52 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!61 &9075781612793676181
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6829214940573407923}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.0027786195, y: 0.14698483}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.64, y: 0.64}
+    newSize: {x: 0.64, y: 0.64}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.49272203, y: 0.24321343}
+  m_EdgeRadius: 0
 --- !u!1001 &7237855235506986481
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -227,9 +274,37 @@ PrefabInstance:
       propertyPath: modifierPrefab
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: -2139428635700634240, guid: 6f8bfb8f0eb68f04abf9f4e5ac7d126f, type: 3}
+      propertyPath: m_Size.x
+      value: 0.5609441
+      objectReference: {fileID: 0}
+    - target: {fileID: -2139428635700634240, guid: 6f8bfb8f0eb68f04abf9f4e5ac7d126f, type: 3}
+      propertyPath: m_Size.y
+      value: 0.5915114
+      objectReference: {fileID: 0}
+    - target: {fileID: -2139428635700634240, guid: 6f8bfb8f0eb68f04abf9f4e5ac7d126f, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.0013895035
+      objectReference: {fileID: 0}
+    - target: {fileID: -2139428635700634240, guid: 6f8bfb8f0eb68f04abf9f4e5ac7d126f, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.04862961
+      objectReference: {fileID: 0}
     - target: {fileID: 1955669219849000920, guid: 6f8bfb8f0eb68f04abf9f4e5ac7d126f, type: 3}
       propertyPath: m_Name
       value: LightningTomePickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 7090820378843097055, guid: 6f8bfb8f0eb68f04abf9f4e5ac7d126f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.7440343
+      objectReference: {fileID: 0}
+    - target: {fileID: 7090820378843097055, guid: 6f8bfb8f0eb68f04abf9f4e5ac7d126f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.7440343
+      objectReference: {fileID: 0}
+    - target: {fileID: 7090820378843097055, guid: 6f8bfb8f0eb68f04abf9f4e5ac7d126f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.7440343
       objectReference: {fileID: 0}
     - target: {fileID: 7090820378843097055, guid: 6f8bfb8f0eb68f04abf9f4e5ac7d126f, type: 3}
       propertyPath: m_LocalPosition.x
