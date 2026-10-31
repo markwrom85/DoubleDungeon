@@ -62,7 +62,7 @@ public sealed class PortalBeam
                 limit = Mathf.Min(range, RoomExit(area.bounds, origin, direction));
             }
             if (float.IsInfinity(limit) || limit < 0.00001f) break;
-            bool crossed = Portal.TryFindRay(user, origin, direction, limit, out Portal gate,
+            bool crossed = Portal.TryFindRay(user, origin, direction, range, out Portal gate,
                 out Vector2 hit, out Vector2 mapped, out Vector2 aim, area, nextArea);
             Vector2 end = crossed ? hit : origin + direction * limit;
             segments.Add(new Segment { Start = origin, End = end, Width = width, Entry = entry,

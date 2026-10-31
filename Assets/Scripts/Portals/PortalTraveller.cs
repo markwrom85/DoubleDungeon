@@ -55,11 +55,39 @@ public sealed class PortalTraveller : MonoBehaviour
         ResetTracking();
     }
 
+    private void FixedUpdate()
+    {
+        if (mode != TravelMode.MovingObject || !automatic || body == null || !body.simulated)
+            return;
+
+        if (body.linearVelocity.sqrMagnitude < 0.0001f) return;
+
+        Vector2 from = body.position;
+        Vector2 to = from + body.linearVelocity * Time.fixedDeltaTime;
+        if (Portal.TryTravelAtBoundary(this, from, to, body.linearVelocity, out _))
+        {
+            ResetTracking();
+            return;
+        }
+
+        if (Portal.TryTravel(this, from, to, body.linearVelocity, out _))
+        {
+            ResetTracking();
+            return;
+        }
+    }
+
     // Restore the authored sprite and hide its routed sections when an attack or object is disabled.
-    private void OnDisable() { beam.Hide(); }
+    private void OnDisable()
+    {
+        beam.Hide();
+    }
 
     // Release only the beam renderers owned by this traveller; their shared assets remain untouched.
-    private void OnDestroy() { beam.Dispose(); }
+    private void OnDestroy()
+    {
+        beam.Dispose();
+    }
 
     // Ordinary physics and transform movement use the same crossing process as custom paths.
     private void LateUpdate()
@@ -117,6 +145,12 @@ public sealed class PortalTraveller : MonoBehaviour
     {
         if (mode != TravelMode.MovingObject) { transit = default; return false; }
         Vector2 from = Position;
+        if (Portal.TryTravelAtBoundary(this, from, destination, direction, out transit))
+        {
+            ResetTracking();
+            return true;
+        }
+
         SetPosition(destination);
         bool crossed = Portal.TryTravel(this, from, destination, direction, out transit);
         ResetTracking();

@@ -143,6 +143,18 @@ public sealed class Portal : MonoBehaviour
     // Restrict contact checks to the visible side of this opening.
     public bool ContainsVisible(Vector2 point) => SignedDistance(point) >= -0.0001f;
 
+    private static bool IsRoomBoundary(Collider2D collider)
+    {
+        string name = collider.gameObject.name.ToLowerInvariant();
+        if (name == "north" || name == "south" || name == "east" || name == "west"
+            || name.Contains("wall") || name.Contains("roomcollider") || name.Contains("boundary"))
+            return true;
+
+        Transform parent = collider.transform.parent;
+        return parent != null && (parent.name.ToLowerInvariant().Contains("wall")
+            || parent.name.ToLowerInvariant().Contains("roomcollider"));
+    }
+
     // Route a permitted ray through the opening; its owner handles its range, damage, and drawing.
     public bool TryMapRay(PortalTraveller user, Vector2 origin, Vector2 direction, float range,
         out Vector2 entrance, out Vector2 exit, out Vector2 exitDirection)
@@ -204,9 +216,9 @@ public sealed class Portal : MonoBehaviour
             if (before <= 0f || after > 0f) continue;
             float fraction = Mathf.Clamp01(before / (before - after));
             Vector2 point = Vector2.Lerp(from, to, fraction);
-            Vector2 center = previous ? Vector2.Lerp(pose.Center, candidate.Center, fraction) : candidate.Center;
-            Vector2 up = previous ? Vector2.Lerp(pose.Up, candidate.Up, fraction).normalized : candidate.Up;
-            float height = previous ? Mathf.Lerp(pose.Height, candidate.Height, fraction) : candidate.Height;
+            Vector2 center = candidate.Center;
+            Vector2 up = candidate.Up;
+            float height = candidate.Height;
             float along = Vector2.Dot(point - center, up) / height;
             if (Mathf.Abs(along) > 0.5f || fraction >= first) continue;
             chosen = candidate;
@@ -220,11 +232,107 @@ public sealed class Portal : MonoBehaviour
         destination -= chosen.linkedPortal.Normal * Mathf.Max(0f, 0.002f - chosen.linkedPortal.SignedDistance(destination));
         transit = new Transit
         {
-            Entrance = chosen, Exit = chosen.linkedPortal, Crossing = Vector2.Lerp(from, to, first),
-            Position = destination, Direction = chosen.MapVector(direction).normalized,
-            Scale = chosen.ExitScale, Fraction = first
+            Entrance = chosen,
+            Exit = chosen.linkedPortal,
+            Crossing = Vector2.Lerp(from, to, first),
+            Position = destination,
+            Direction = chosen.MapVector(direction).normalized,
+            Scale = chosen.ExitScale,
+            Fraction = first
         };
         user.ApplyTransit(transit);
         return true;
+    }
+
+    // Transfer at the room wall when the camera portal is beyond that wall.
+    internal static bool TryTravelAtBoundary(PortalTraveller user, Vector2 from, Vector2 to,
+        Vector2 direction, out Transit transit)
+    {
+        transit = default;
+        if (user == null || direction.sqrMagnitude < 0.000001f)
+            return false;
+
+        foreach (Portal candidate in portals)
+        {
+            candidate.FitToCamera();
+            if (candidate.linkedPortal != null) candidate.linkedPortal.FitToCamera();
+            if (!candidate.IsConnected || candidate.gameObject.scene != user.gameObject.scene
+                || !user.CanUse(candidate) || user.IsExitBlocked(candidate))
+                continue;
+
+            if (candidate.SignedDistance(from) <= 0f
+                || Vector2.Dot(direction.normalized, candidate.Normal) <= 0.00001f)
+                continue;
+
+            RaycastHit2D boundary = FindBoundaryHit(user, from, to, candidate.Normal);
+            if (boundary.collider == null)
+                continue;
+
+            Vector2 crossing = boundary.point;
+            if (Mathf.Abs(Vector2.Dot(crossing - candidate.Center, candidate.Up)) > candidate.Height * 0.5f)
+                continue;
+
+            float fraction = Mathf.Clamp01(Vector2.Distance(from, crossing) / Vector2.Distance(from, to));
+            Vector2 destination = candidate.MapPoint(crossing);
+            if (!user.StopAtExit)
+                destination += candidate.MapVector((to - from) * (1f - fraction));
+
+            transit = new Transit
+            {
+                Entrance = candidate,
+                Exit = candidate.linkedPortal,
+                Crossing = crossing,
+                Position = destination,
+                Direction = candidate.MapVector(direction).normalized,
+                Scale = candidate.ExitScale,
+                Fraction = fraction
+            };
+            user.ApplyTransit(transit);
+            return true;
+        }
+
+        return false;
+    }
+
+    private static RaycastHit2D FindBoundaryHit(PortalTraveller user, Vector2 from, Vector2 to,
+        Vector2 portalNormal)
+    {
+        Vector2 delta = to - from;
+        RaycastHit2D nearest = default;
+        float distance = float.PositiveInfinity;
+        foreach (RaycastHit2D hit in Physics2D.LinecastAll(from, to))
+        {
+            Collider2D collider = hit.collider;
+            if (collider == null || collider.isTrigger || collider.transform.IsChildOf(user.transform)
+                || !IsRoomBoundary(collider)
+                || Mathf.Abs(Vector2.Dot(hit.normal, portalNormal)) < 0.5f)
+                continue;
+
+            float candidateDistance = Vector2.Distance(from, hit.point);
+            if (candidateDistance < distance)
+            {
+                distance = candidateDistance;
+                nearest = hit;
+            }
+        }
+
+        if (nearest.collider == null && delta.sqrMagnitude > 0.000001f)
+        {
+            Vector2 direction = delta.normalized;
+            foreach (RaycastHit2D hit in Physics2D.RaycastAll(from - direction * 0.02f, direction,
+                delta.magnitude + 0.02f))
+            {
+                Collider2D collider = hit.collider;
+                if (collider == null || collider.isTrigger || collider.transform.IsChildOf(user.transform)
+                    || !IsRoomBoundary(collider)
+                    || Mathf.Abs(Vector2.Dot(hit.normal, portalNormal)) < 0.5f)
+                    continue;
+
+                nearest = hit;
+                break;
+            }
+        }
+
+        return nearest;
     }
 }
