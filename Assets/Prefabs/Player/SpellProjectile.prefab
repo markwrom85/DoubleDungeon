@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7791839095155080986}
   - component: {fileID: 6659353257135820354}
   - component: {fileID: 5788919255543249563}
+  - component: {fileID: 901010004}
   m_Layer: 0
   m_Name: SpellProjectile
   m_TagString: Untagged
@@ -182,3 +183,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
   speed: 12
   lifetime: 2
+--- !u!114 &901010004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509915747287120875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c04c13b8551746268a193a6d97ea8560, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::PortalTraveller
+  allowTravel: 1
+  automatic: 1
+  scaleWithPortal: 1
+  stopAtExit: 0

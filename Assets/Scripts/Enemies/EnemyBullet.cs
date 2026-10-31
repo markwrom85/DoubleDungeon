@@ -2,12 +2,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
-public class EnemyBullet : MonoBehaviour
+public class EnemyBullet : MonoBehaviour, IPortalUser
 {
     [Min(0.1f)] public float speed = 8f;
     [Min(0.1f)] public float lifetime = 5f;
 
     private Rigidbody2D body;
+    private PortalTraveller traveller;
     private EnemyDungeonSide side;
     private float damage, expiresAt;
     public bool IsFlying { get; private set; }
@@ -16,6 +17,7 @@ public class EnemyBullet : MonoBehaviour
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
+        traveller = GetComponent<PortalTraveller>();
         body.gravityScale = 0f;
         body.freezeRotation = true;
     }
@@ -31,10 +33,12 @@ public class EnemyBullet : MonoBehaviour
         body.linearVelocity = direction.normalized * Mathf.Max(0.1f, speed);
         expiresAt = Time.time + Mathf.Max(0.1f, lifetime);
         IsFlying = true;
+        traveller?.ResetTracking();
     }
 
     private void Update()
     {
+        if (IsFlying) traveller?.CheckCrossing();
         // I retire shots when their lifetime ends or they leave their original room area.
         if (IsFlying && (Time.time >= expiresAt || side == null || !side.Contains(body.position)))
             ReturnToPool();
@@ -43,6 +47,7 @@ public class EnemyBullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!IsFlying) return;
+        if (traveller != null && traveller.CheckCrossing()) return;
         PlayerInput player = other.GetComponentInParent<PlayerInput>();
         if (player != null)
         {
@@ -75,4 +80,11 @@ public class EnemyBullet : MonoBehaviour
     }
 
     private void OnDisable() { ReturnToPool(); }
+
+    // Enemy shots remain excluded by default; an enabled permission still requires a valid room pair.
+    public bool CanUsePortal(Portal entrance) => IsFlying && side != null && side.OppositeSide != null
+        && entrance.IsValidFor(side.LevelBounds, side.OppositeSide.LevelBounds);
+
+    // A permitted shot must target players in its destination room after crossing.
+    public void OnPortalTravel(Portal.Transit transit) { side = side.OppositeSide; }
 }
