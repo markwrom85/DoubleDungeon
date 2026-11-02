@@ -5,11 +5,20 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private CinemachineBrain cinemachineBrainLeft, cinemachineBrainRight;
+    [SerializeField] private CinemachineCamera initialCameraLeft, initialCameraRight;
     private DungeonManager dungeonManager;
 
     void Start()
     {
         dungeonManager = GetComponent<DungeonManager>();
+
+        // Set the initial cameras to be active at the start of the game.
+        initialCameraLeft.Priority = 10;
+        initialCameraRight.Priority = 10;
+        initialCameraLeft.OutputChannel = OutputChannels.Channel01;
+        initialCameraRight.OutputChannel = OutputChannels.Channel02;
+        dungeonManager.leftCinemachineCamera = initialCameraLeft;
+        dungeonManager.rightCinemachineCamera = initialCameraRight;
     }
 
     public void MoveCamera(CinemachineCamera desiredCamLeft, CinemachineCamera desiredCamRight, CinemachineCamera oldCameraLeft, CinemachineCamera oldCameraRight)
