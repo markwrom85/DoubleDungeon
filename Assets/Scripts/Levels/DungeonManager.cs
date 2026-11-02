@@ -119,6 +119,7 @@ public class DungeonManager : MonoBehaviour
         playerInput.transform.SetPositionAndRotation(
             spawnPoint.position,
             spawnPoint.rotation);
+        playerInput.GetComponent<PortalTraveller>()?.ResetTracking();
     }
 
     private void InitializePlayer(ArduinoJoystickPlayer player)
@@ -268,9 +269,21 @@ public class DungeonManager : MonoBehaviour
     Transform playerLeftSpawnPoint,
     Transform playerRightSpawnPoint)
     {
-        // Freeze player input while the cameras blend and the room positions are updated.
+        // Freeze player input while the room positions and cameras are updated.
         foreach (ArduinoJoystickPlayer player in players)
             player.isPlayable = false;
+
+        // Move the target-group members before activating the new cameras. This
+        // prevents Cinemachine from blending to the old target position and
+        // then readjusting after the players are teleported.
+        foreach (CinemachineTargetGroup.Target playerTarget in cameraTargetGroups[0].Targets)
+            playerTarget.Object.transform.position = playerLeftSpawnPoint.position;
+
+        foreach (CinemachineTargetGroup.Target playerTarget in cameraTargetGroups[1].Targets)
+            playerTarget.Object.transform.position = playerRightSpawnPoint.position;
+
+        foreach (ArduinoJoystickPlayer player in players)
+            player.GetComponent<PortalTraveller>()?.ResetTracking();
 
         // StartCoroutine must be yielded here so the code below waits for the blend to finish.
         yield return StartCoroutine(cameraController.MoveAndWaitForCameraBlend(
@@ -281,18 +294,10 @@ public class DungeonManager : MonoBehaviour
 
         RoomPairChanged?.Invoke(leftCinemachineCamera, rightCinemachineCamera);
 
-        // Move the players only after the camera transition is complete.
-
-        foreach (CinemachineTargetGroup.Target playerTarget in cameraTargetGroups[0].Targets)
-            playerTarget.Object.transform.position = playerLeftSpawnPoint.position;
-
-        foreach (CinemachineTargetGroup.Target playerTarget in cameraTargetGroups[1].Targets)
-            playerTarget.Object.transform.position = playerRightSpawnPoint.position;
-
         foreach (ArduinoJoystickPlayer player in players)
             player.isPlayable = true;
 
-        // Allow the next room transition after all repositioning is complete.
+        // Allow the next room transition after the camera blend is complete.
         canChangeRooms = true;
     }
 }

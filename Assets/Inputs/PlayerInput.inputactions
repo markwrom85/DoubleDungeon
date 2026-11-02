@@ -256,6 +256,17 @@
                     "action": "Special Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "da024746-9026-43d5-ae84-db0688354dba",
+                    "path": "<ArduinoInputDevice>/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Special Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
