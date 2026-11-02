@@ -2716,6 +2716,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 5880089571506486503}
     m_Modifications:
     - target: {fileID: 900412011629494694, guid: dd21c5e8c9cba924cbe7a0d9bc3d81e1, type: 3}
+      propertyPath: leftPlayers
+      value: 
+      objectReference: {fileID: 3470970370492974527}
+    - target: {fileID: 900412011629494694, guid: dd21c5e8c9cba924cbe7a0d9bc3d81e1, type: 3}
+      propertyPath: rightPlayers
+      value: 
+      objectReference: {fileID: 7472284701938296676}
+    - target: {fileID: 900412011629494694, guid: dd21c5e8c9cba924cbe7a0d9bc3d81e1, type: 3}
       propertyPath: cinemachineBrainLeft
       value: 
       objectReference: {fileID: 6313807439824104287}
@@ -2827,11 +2835,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 60568941596090986, guid: c7eff0eaf293562438ae56ea8c88f3f3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 60568941596090986, guid: c7eff0eaf293562438ae56ea8c88f3f3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 3252209294774561791, guid: c7eff0eaf293562438ae56ea8c88f3f3, type: 3}
       propertyPath: m_Name

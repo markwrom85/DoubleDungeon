@@ -7,24 +7,15 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] private CinemachineBrain cinemachineBrainLeft, cinemachineBrainRight;
     [SerializeField] private CinemachineCamera initialCameraLeft, initialCameraRight;
+    [SerializeField] private CinemachineTargetGroup leftPlayers, rightPlayers;
     [SerializeField] private float standardBlendTime = 0.5f;
     private DungeonManager dungeonManager;
 
-    // void Start()
-    // {
-    //     dungeonManager = GetComponent<DungeonManager>();
-
-    //     // Set the initial cameras to be active at the start of the game.
-    //     cinemachineBrainLeft.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.Cut, 0f);
-    //     cinemachineBrainRight.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.Cut, 0f);
-
-    //     StartCoroutine(MoveAndWaitForCameraBlend(initialCameraLeft, initialCameraRight, null, null));
-    //     cinemachineBrainLeft.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.EaseInOut, standardBlendTime);
-    //     cinemachineBrainRight.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.EaseInOut, standardBlendTime);
-    // }
-
     void Start()
     {
+        initialCameraLeft.Follow = leftPlayers.transform;
+        initialCameraRight.Follow = rightPlayers.transform;
+
         StartCoroutine(InitializationCoroutine());
     }
 
@@ -52,6 +43,9 @@ public class CameraController : MonoBehaviour
 
         desiredCamLeft.Priority = 10;
         desiredCamRight.Priority = 10;
+
+        desiredCamLeft.Follow = leftPlayers.transform;
+        desiredCamRight.Follow = rightPlayers.transform;
 
         // Set the output channels for the new cameras to ensure they are rendered on the correct display.
         desiredCamLeft.OutputChannel = OutputChannels.Channel01;

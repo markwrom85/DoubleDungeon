@@ -211,10 +211,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5533396661138247860, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
   m_PrefabInstance: {fileID: 774690776}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &393093389 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6023317424863724512, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+  m_PrefabInstance: {fileID: 1211465853}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &400895515 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6093854360888359872, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
   m_PrefabInstance: {fileID: 1488853418}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &462333476 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6023317424863724512, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+  m_PrefabInstance: {fileID: 678564276}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &542426222 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8755753557822214851, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
+  m_PrefabInstance: {fileID: 2039513287}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &607687668
 PrefabInstance:
@@ -730,6 +745,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hallway
       objectReference: {fileID: 0}
+    - target: {fileID: 6217958909527411800, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
+      propertyPath: playerLeftSpawnPoint
+      value: 
+      objectReference: {fileID: 393093389}
+    - target: {fileID: 6217958909527411800, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
+      propertyPath: playerRightSpawnPoint
+      value: 
+      objectReference: {fileID: 462333476}
+    - target: {fileID: 6217958909527411800, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
+      propertyPath: newLeftCinemachineCamera
+      value: 
+      objectReference: {fileID: 1623157443}
+    - target: {fileID: 6217958909527411800, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
+      propertyPath: newRightCinemachineCamera
+      value: 
+      objectReference: {fileID: 1504794001}
     - target: {fileID: 7683984805826052125, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 45
@@ -830,6 +861,11 @@ Transform:
   - {fileID: 774690777}
   m_Father: {fileID: 1230843877}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1332358876 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4454909843584649199, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
+  m_PrefabInstance: {fileID: 2039513287}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1407393882 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6023317424863724512, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
@@ -1491,6 +1527,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hallway
       objectReference: {fileID: 0}
+    - target: {fileID: 6217958909527411800, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
+      propertyPath: playerLeftSpawnPoint
+      value: 
+      objectReference: {fileID: 393093389}
+    - target: {fileID: 6217958909527411800, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
+      propertyPath: playerRightSpawnPoint
+      value: 
+      objectReference: {fileID: 462333476}
+    - target: {fileID: 6217958909527411800, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
+      propertyPath: newLeftCinemachineCamera
+      value: 
+      objectReference: {fileID: 1623157443}
+    - target: {fileID: 6217958909527411800, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
+      propertyPath: newRightCinemachineCamera
+      value: 
+      objectReference: {fileID: 1504794001}
     - target: {fileID: 7683984805826052125, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 15
@@ -2259,9 +2311,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1667092225}
     - target: {fileID: 5938485644798259095, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
+      propertyPath: trackingGroupLeft
+      value: 
+      objectReference: {fileID: 1332358876}
+    - target: {fileID: 5938485644798259095, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
       propertyPath: initialCameraRight
       value: 
       objectReference: {fileID: 246042982}
+    - target: {fileID: 5938485644798259095, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
+      propertyPath: trackingGroupRight
+      value: 
+      objectReference: {fileID: 542426222}
     - target: {fileID: 6242863284366060865, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2348,7 +2408,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6920039662339046792, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 80
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 7193081222386157185, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
       propertyPath: m_AnchorMax.y
