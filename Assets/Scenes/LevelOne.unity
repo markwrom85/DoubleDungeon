@@ -453,6 +453,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1031564408350812838, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
   m_PrefabInstance: {fileID: 678564276}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &704473949 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5533396661138247860, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+  m_PrefabInstance: {fileID: 1626950840}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &740151609 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 625197113829684772, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
@@ -809,6 +814,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1282513897}
     m_Modifications:
+    - target: {fileID: 4535915724256627498, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -7.9000015
+      objectReference: {fileID: 0}
     - target: {fileID: 4983767997683902687, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
       propertyPath: m_Name
       value: Hallway
@@ -1297,7 +1306,7 @@ PrefabInstance:
     - target: {fileID: 4633455771059550356, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
       propertyPath: playerLeftSpawnPoint
       value: 
-      objectReference: {fileID: 1700213960}
+      objectReference: {fileID: 704473949}
     - target: {fileID: 4633455771059550356, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
       propertyPath: playerRightSpawnPoint
       value: 
@@ -1648,6 +1657,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1282513897}
     m_Modifications:
+    - target: {fileID: 4535915724256627498, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -7.9
+      objectReference: {fileID: 0}
     - target: {fileID: 4983767997683902687, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
       propertyPath: m_Name
       value: Hallway
@@ -2566,11 +2579,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6920039662339046792, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 6920039662339046792, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 55
+      value: 47.1
       objectReference: {fileID: 0}
     - target: {fileID: 7193081222386157185, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
       propertyPath: m_AnchorMax.y
