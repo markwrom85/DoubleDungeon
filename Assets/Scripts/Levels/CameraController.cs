@@ -44,9 +44,6 @@ public class CameraController : MonoBehaviour
         desiredCamLeft.Priority = 10;
         desiredCamRight.Priority = 10;
 
-        desiredCamLeft.Follow = leftPlayers.transform;
-        desiredCamRight.Follow = rightPlayers.transform;
-
         // Set the output channels for the new cameras to ensure they are rendered on the correct display.
         desiredCamLeft.OutputChannel = OutputChannels.Channel01;
         desiredCamRight.OutputChannel = OutputChannels.Channel02;
@@ -74,5 +71,7 @@ public class CameraController : MonoBehaviour
             timeout -= Time.unscaledDeltaTime;
             yield return null;
         }
+        desiredCamLeft.Follow = leftPlayers.transform;
+        desiredCamRight.Follow = rightPlayers.transform;
     }
 }
