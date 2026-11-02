@@ -35,6 +35,7 @@ public class PlayerInfo : MonoBehaviour
     private void LateUpdate()
     {
         playerPanel?.SetSpecialAbilityCooldown(spAttack);
+        playerPanel2?.SetSpecialAbilityCooldown(spAttack);
     }
 
     public bool EquipTome(TomeDefinition tome)
@@ -58,7 +59,9 @@ public class PlayerInfo : MonoBehaviour
         spAttack = equippedAbility.GetComponent<SpecialAttack>();
         EquippedTome = tome;
         playerPanel?.ApplyTome(tome);
+        playerPanel2?.ApplyTome(tome);
         playerPanel?.SetSpecialAbilityCooldown(spAttack);
+        playerPanel2?.SetSpecialAbilityCooldown(spAttack);
         return true;
     }
 
