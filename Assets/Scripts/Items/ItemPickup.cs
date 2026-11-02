@@ -16,9 +16,7 @@ public class ItemPickup : MonoBehaviour
             ItemInfo item = other.GetComponent<ItemInfo>();
             if (item != null)
             {
-                playerInfo.ChangeStats(item.MoveSpeed, item.MaxHealth, item.AttackDamage, item.AttackRate, item.AOEDamage, item.SwapCooldown, item.SwapDuration);
-                item.AddGameplayModifier(transform);
-                Destroy(other.gameObject);
+                item.TryCollect(playerInfo);
             }
         }
     }

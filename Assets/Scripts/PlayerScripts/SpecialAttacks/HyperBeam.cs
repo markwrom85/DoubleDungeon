@@ -6,7 +6,7 @@ public class HyperBeam : SpecialAttack
     [SerializeField] private GameObject beamObj;
     private HyperBeamCollision hyperBeamCollision;
 
-    void Start()
+    void Awake()
     {
         hyperBeamCollision = beamObj.GetComponent<HyperBeamCollision>();
         hyperBeamCollision.damage = spDamage;
@@ -25,7 +25,8 @@ public class HyperBeam : SpecialAttack
 
     private IEnumerator BeamAttack()
     {
-        canAttack = false;
+        // The beam cannot be used during its active duration or its recovery.
+        BeginCooldown(Mathf.Max(0f, spLength) + Mathf.Max(0f, spCooldown));
         beamObj.SetActive(true);
         Debug.Log("starting beam");
         yield return new WaitForSeconds(spLength);
