@@ -28,7 +28,7 @@ public class PlayerInfo : MonoBehaviour
 
     private float currentHealth;
     private Animator animator;
-    private PlayerPanel playerPanel;
+    private PlayerPanel playerPanel, playerPanel2;
     public TomeDefinition EquippedTome { get; private set; }
     private GameObject equippedAbility;
 
@@ -109,6 +109,7 @@ public class PlayerInfo : MonoBehaviour
             case 1:
                 gameObject.name = "Player 1";
                 playerPanel = GameObject.Find("Player 1 Panel")?.GetComponent<PlayerPanel>();
+                playerPanel2 = GameObject.Find("Player 1 Panel 2")?.GetComponent<PlayerPanel>();
                 if (spriteRenderer != null) spriteRenderer.color = Color.cyan;
                 if (underglowRenderer != null) underglowRenderer.sprite = player1UnderglowSprite;
                 break;
@@ -116,6 +117,7 @@ public class PlayerInfo : MonoBehaviour
             case 2:
                 gameObject.name = "Player 2";
                 playerPanel = GameObject.Find("Player 2 Panel")?.GetComponent<PlayerPanel>();
+                playerPanel2 = GameObject.Find("Player 2 Panel 2")?.GetComponent<PlayerPanel>();
                 if (spriteRenderer != null) spriteRenderer.color = Color.red;
                 if (underglowRenderer != null) underglowRenderer.sprite = player2UnderglowSprite;
                 break;
@@ -123,6 +125,7 @@ public class PlayerInfo : MonoBehaviour
             case 3:
                 gameObject.name = "Player 3";
                 playerPanel = GameObject.Find("Player 3 Panel")?.GetComponent<PlayerPanel>();
+                playerPanel2 = GameObject.Find("Player 3 Panel 2")?.GetComponent<PlayerPanel>();
                 if (spriteRenderer != null) spriteRenderer.color = Color.green;
                 if (underglowRenderer != null) underglowRenderer.sprite = player3UnderglowSprite;
                 break;
@@ -130,6 +133,7 @@ public class PlayerInfo : MonoBehaviour
             case 4:
                 gameObject.name = "Player 4";
                 playerPanel = GameObject.Find("Player 4 Panel")?.GetComponent<PlayerPanel>();
+                playerPanel2 = GameObject.Find("Player 4 Panel 2")?.GetComponent<PlayerPanel>();
                 if (spriteRenderer != null) spriteRenderer.color = Color.yellow;
                 if (underglowRenderer != null) underglowRenderer.sprite = player4UnderglowSprite;
                 break;
@@ -156,22 +160,26 @@ public class PlayerInfo : MonoBehaviour
     private void RefreshHealthDisplay()
     {
         playerPanel?.ChangeHealthDisplay(currentHealth, MaxHealth);
+        playerPanel2?.ChangeHealthDisplay(currentHealth, MaxHealth);
         if (EquippedTome != null) playerPanel?.ApplyTome(EquippedTome);
     }
 
     public void ChangePanelSide()
     {
         playerPanel?.ChangePanelSide();
+        playerPanel2?.ChangePanelSide();
     }
 
     public void SetPanelSide(bool isLeftSide)
     {
         playerPanel?.SetPanelSide(isLeftSide);
+        playerPanel2?.SetPanelSide(isLeftSide);
     }
 
     public void SetTeleportCooldownProgress(float progress)
     {
         playerPanel?.SetTeleportCooldownProgress(progress);
+        playerPanel2?.SetTeleportCooldownProgress(progress);
     }
 
     public void SetDirection(Vector2 direction)

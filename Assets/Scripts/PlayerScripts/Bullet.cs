@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     [Min(0.1f)] public float lifetime = 2;
     private Transform owner;
     private Rigidbody2D body;
+    private PortalTraveller traveller;
     private float expiresAt;
     private float damage;
     public bool IsFlying { get; private set; }
@@ -18,12 +19,14 @@ public class Bullet : MonoBehaviour
         // I reset the damage on each launch so reused bullets receive the current shot's damage.
         damage = Mathf.Max(0f, shotDamage);
         if (body == null) body = GetComponent<Rigidbody2D>();
+        if (traveller == null) traveller = GetComponent<PortalTraveller>();
         body.position = transform.position;
         body.rotation = transform.eulerAngles.z;
         body.angularVelocity = 0;
         body.linearVelocity = direction.normalized * speed;
         expiresAt = Time.time + Mathf.Max(0.1f, lifetime);
         IsFlying = true;
+        traveller?.ResetTracking();
     }
 
     private void Update()
@@ -50,6 +53,7 @@ public class Bullet : MonoBehaviour
         if (!IsFlying) return;
         if (other.isTrigger || other.GetComponentInParent<Bullet>() != null) return;
         if (owner != null && (other.transform == owner || other.transform.IsChildOf(owner))) return;
+        if (traveller != null && traveller.CheckCrossing()) return;
         // I look up the damageable target on this collider or its parent.
         IDamageable target = other.GetComponentInParent<IDamageable>();
         float hitDamage = damage;
@@ -59,7 +63,8 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player")) return;
+        if(collision.CompareTag("Player") || collision.GetComponent<Portal>() != null) return;
+        if (traveller != null && (traveller.CheckCrossing() || traveller.RecentlyTravelled)) return;
         ReturnToPool(); // Return to pool when leaving the trigger area, e.g., for bullets that should not persist.
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 using Unity.Cinemachine;
 using System.Collections;
 
-public class PlayerSwapSides : MonoBehaviour
+public class PlayerSwapSides : MonoBehaviour, IPortalUser
 {
     [SerializeField] private PlayerInfo playerInfo;
     [SerializeField] private GameObject playerObj, crosshair, aoeBurst;
@@ -18,6 +18,9 @@ public class PlayerSwapSides : MonoBehaviour
     private bool IsOnLeftSide => player != null && player.MovementCamera == leftCamera;
     private bool panelSideInitialized;
     private bool panelIsOnLeft;
+    private bool completeSwapRequested;
+
+    private Coroutine swapCoroutine;
 
     private void Awake()
     {
@@ -36,8 +39,35 @@ public class PlayerSwapSides : MonoBehaviour
     {
         SyncPanelSide();
 
-        if (!canSwap || player == null || player.isSwapping || !player.SwitchTriggered) return;
-        SwapSides();
+        if (player == null || !player.SwitchTriggered) return;
+
+        if (player.isSwapping)
+        {
+            completeSwapRequested = true;
+        }
+        else if (canSwap)
+        {
+            SwapSides();
+        }
+    }
+
+    // Physical portal travel is independent of the button-based swap and its cooldown.
+    public bool CanUsePortal(Portal entrance) => player != null && player.isPlayable && !player.isSwapping
+        && entrance.AttachedCamera == player.MovementCamera && entrance.LinkedPortal != null
+        && (entrance.LinkedPortal.AttachedCamera == leftCamera || entrance.LinkedPortal.AttachedCamera == rightCamera);
+
+    // The portal already moved the player; update only the camera group and UI assignment.
+    public void OnPortalTravel(Portal.Transit transit)
+    {
+        Transform target = player.GetComponentInParent<PlayerInput>().transform;
+        bool onLeft = transit.Exit.AttachedCamera == leftCamera;
+        leftTargetGroup.RemoveMember(target);
+        rightTargetGroup.RemoveMember(target);
+        (onLeft ? leftTargetGroup : rightTargetGroup).AddMember(target, 0.5f, 1f);
+        player.SetMovementCamera(transit.Exit.AttachedCamera);
+        playerInfo.SetPanelSide(onLeft);
+        panelIsOnLeft = onLeft;
+        panelSideInitialized = true;
     }
 
     private void SwapSides()
@@ -56,10 +86,11 @@ public class PlayerSwapSides : MonoBehaviour
             : 0f;
 
         canSwap = false;
+        completeSwapRequested = false;
         playerInfo?.SetTeleportCooldownProgress(0f);
         player.isSwapping = true;
         cardinalGun.canShoot = false;
-        StartCoroutine(SwapSidesRoutine(
+        swapCoroutine = StartCoroutine(SwapSidesRoutine(
             playerInput.transform,
             wasOnLeftSide,
             totalDuration,
@@ -80,13 +111,18 @@ public class PlayerSwapSides : MonoBehaviour
         TransferToOppositeSide(playerTarget, wasOnLeftSide);
 
         float destinationHold = Mathf.Max(0f, totalDuration - phaseDuration * 2f);
-        if (destinationHold > 0f)
-            yield return new WaitForSeconds(destinationHold);
+        float elapsed = 0f;
+        while (elapsed < destinationHold && !completeSwapRequested)
+        {
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
 
         playerObj.SetActive(true);
         if (teleportVanishEffect != null)
             yield return teleportVanishEffect.Reappear(phaseDuration);
 
+        swapCoroutine = null;
         CompleteSwap();
     }
 
@@ -145,6 +181,14 @@ public class PlayerSwapSides : MonoBehaviour
     private void CompleteSwap()
     {
         playerObj.SetActive(true);
+        completeSwapRequested = false;
+
+        if (swapCoroutine != null)
+        {
+            StopCoroutine(swapCoroutine);
+            swapCoroutine = null;
+        }
+
         crosshair.SetActive(false);
         player.isSwapping = false;
         cardinalGun.canShoot = true;
