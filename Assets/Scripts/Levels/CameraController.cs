@@ -1,31 +1,55 @@
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private CinemachineBrain cinemachineBrainLeft, cinemachineBrainRight;
     [SerializeField] private CinemachineCamera initialCameraLeft, initialCameraRight;
+    [SerializeField] private float standardBlendTime = 0.5f;
     private DungeonManager dungeonManager;
+
+    // void Start()
+    // {
+    //     dungeonManager = GetComponent<DungeonManager>();
+
+    //     // Set the initial cameras to be active at the start of the game.
+    //     cinemachineBrainLeft.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.Cut, 0f);
+    //     cinemachineBrainRight.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.Cut, 0f);
+
+    //     StartCoroutine(MoveAndWaitForCameraBlend(initialCameraLeft, initialCameraRight, null, null));
+    //     cinemachineBrainLeft.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.EaseInOut, standardBlendTime);
+    //     cinemachineBrainRight.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.EaseInOut, standardBlendTime);
+    // }
 
     void Start()
     {
+        StartCoroutine(InitializationCoroutine());
+    }
+
+    IEnumerator InitializationCoroutine()
+    {
         dungeonManager = GetComponent<DungeonManager>();
 
-        // Set the initial cameras to be active at the start of the game.
-        initialCameraLeft.Priority = 10;
-        initialCameraRight.Priority = 10;
-        initialCameraLeft.OutputChannel = OutputChannels.Channel01;
-        initialCameraRight.OutputChannel = OutputChannels.Channel02;
-        dungeonManager.leftCinemachineCamera = initialCameraLeft;
-        dungeonManager.rightCinemachineCamera = initialCameraRight;
+        cinemachineBrainLeft.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.Cut, 0f);
+        cinemachineBrainRight.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.Cut, 0f);
+
+        yield return StartCoroutine(MoveAndWaitForCameraBlend(initialCameraLeft, initialCameraRight, null, null));
+
+        cinemachineBrainLeft.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.EaseInOut, standardBlendTime);
+        cinemachineBrainRight.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.EaseInOut, standardBlendTime);
     }
 
     public void MoveCamera(CinemachineCamera desiredCamLeft, CinemachineCamera desiredCamRight, CinemachineCamera oldCameraLeft, CinemachineCamera oldCameraRight)
     {
         // Changing priorities tells each CinemachineBrain to blend to the new room camera.
-        oldCameraLeft.Priority = 0;
-        oldCameraRight.Priority = 0;
+        if(oldCameraLeft != null && oldCameraRight != null)
+        {
+            oldCameraLeft.Priority = 0;
+            oldCameraRight.Priority = 0;
+        }
+
         desiredCamLeft.Priority = 10;
         desiredCamRight.Priority = 10;
 
