@@ -2718,11 +2718,11 @@ PrefabInstance:
     - target: {fileID: 900412011629494694, guid: dd21c5e8c9cba924cbe7a0d9bc3d81e1, type: 3}
       propertyPath: leftPlayers
       value: 
-      objectReference: {fileID: 3470970370492974527}
+      objectReference: {fileID: 0}
     - target: {fileID: 900412011629494694, guid: dd21c5e8c9cba924cbe7a0d9bc3d81e1, type: 3}
       propertyPath: rightPlayers
       value: 
-      objectReference: {fileID: 7472284701938296676}
+      objectReference: {fileID: 0}
     - target: {fileID: 900412011629494694, guid: dd21c5e8c9cba924cbe7a0d9bc3d81e1, type: 3}
       propertyPath: cinemachineBrainLeft
       value: 
@@ -2766,11 +2766,11 @@ PrefabInstance:
     - target: {fileID: 1246304570452974264, guid: dd21c5e8c9cba924cbe7a0d9bc3d81e1, type: 3}
       propertyPath: 'cameraTargetGroups.Array.data[0]'
       value: 
-      objectReference: {fileID: 3470970370492974527}
+      objectReference: {fileID: 0}
     - target: {fileID: 1246304570452974264, guid: dd21c5e8c9cba924cbe7a0d9bc3d81e1, type: 3}
       propertyPath: 'cameraTargetGroups.Array.data[1]'
       value: 
-      objectReference: {fileID: 7472284701938296676}
+      objectReference: {fileID: 0}
     - target: {fileID: 5008949637417340555, guid: dd21c5e8c9cba924cbe7a0d9bc3d81e1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2839,7 +2839,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 60568941596090986, guid: c7eff0eaf293562438ae56ea8c88f3f3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 80
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 3252209294774561791, guid: c7eff0eaf293562438ae56ea8c88f3f3, type: 3}
       propertyPath: m_Name
@@ -3028,17 +3028,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9adfedf550077f143b62229bcf5a38ad, type: 3}
---- !u!114 &3470970370492974527 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5591819291306245555, guid: 9adfedf550077f143b62229bcf5a38ad, type: 3}
-  m_PrefabInstance: {fileID: 9057160160046217228}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5eb80d8e62d9d145bb50fb783c0f731, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineTargetGroup
 --- !u!1 &3557050677871282424 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5542894934996775156, guid: 9adfedf550077f143b62229bcf5a38ad, type: 3}
@@ -3049,14 +3038,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4443785213128793924, guid: 9adfedf550077f143b62229bcf5a38ad, type: 3}
   m_PrefabInstance: {fileID: 9057160160046217228}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7472284701938296676 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1874513896421842792, guid: 9adfedf550077f143b62229bcf5a38ad, type: 3}
-  m_PrefabInstance: {fileID: 9057160160046217228}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5eb80d8e62d9d145bb50fb783c0f731, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineTargetGroup

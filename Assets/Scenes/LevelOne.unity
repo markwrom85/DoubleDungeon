@@ -119,6 +119,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &11906353 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1625880859270318992, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+  m_PrefabInstance: {fileID: 1814703904}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
 --- !u!4 &42599117 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1031564408350812838, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
@@ -206,10 +217,20 @@ Transform:
   - {fileID: 1953005928}
   m_Father: {fileID: 1230843877}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &331461036 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1132615720425655079, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
+  m_PrefabInstance: {fileID: 1967891984}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &354018098 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5533396661138247860, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
   m_PrefabInstance: {fileID: 774690776}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &392459593 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1132615720425655079, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
+  m_PrefabInstance: {fileID: 1297507727}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &393093389 stripped
 Transform:
@@ -226,11 +247,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6023317424863724512, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
   m_PrefabInstance: {fileID: 678564276}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &542426222 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8755753557822214851, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
-  m_PrefabInstance: {fileID: 2039513287}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &607687668
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -239,6 +255,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 78323379}
     m_Modifications:
+    - target: {fileID: 625197113829684772, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+      propertyPath: playerLeftSpawnPoint
+      value: 
+      objectReference: {fileID: 331461036}
+    - target: {fileID: 625197113829684772, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+      propertyPath: playerRightSpawnPoint
+      value: 
+      objectReference: {fileID: 392459593}
+    - target: {fileID: 625197113829684772, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+      propertyPath: newLeftCinemachineCamera
+      value: 
+      objectReference: {fileID: 1967891987}
+    - target: {fileID: 625197113829684772, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+      propertyPath: newRightCinemachineCamera
+      value: 
+      objectReference: {fileID: 1297507730}
     - target: {fileID: 1031564408350812838, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
       propertyPath: m_LocalPosition.x
       value: 15
@@ -283,8 +315,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Room
       objectReference: {fileID: 0}
+    - target: {fileID: 6324334852978636750, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+      propertyPath: doors.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6324334852978636750, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+      propertyPath: 'doors.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1397092427}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7085131033265159202, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+    - {fileID: 5604113239609739099, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+    - {fileID: 1241341820001158641, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+    - {fileID: 2605784560889434941, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+    - {fileID: 4624394395415506919, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+    - {fileID: 5932829607648451765, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
@@ -407,6 +453,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1031564408350812838, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
   m_PrefabInstance: {fileID: 678564276}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &740151609 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 625197113829684772, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+  m_PrefabInstance: {fileID: 1814703904}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eef032c794654115a61955682364bb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Door
 --- !u!1001 &774690776
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -550,6 +607,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2605784560889434941, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
   m_PrefabInstance: {fileID: 1626950840}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1203239895 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1625880859270318992, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+  m_PrefabInstance: {fileID: 607687668}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
 --- !u!1001 &1211465853
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -761,6 +829,22 @@ PrefabInstance:
       propertyPath: newRightCinemachineCamera
       value: 
       objectReference: {fileID: 1504794001}
+    - target: {fileID: 7294311955580849576, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
+      propertyPath: playerLeftSpawnPoint
+      value: 
+      objectReference: {fileID: 2022411852}
+    - target: {fileID: 7294311955580849576, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
+      propertyPath: playerRightSpawnPoint
+      value: 
+      objectReference: {fileID: 1560690653}
+    - target: {fileID: 7294311955580849576, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
+      propertyPath: newLeftCinemachineCamera
+      value: 
+      objectReference: {fileID: 1203239895}
+    - target: {fileID: 7294311955580849576, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
+      propertyPath: newRightCinemachineCamera
+      value: 
+      objectReference: {fileID: 11906353}
     - target: {fileID: 7683984805826052125, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 45
@@ -861,11 +945,17 @@ Transform:
   - {fileID: 774690777}
   m_Father: {fileID: 1230843877}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1332358876 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4454909843584649199, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
-  m_PrefabInstance: {fileID: 2039513287}
+--- !u!114 &1397092427 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 625197113829684772, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+  m_PrefabInstance: {fileID: 607687668}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eef032c794654115a61955682364bb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Door
 --- !u!4 &1407393882 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6023317424863724512, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
@@ -1088,6 +1178,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
+--- !u!4 &1560690653 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2174353742786483094, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+  m_PrefabInstance: {fileID: 1814703904}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1623157443 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1625880859270318992, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
@@ -1451,6 +1546,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 78323379}
     m_Modifications:
+    - target: {fileID: 625197113829684772, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+      propertyPath: playerLeftSpawnPoint
+      value: 
+      objectReference: {fileID: 331461036}
+    - target: {fileID: 625197113829684772, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+      propertyPath: playerRightSpawnPoint
+      value: 
+      objectReference: {fileID: 392459593}
+    - target: {fileID: 625197113829684772, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+      propertyPath: newLeftCinemachineCamera
+      value: 
+      objectReference: {fileID: 1967891987}
+    - target: {fileID: 625197113829684772, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+      propertyPath: newRightCinemachineCamera
+      value: 
+      objectReference: {fileID: 1297507730}
     - target: {fileID: 1031564408350812838, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
       propertyPath: m_LocalPosition.x
       value: 45
@@ -1495,8 +1606,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Room (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6324334852978636750, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+      propertyPath: doors.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6324334852978636750, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+      propertyPath: 'doors.Array.data[0]'
+      value: 
+      objectReference: {fileID: 740151609}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7085131033265159202, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+    - {fileID: 5604113239609739099, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+    - {fileID: 1241341820001158641, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+    - {fileID: 2605784560889434941, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+    - {fileID: 4624394395415506919, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+    - {fileID: 5932829607648451765, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
@@ -1543,6 +1668,22 @@ PrefabInstance:
       propertyPath: newRightCinemachineCamera
       value: 
       objectReference: {fileID: 1504794001}
+    - target: {fileID: 7294311955580849576, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
+      propertyPath: playerLeftSpawnPoint
+      value: 
+      objectReference: {fileID: 2022411852}
+    - target: {fileID: 7294311955580849576, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
+      propertyPath: playerRightSpawnPoint
+      value: 
+      objectReference: {fileID: 1560690653}
+    - target: {fileID: 7294311955580849576, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
+      propertyPath: newLeftCinemachineCamera
+      value: 
+      objectReference: {fileID: 1203239895}
+    - target: {fileID: 7294311955580849576, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
+      propertyPath: newRightCinemachineCamera
+      value: 
+      objectReference: {fileID: 11906353}
     - target: {fileID: 7683984805826052125, guid: af0a249ed02af454f804d58bbb8015b5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 15
@@ -1613,6 +1754,11 @@ MonoBehaviour:
 Transform:
   m_CorrespondingSourceObject: {fileID: 2174353742786483094, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
   m_PrefabInstance: {fileID: 678564276}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2022411852 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2174353742786483094, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+  m_PrefabInstance: {fileID: 607687668}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2039513287
 PrefabInstance:
@@ -1902,6 +2048,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1979388854007383601, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1979388854007383601, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2115430057330085322, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2068,6 +2222,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2919688049559716748, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2997030197771839962, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2997030197771839962, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
+      propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3013839562936457724, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
@@ -2313,7 +2475,7 @@ PrefabInstance:
     - target: {fileID: 5938485644798259095, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
       propertyPath: trackingGroupLeft
       value: 
-      objectReference: {fileID: 1332358876}
+      objectReference: {fileID: 0}
     - target: {fileID: 5938485644798259095, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
       propertyPath: initialCameraRight
       value: 
@@ -2321,7 +2483,7 @@ PrefabInstance:
     - target: {fileID: 5938485644798259095, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
       propertyPath: trackingGroupRight
       value: 
-      objectReference: {fileID: 542426222}
+      objectReference: {fileID: 0}
     - target: {fileID: 6242863284366060865, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
