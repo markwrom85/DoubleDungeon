@@ -18,6 +18,7 @@ public class DisplayManager : MonoBehaviour
             secondaryCanvas.gameObject.SetActive(false);
 
             mainCanvas.GetComponent<CanvasScaler>().referenceResolution = new Vector2(3840, 1080);
+            canvasUI.anchoredPosition = Vector2.zero;
             canvasUI.localPosition = Vector2.zero;
 
             leftCamera.rect = new Rect(0f, 0f, 0.5f, 1f);

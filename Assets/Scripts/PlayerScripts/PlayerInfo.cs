@@ -29,6 +29,41 @@ public class PlayerInfo : MonoBehaviour
     private float currentHealth;
     private Animator animator;
     private PlayerPanel playerPanel, playerPanel2;
+    public TomeDefinition EquippedTome { get; private set; }
+    private GameObject equippedAbility;
+
+    private void LateUpdate()
+    {
+        playerPanel?.SetSpecialAbilityCooldown(spAttack);
+        playerPanel2?.SetSpecialAbilityCooldown(spAttack);
+    }
+
+    public bool EquipTome(TomeDefinition tome)
+    {
+        if (tome == null || tome.abilityPrefab == null ||
+            tome.abilityPrefab.GetComponent<SpecialAttack>() == null)
+        {
+            Debug.LogWarning("Tome needs an ability prefab with a SpecialAttack on its root.", this);
+            return false;
+        }
+
+        GameObject previous = equippedAbility != null ? equippedAbility : spAttack != null ? spAttack.gameObject : null;
+        if (previous == gameObject) previous = null;
+        if (previous != null)
+        {
+            previous.SetActive(false);
+            Destroy(previous);
+        }
+        equippedAbility = Instantiate(tome.abilityPrefab, transform, false);
+        equippedAbility.transform.localPosition = Vector3.zero;
+        spAttack = equippedAbility.GetComponent<SpecialAttack>();
+        EquippedTome = tome;
+        playerPanel?.ApplyTome(tome);
+        playerPanel2?.ApplyTome(tome);
+        playerPanel?.SetSpecialAbilityCooldown(spAttack);
+        playerPanel2?.SetSpecialAbilityCooldown(spAttack);
+        return true;
+    }
 
     private int lastDirection;
     private int shootingDirection;
@@ -129,6 +164,7 @@ public class PlayerInfo : MonoBehaviour
     {
         playerPanel?.ChangeHealthDisplay(currentHealth, MaxHealth);
         playerPanel2?.ChangeHealthDisplay(currentHealth, MaxHealth);
+        if (EquippedTome != null) playerPanel?.ApplyTome(EquippedTome);
     }
 
     public void ChangePanelSide()

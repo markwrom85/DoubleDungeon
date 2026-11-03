@@ -19,6 +19,7 @@ public class Door : MonoBehaviour
         ArduinoJoystickPlayer player = other.GetComponentInParent<ArduinoJoystickPlayer>();
         if (player != null && isOpen)
         {
+            Debug.Log("Player entered the door trigger.");
             dungeonManager.ChangeRooms(newLeftCinemachineCamera, newRightCinemachineCamera, playerLeftSpawnPoint, playerRightSpawnPoint, doorsToDisableAfterTransition);
         }
     }
