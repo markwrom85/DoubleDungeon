@@ -35,7 +35,7 @@ public class CameraController : MonoBehaviour
     public void MoveCamera(CinemachineCamera desiredCamLeft, CinemachineCamera desiredCamRight, CinemachineCamera oldCameraLeft, CinemachineCamera oldCameraRight)
     {
         // Changing priorities tells each CinemachineBrain to blend to the new room camera.
-        if(oldCameraLeft != null && oldCameraRight != null)
+        if (oldCameraLeft != null && oldCameraRight != null)
         {
             oldCameraLeft.Priority = 0;
             oldCameraRight.Priority = 0;
@@ -71,6 +71,13 @@ public class CameraController : MonoBehaviour
             timeout -= Time.unscaledDeltaTime;
             yield return null;
         }
+
+        if (oldCameraLeft != null)
+            oldCameraLeft.Follow = null;
+
+        if (oldCameraRight != null)
+            oldCameraRight.Follow = null;
+
         desiredCamLeft.Follow = leftPlayers.transform;
         desiredCamRight.Follow = rightPlayers.transform;
     }
