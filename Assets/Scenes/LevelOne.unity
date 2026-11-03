@@ -1192,6 +1192,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2174353742786483094, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
   m_PrefabInstance: {fileID: 1814703904}
   m_PrefabAsset: {fileID: 0}
+--- !u!224 &1590287567 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6542228851905583585, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
+  m_PrefabInstance: {fileID: 2039513287}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1623157443 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1625880859270318992, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
@@ -2445,6 +2450,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5187321747142874925, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
+      propertyPath: canvasUI
+      value: 
+      objectReference: {fileID: 1590287567}
     - target: {fileID: 5880089571506486503, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2580,6 +2589,10 @@ PrefabInstance:
     - target: {fileID: 6545430133926923893, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6659122793668453592, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -960
       objectReference: {fileID: 0}
     - target: {fileID: 6920039662339046792, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
       propertyPath: m_LocalPosition.x
