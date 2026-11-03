@@ -1385,9 +1385,9 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7096369113957562937, guid: 8754c845bf1535449b7b1a4949259330, type: 3}
   m_PrefabInstance: {fileID: 3142899543493320956}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &7768211124426004926 stripped
+--- !u!224 &6542228851905583585 stripped
 RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4635304247683873090, guid: 8754c845bf1535449b7b1a4949259330, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8167128395546425629, guid: 8754c845bf1535449b7b1a4949259330, type: 3}
   m_PrefabInstance: {fileID: 3142899543493320956}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3260198104495578565
@@ -2554,6 +2554,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -8.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8167128395546425629, guid: 8754c845bf1535449b7b1a4949259330, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -960
+      objectReference: {fileID: 0}
     - target: {fileID: 8179352603235937317, guid: 8754c845bf1535449b7b1a4949259330, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2680,7 +2684,7 @@ PrefabInstance:
     - target: {fileID: 8866440663291150248, guid: f5f862ed26159b54ba14750bbed4b114, type: 3}
       propertyPath: canvasUI
       value: 
-      objectReference: {fileID: 7768211124426004926}
+      objectReference: {fileID: 6542228851905583585}
     - target: {fileID: 8866440663291150248, guid: f5f862ed26159b54ba14750bbed4b114, type: 3}
       propertyPath: leftCamera
       value: 
@@ -2835,11 +2839,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 60568941596090986, guid: c7eff0eaf293562438ae56ea8c88f3f3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15
+      value: -9
       objectReference: {fileID: 0}
     - target: {fileID: 60568941596090986, guid: c7eff0eaf293562438ae56ea8c88f3f3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 55
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3252209294774561791, guid: c7eff0eaf293562438ae56ea8c88f3f3, type: 3}
       propertyPath: m_Name
@@ -2887,7 +2891,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8930155711742440600, guid: c7eff0eaf293562438ae56ea8c88f3f3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.666667
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8930155711742440600, guid: c7eff0eaf293562438ae56ea8c88f3f3, type: 3}
       propertyPath: m_LocalPosition.y
