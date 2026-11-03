@@ -26,6 +26,9 @@ public class CameraController : MonoBehaviour
         cinemachineBrainLeft.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.Cut, 0f);
         cinemachineBrainRight.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.Cut, 0f);
 
+        // Let DungeonManager finish placing players and populating the target groups
+        // before the initial cameras become live.
+        yield return null;
         yield return StartCoroutine(MoveAndWaitForCameraBlend(initialCameraLeft, initialCameraRight, null, null));
 
         cinemachineBrainLeft.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.EaseInOut, standardBlendTime);
@@ -35,7 +38,7 @@ public class CameraController : MonoBehaviour
     public void MoveCamera(CinemachineCamera desiredCamLeft, CinemachineCamera desiredCamRight, CinemachineCamera oldCameraLeft, CinemachineCamera oldCameraRight)
     {
         // Changing priorities tells each CinemachineBrain to blend to the new room camera.
-        if(oldCameraLeft != null && oldCameraRight != null)
+        if (oldCameraLeft != null && oldCameraRight != null)
         {
             oldCameraLeft.Priority = 0;
             oldCameraRight.Priority = 0;
@@ -57,6 +60,16 @@ public class CameraController : MonoBehaviour
         if (desiredCamLeft == null || desiredCamRight == null)
             yield break;
 
+        // Bind and reset the incoming cameras before changing priority. Otherwise
+        // Cinemachine can render their serialized room position for one update,
+        // then jump when the follow target is assigned after the blend.
+        desiredCamLeft.Follow = leftPlayers.transform;
+        desiredCamRight.Follow = rightPlayers.transform;
+        leftPlayers.DoUpdate();
+        rightPlayers.DoUpdate();
+        desiredCamLeft.PreviousStateIsValid = false;
+        desiredCamRight.PreviousStateIsValid = false;
+
         MoveCamera(desiredCamLeft, desiredCamRight, oldCameraLeft, oldCameraRight);
 
         // Wait for Cinemachine to process the priority change before checking IsBlending.
@@ -71,7 +84,12 @@ public class CameraController : MonoBehaviour
             timeout -= Time.unscaledDeltaTime;
             yield return null;
         }
-        desiredCamLeft.Follow = leftPlayers.transform;
-        desiredCamRight.Follow = rightPlayers.transform;
+
+        if (oldCameraLeft != null)
+            oldCameraLeft.Follow = null;
+
+        if (oldCameraRight != null)
+            oldCameraRight.Follow = null;
+
     }
 }

@@ -191,12 +191,8 @@ public class DungeonManager : MonoBehaviour
             if (groupTarget.Object == target) return;
         }
 
-        targetGroup.Targets.Add(new CinemachineTargetGroup.Target
-        {
-            Object = target,
-            Weight = 1f,
-            Radius = 0.5f
-        });
+        targetGroup.AddMember(target, 1f, 0.5f);
+        targetGroup.DoUpdate();
     }
 
     private int GetCameraIndex(int playerIndex)
@@ -281,6 +277,9 @@ public class DungeonManager : MonoBehaviour
 
         foreach (CinemachineTargetGroup.Target playerTarget in cameraTargetGroups[1].Targets)
             playerTarget.Object.transform.position = playerRightSpawnPoint.position;
+
+        cameraTargetGroups[0].DoUpdate();
+        cameraTargetGroups[1].DoUpdate();
 
         foreach (ArduinoJoystickPlayer player in players)
             player.GetComponent<PortalTraveller>()?.ResetTracking();
