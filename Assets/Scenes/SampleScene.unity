@@ -10235,7 +10235,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5187321747142874925, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
       propertyPath: oneScreenMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5712203679807973372, guid: 6966f75d01b15bd428f8fcd5dff21091, type: 3}
       propertyPath: m_LocalRotation.x
