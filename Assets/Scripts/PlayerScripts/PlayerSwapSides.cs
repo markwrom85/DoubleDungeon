@@ -63,7 +63,10 @@ public class PlayerSwapSides : MonoBehaviour, IPortalUser
         bool onLeft = transit.Exit.AttachedCamera == leftCamera;
         leftTargetGroup.RemoveMember(target);
         rightTargetGroup.RemoveMember(target);
-        (onLeft ? leftTargetGroup : rightTargetGroup).AddMember(target, 0.5f, 1f);
+        CinemachineTargetGroup destinationGroup = onLeft ? leftTargetGroup : rightTargetGroup;
+        destinationGroup.AddMember(target, 0.5f, 1f);
+        leftTargetGroup.DoUpdate();
+        rightTargetGroup.DoUpdate();
         player.SetMovementCamera(transit.Exit.AttachedCamera);
         playerInfo.SetPanelSide(onLeft);
         panelIsOnLeft = onLeft;
@@ -144,6 +147,8 @@ public class PlayerSwapSides : MonoBehaviour, IPortalUser
             leftTargetGroup.RemoveMember(playerTarget);
             leftTargetGroup.AddMember(playerTarget, 0.5f, 1f);
         }
+        leftTargetGroup.DoUpdate();
+        rightTargetGroup.DoUpdate();
         crosshair.SetActive(true);
         playerInfo.SetPanelSide(!wasOnLeftSide);
         panelIsOnLeft = !wasOnLeftSide;
