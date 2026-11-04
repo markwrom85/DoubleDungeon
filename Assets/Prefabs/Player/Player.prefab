@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2996432125620489813}
   - component: {fileID: 2196338445739179551}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Collider
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 597723847873939416}
   - component: {fileID: 877620927877009322}
   - component: {fileID: 1737602411582995485}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: AOEBurst
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,7 +242,7 @@ GameObject:
   - component: {fileID: 3713465482239230450}
   - component: {fileID: 2805800036879410325}
   - component: {fileID: 7497816328742910561}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -349,7 +349,7 @@ GameObject:
   - component: {fileID: 4542872084837076838}
   - component: {fileID: 5637610099729193619}
   - component: {fileID: 8837241092361400571}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PlayerSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -490,7 +490,8 @@ GameObject:
   - component: {fileID: 7349201362178500641}
   - component: {fileID: 5251293998876446244}
   - component: {fileID: 901010003}
-  m_Layer: 0
+  - component: {fileID: 8950584820399516385}
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -683,6 +684,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &901010003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7352079989303448806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c04c13b8551746268a193a6d97ea8560, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PortalTraveller
+  mode: 0
+  allowTravel: 1
+  automatic: 1
+  scaleWithPortal: 1
+  stopAtExit: 0
 --- !u!212 &8950584820399516385
 SpriteRenderer:
   serializedVersion: 3
@@ -753,7 +771,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7562391145801200002}
   - component: {fileID: 7562391145801200003}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Underglow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -843,6 +861,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6442700957787475046}
     m_Modifications:
+    - target: {fileID: 3084455926694471276, guid: 0ef0286fd4194014caa1b57754fe85ef, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5756580798457616121, guid: 0ef0286fd4194014caa1b57754fe85ef, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -887,10 +909,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gun
       objectReference: {fileID: 0}
+    - target: {fileID: 6829251810351168530, guid: 0ef0286fd4194014caa1b57754fe85ef, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7048014547865305060, guid: 0ef0286fd4194014caa1b57754fe85ef, type: 3}
       propertyPath: playerInfo
       value: 
       objectReference: {fileID: 2629216153815710971}
+    - target: {fileID: 9016575796584144873, guid: 0ef0286fd4194014caa1b57754fe85ef, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -912,19 +942,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d81d419c63441c7bb3eabf71183b3ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardinalGun
---- !u!114 &901010003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7352079989303448806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04c13b8551746268a193a6d97ea8560, type: 3}
-  m_Name:
-  m_EditorClassIdentifier: Assembly-CSharp::PortalTraveller
-  allowTravel: 1
-  automatic: 1
-  scaleWithPortal: 1
-  stopAtExit: 0
