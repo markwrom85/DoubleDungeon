@@ -36,6 +36,8 @@ public sealed class BatController : EnemyController, IPortalUser
     private Rigidbody2D body;
     private CircleCollider2D hitbox;
     private MeshRenderer bodyRenderer;
+    private Animator animator;
+    private int facingDirection = 1;
     private MaterialPropertyBlock bodyProperties;
     private static readonly int TintId = Shader.PropertyToID("_White");
     private EnemyDungeonSetup dungeonSetup;
@@ -74,6 +76,7 @@ public sealed class BatController : EnemyController, IPortalUser
         body = GetComponent<Rigidbody2D>();
         hitbox = GetComponent<CircleCollider2D>();
         bodyRenderer = GetComponentInChildren<MeshRenderer>(true);
+        animator = GetComponentInChildren<Animator>(true);
         bodyProperties = new MaterialPropertyBlock();
         dungeonSetup = GetComponent<EnemyDungeonSetup>();
         traveller = GetComponent<PortalTraveller>();
@@ -105,6 +108,7 @@ public sealed class BatController : EnemyController, IPortalUser
         hitbox.enabled = body.simulated = bodyRenderer.enabled = true;
         PrepareRoom();
         ChangeState(RoamState);
+        UpdateAnimator();
     }
 
     protected override void Update()
@@ -118,6 +122,7 @@ public sealed class BatController : EnemyController, IPortalUser
         {
             if (CurrentState != RoamState) ChangeState(RoamState);
             StopMoving();
+            UpdateAnimator();
             return;
         }
         base.Update();
@@ -126,6 +131,7 @@ public sealed class BatController : EnemyController, IPortalUser
             hitFlashUntil = 0f;
             ApplyColor(stateColor);
         }
+        UpdateAnimator();
     }
 
     protected override void FixedUpdate()
@@ -138,6 +144,7 @@ public sealed class BatController : EnemyController, IPortalUser
     {
         // Cinemachine finalizes each independent camera before the Bat crosses its edge.
         if (IsSwooping && AdvanceSwoop(Time.deltaTime)) ChangeState(RoamState);
+        UpdateAnimator();
     }
 
     protected override void OnDisable()
@@ -337,6 +344,7 @@ public sealed class BatController : EnemyController, IPortalUser
                     break;
                 }
                 DamageSwoopSegment(previous, next);
+                UpdateFacing(next - position);
                 previous = next;
                 position = next;
             }
@@ -368,6 +376,7 @@ public sealed class BatController : EnemyController, IPortalUser
         movementScale *= transit.Scale;
         portal = transit.Exit;
         position = transit.Position;
+        UpdateFacing(transit.Direction);
         PassIndex = 1;
         BuildPass(true, transit.Direction);
     }
@@ -408,15 +417,30 @@ public sealed class BatController : EnemyController, IPortalUser
 
     private void MoveTo(Vector2 next)
     {
+        UpdateFacing(next - position);
         position = next;
         body.MovePosition(next);
     }
 
     private void WarpTo(Vector2 next)
     {
+        UpdateFacing(next - position);
         position = next;
         body.position = next;
         transform.position = new Vector3(next.x, next.y, transform.position.z);
+    }
+
+    private void UpdateFacing(Vector2 movement)
+    {
+        if (Mathf.Abs(movement.x) > 0.001f)
+            facingDirection = movement.x < 0f ? -1 : 1;
+    }
+
+    private void UpdateAnimator()
+    {
+        if (animator == null) return;
+        animator.SetInteger("Direction", facingDirection);
+        animator.SetBool("IsSwooping", IsSwooping);
     }
 
     public void StopMoving() { if (body != null) body.linearVelocity = Vector2.zero; }
