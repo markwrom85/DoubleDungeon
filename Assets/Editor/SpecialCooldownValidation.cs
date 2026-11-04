@@ -81,9 +81,8 @@ public static class SpecialCooldownValidation
             {
                 Require(player.spAttack.IsReady && !overlay.enabled && !number.enabled && animator.speed == 1, "Ready state did not clear countdown and resume animation.");
                 player.TriggerSpecialAttack();
-                Require(player.EquipTome(tome) && !oldAbility.gameObject.activeSelf, "Replacing a cooling ability failed.");
-                Require(!overlay.enabled && player.spAttack.IsReady && animator.speed == 1, "New tome retained previous cooldown.");
-                Debug.Log("SPECIAL_COOLDOWN_PLAY_TEST_OK: full slot coverage, numeric countdown, sweep progression, animation pause/resume, player isolation, actual readiness and tome replacement passed.");
+                Require(!player.EquipTome(tome) && player.spAttack == oldAbility && !oldAbility.IsReady, "A second tome bypassed the cooldown.");
+                Debug.Log("SPECIAL_COOLDOWN_PLAY_TEST_OK: full slot coverage, numeric countdown, sweep progression, animation pause/resume, player isolation and actual readiness passed.");
                 Stop();
             }
         }

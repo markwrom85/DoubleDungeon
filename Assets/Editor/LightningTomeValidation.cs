@@ -63,9 +63,14 @@ public static class LightningTomeValidation
             Require(((Animator)serialized.FindProperty("specialAbilityAnimator").objectReferenceValue).runtimeAnimatorController == tome.abilityAnimation, "Ability animation not connected.");
             Require(other.spAttack == null && before.SequenceEqual(otherPanel.GetComponentsInChildren<Image>(true).Select(i => i.sprite)), "Other player was changed.");
             var previous = player.spAttack;
-            Require(player.EquipTome(tome) && !previous.gameObject.activeSelf, "Old ability remained active.");
+            var firePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Items/FireTomePickup.prefab");
+            var firePickup = UnityEngine.Object.Instantiate(firePrefab, new Vector3(520, 500), Quaternion.identity).GetComponent<ItemInfo>();
+            var firePedestal = firePickup.transform.Find("Pedestal");
+            Require(firePedestal.GetComponent<Rigidbody2D>() != null && firePedestal.GetComponent<PedestalShake>() != null && !firePedestal.GetComponent<BoxCollider2D>().isTrigger, "Fire pedestal physics do not match Lightning.");
+            Require(!firePickup.TryCollect(player) && player.spAttack == previous, "Player was able to take a second tome.");
+            Require(firePickup.TryCollect(other) && other.EquippedTome.element == TomeElement.Fire, "Rejected tome was not available to another player.");
             player.TriggerSpecialAttack();
-            Debug.Log("LIGHTNING_TOME_PLAY_TEST_OK: animation, pickup, duplicate protection, pedestal, HyperBeam, HUD, player isolation, ability replacement and activation passed.");
+            Debug.Log("LIGHTNING_TOME_PLAY_TEST_OK: animation, pickup, pedestal, HyperBeam, HUD, player isolation and one tome per player passed.");
         }
         catch (Exception error) { Debug.LogException(error); }
         finally { EditorApplication.isPlaying = false; }
