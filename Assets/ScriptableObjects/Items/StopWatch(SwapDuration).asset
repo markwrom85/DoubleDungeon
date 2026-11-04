@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c58d36910da7741598b64af6d0b6a79c, type: 3}
-  m_Name: HealthUp
+  m_Name: StopWatch(SwapDuration)
   m_EditorClassIdentifier: Assembly-CSharp::Item
   moveSpeed: 0
-  maxHealth: 2
+  maxHealth: 0
   attackDamage: 0
   attackRate: 0
   aoeDamage: 0
   swapCooldown: 0
-  swapDuration: 0
+  swapDuration: 0.5
