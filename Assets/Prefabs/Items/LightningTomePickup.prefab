@@ -126,6 +126,8 @@ GameObject:
   - component: {fileID: 4131292766785890803}
   - component: {fileID: 7797585961945360041}
   - component: {fileID: 9075781612793676181}
+  - component: {fileID: 6764980772094511713}
+  - component: {fileID: 1098185946522992269}
   m_Layer: 0
   m_Name: Pedestal
   m_TagString: Untagged
@@ -254,6 +256,48 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.49272203, y: 0.24321343}
   m_EdgeRadius: 0
+--- !u!114 &6764980772094511713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6829214940573407923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93feb1e87e491774bb95333d129c641d, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::PedestalShake
+  returnStrength: 100
+  damping: 25
+  maxDistance: 0.25
+--- !u!50 &1098185946522992269
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6829214940573407923}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1001 &7237855235506986481
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -262,18 +306,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -6314270196311088662, guid: 6f8bfb8f0eb68f04abf9f4e5ac7d126f, type: 3}
-      propertyPath: tome
-      value: 
-      objectReference: {fileID: 11400000, guid: 60d7da4ec0558b947b38b46da5ddaaf3, type: 2}
-    - target: {fileID: -6314270196311088662, guid: 6f8bfb8f0eb68f04abf9f4e5ac7d126f, type: 3}
-      propertyPath: pedestal
-      value: 
-      objectReference: {fileID: 4131292766785890803}
-    - target: {fileID: -6314270196311088662, guid: 6f8bfb8f0eb68f04abf9f4e5ac7d126f, type: 3}
-      propertyPath: modifierPrefab
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: -2139428635700634240, guid: 6f8bfb8f0eb68f04abf9f4e5ac7d126f, type: 3}
       propertyPath: m_Size.x
       value: 0.5609441

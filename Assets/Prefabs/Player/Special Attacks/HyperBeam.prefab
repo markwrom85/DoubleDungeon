@@ -51,6 +51,10 @@ MonoBehaviour:
   spLength: 3
   spCooldown: 5
   beamObj: {fileID: 7565463388575905198}
+  panelOutline: {fileID: 2578153803222835768, guid: 2757063791061564e8883895a3e04137, type: 3}
+  panelBackground: {fileID: 3319912297108983410, guid: 2757063791061564e8883895a3e04137, type: 3}
+  abilityIcon: {fileID: -1167944727478786785, guid: 166674686d1beb54aab1cd0fcd0c1fd1, type: 3}
+  abilityAnimation: {fileID: 9100000, guid: 7083e148debe6d749bb56e09e3d890b6, type: 2}
 --- !u!114 &2527410797392875665
 MonoBehaviour:
   m_ObjectHideFlags: 0

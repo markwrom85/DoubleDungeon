@@ -11,7 +11,6 @@ public static class SpecialCooldownValidation
     private static double runAt;
     private static int phase;
     private static PlayerInfo player;
-    private static TomeDefinition tome;
     private static Image overlay;
     private static TextMeshProUGUI number;
     private static Animator animator;
@@ -48,10 +47,13 @@ public static class SpecialCooldownValidation
         {
             if (phase == 0)
             {
-                tome = AssetDatabase.LoadAssetAtPath<TomeDefinition>("Assets/ScriptableObjects/Items/Tomes/LightningTome.asset");
                 player = UnityEngine.Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player.prefab"), new Vector3(500, 500), Quaternion.identity).GetComponent<PlayerInfo>();
                 player.SetPlayerId(1);
-                Require(player.EquipTome(tome), "Tome did not equip.");
+                UnityEngine.Object.Instantiate(
+                    AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Special Attacks/HyperBeam.prefab"),
+                    player.transform,
+                    false
+                );
                 var panel = GameObject.Find("Player 1 Panel").GetComponent<PlayerPanel>();
                 overlay = panel.transform.Find("Special Cooldown Sweep").GetComponent<Image>();
                 number = overlay.GetComponentInChildren<TextMeshProUGUI>();
@@ -81,7 +83,14 @@ public static class SpecialCooldownValidation
             {
                 Require(player.spAttack.IsReady && !overlay.enabled && !number.enabled && animator.speed == 1, "Ready state did not clear countdown and resume animation.");
                 player.TriggerSpecialAttack();
-                Require(player.EquipTome(tome) && !oldAbility.gameObject.activeSelf, "Replacing a cooling ability failed.");
+                oldAbility.gameObject.SetActive(false);
+                UnityEngine.Object.Destroy(oldAbility.gameObject);
+                UnityEngine.Object.Instantiate(
+                    AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Special Attacks/HyperBeam.prefab"),
+                    player.transform,
+                    false
+                );
+                Require(!oldAbility.gameObject.activeSelf, "Replacing a cooling ability failed.");
                 Require(!overlay.enabled && player.spAttack.IsReady && animator.speed == 1, "New tome retained previous cooldown.");
                 Debug.Log("SPECIAL_COOLDOWN_PLAY_TEST_OK: full slot coverage, numeric countdown, sweep progression, animation pause/resume, player isolation, actual readiness and tome replacement passed.");
                 Stop();

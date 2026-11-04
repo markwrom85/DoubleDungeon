@@ -6,11 +6,12 @@ public class HyperBeam : SpecialAttack
     [SerializeField] private GameObject beamObj;
     private HyperBeamCollision hyperBeamCollision;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         hyperBeamCollision = beamObj.GetComponent<HyperBeamCollision>();
         hyperBeamCollision.damage = spDamage;
-        GetComponentInParent<PlayerInfo>().spAttack = this;
     }
 
     public override void StartAttack()

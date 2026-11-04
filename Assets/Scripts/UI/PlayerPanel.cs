@@ -9,7 +9,7 @@ public class PlayerPanel : MonoBehaviour
     [SerializeField] private Image tomeBackground;
     [SerializeField] private Image specialAbilityIcon;
     [SerializeField] private Animator specialAbilityAnimator;
-    private TomeDefinition displayedTome;
+    private Sprite displayedAbilityIcon;
     [Header("Special Ability Cooldown")]
     [SerializeField] private Vector2 abilitySlotCenter = new Vector2(33.3f, 5.8f);
     [SerializeField] private Vector2 abilitySlotSize = new Vector2(28f, 28f);
@@ -87,21 +87,25 @@ public class PlayerPanel : MonoBehaviour
         abilityWasReady = ready;
     }
 
-    public void ApplyTome(TomeDefinition tome)
+    public void ApplySpecialAbility(
+        Sprite panelOutline,
+        Sprite panelBackground,
+        Sprite abilityIcon,
+        RuntimeAnimatorController abilityAnimation)
     {
-        if (tome == null || displayedTome == tome) return;
-        displayedTome = tome;
-        if (tomeOutline != null && tome.panelOutline != null) tomeOutline.sprite = tome.panelOutline;
-        if (tomeBackground != null && tome.panelBackground != null) tomeBackground.sprite = tome.panelBackground;
+        if (displayedAbilityIcon == abilityIcon) return;
+        displayedAbilityIcon = abilityIcon;
+        if (tomeOutline != null && panelOutline != null) tomeOutline.sprite = panelOutline;
+        if (tomeBackground != null && panelBackground != null) tomeBackground.sprite = panelBackground;
         if (specialAbilityAnimator != null)
         {
-            specialAbilityAnimator.runtimeAnimatorController = tome.abilityAnimation;
-            specialAbilityAnimator.enabled = tome.abilityAnimation != null;
+            specialAbilityAnimator.runtimeAnimatorController = abilityAnimation;
+            specialAbilityAnimator.enabled = abilityAnimation != null;
         }
         if (specialAbilityIcon != null)
         {
-            specialAbilityIcon.sprite = tome.abilityIcon;
-            specialAbilityIcon.enabled = tome.abilityIcon != null;
+            specialAbilityIcon.sprite = abilityIcon;
+            specialAbilityIcon.enabled = abilityIcon != null;
             // Keep every element's icon centered in the same full-size ability slot.
             specialAbilityIcon.rectTransform.localScale = Vector3.one;
             specialAbilityIcon.rectTransform.anchoredPosition = abilitySlotCenter;
