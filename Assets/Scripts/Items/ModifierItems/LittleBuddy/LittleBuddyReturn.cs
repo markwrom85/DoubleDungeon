@@ -25,7 +25,7 @@ public class LittleBuddyReturn : LittleBuddyState
             lbsc.SetState(new LittleBuddyChase(lbsc));
         }
 
-        if (offset.magnitude <= lbsc.followDistance)
+        if (offset.magnitude <= lbsc.returnRange)
         {
             lbsc.SetState(new LittleBuddyCooldown(lbsc));
         }

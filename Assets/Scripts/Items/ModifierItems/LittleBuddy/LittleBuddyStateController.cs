@@ -10,7 +10,7 @@ public class LittleBuddyStateController : MonoBehaviour
     public float followSpeed = 5f, followDistance = 2, followSlowDistance = 2, returnSpeed = 1.5f;
 
     [Header("Buddy Combat")]
-    public float attackDamage = 7f, attackCooldown = 3f, attackDuration = 1f, chaseRange = 10f, chaseSpeed = 7f;
+    public float attackDamage = 7f, attackCooldown = 3f, attackDuration = 1f, chaseRange = 10f, chaseSpeed = 7f, returnRange = 1f;
     public AOEBurst buddyAOE;
     public bool canAttack = true, transitionToReturn = false;
     public bool AttackRequested => enemyContacts > 0;

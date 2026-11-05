@@ -13086,6 +13086,74 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 3
   m_ColliderType: 1
+--- !u!1001 &1042648037
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1937755720}
+    m_Modifications:
+    - target: {fileID: 6159595123552299413, guid: 7a5b03e7ce9fb465486cb44fbe004f9d, type: 3}
+      propertyPath: m_Name
+      value: ZombieSpawn
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669963804302649804, guid: 7a5b03e7ce9fb465486cb44fbe004f9d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669963804302649804, guid: 7a5b03e7ce9fb465486cb44fbe004f9d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669963804302649804, guid: 7a5b03e7ce9fb465486cb44fbe004f9d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669963804302649804, guid: 7a5b03e7ce9fb465486cb44fbe004f9d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669963804302649804, guid: 7a5b03e7ce9fb465486cb44fbe004f9d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669963804302649804, guid: 7a5b03e7ce9fb465486cb44fbe004f9d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669963804302649804, guid: 7a5b03e7ce9fb465486cb44fbe004f9d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669963804302649804, guid: 7a5b03e7ce9fb465486cb44fbe004f9d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669963804302649804, guid: 7a5b03e7ce9fb465486cb44fbe004f9d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669963804302649804, guid: 7a5b03e7ce9fb465486cb44fbe004f9d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7a5b03e7ce9fb465486cb44fbe004f9d, type: 3}
+--- !u!114 &1042648038 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 988862261418752095, guid: 7a5b03e7ce9fb465486cb44fbe004f9d, type: 3}
+  m_PrefabInstance: {fileID: 1042648037}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ef80021ae3e4ab69679662bc5fcd21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawn
 --- !u!114 &1051430626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16165,6 +16233,11 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 3
   m_ColliderType: 1
+--- !u!4 &1721561853 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8669963804302649804, guid: 7a5b03e7ce9fb465486cb44fbe004f9d, type: 3}
+  m_PrefabInstance: {fileID: 1042648037}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1724829058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20607,6 +20680,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8867118270683686026, guid: 2cfee632468f6e543bb3934332ae3757, type: 3}
   m_PrefabInstance: {fileID: 1331049123}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1937755720 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1031564408350812838, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+  m_PrefabInstance: {fileID: 9048746407729525403}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1939955525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21484,13 +21562,24 @@ PrefabInstance:
       propertyPath: 'doors.Array.data[3]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6324334852978636750, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+      propertyPath: enemySpawns.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6324334852978636750, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+      propertyPath: 'enemySpawns.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1042648038}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 5604113239609739099, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
     - {fileID: 1241341820001158641, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
     - {fileID: 5932829607648451765, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
     - {fileID: 2605784560889434941, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1031564408350812838, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1721561853}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 926a4b3008cdcc4428a1a9396af11125, type: 3}
 --- !u!1660057539 &9223372036854775807
