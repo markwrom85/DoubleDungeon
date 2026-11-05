@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LittleBuddyTeleport : LittleBuddyState
@@ -6,7 +7,8 @@ public class LittleBuddyTeleport : LittleBuddyState
 
     public override void OnStateEnter()
     {
-        base.OnStateEnter();
+        lbsc.gameObject.transform.position = lbsc.playerInfo.gameObject.transform.position;
+        lbsc.SetState(new LittleBuddyIdle(lbsc));
     }
 
     public override void CheckTransitions()

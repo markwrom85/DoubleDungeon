@@ -118,7 +118,7 @@ public class LittleBuddyStateController : MonoBehaviour
 
     public void BuddyTeleport()
     {
-        Debug.Log("buddy teleport");
+        SetState(new LittleBuddyTeleport(this));
     }
 
     void OnCollisionEnter2D(Collision2D collision)

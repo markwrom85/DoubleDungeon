@@ -8,6 +8,7 @@ TagManager:
   - RightDungeon
   - Item
   - Camera
+  - Door
   layers:
   - Default
   - TransparentFX
