@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dee4c6765c4c4446aa59227f1cbb0714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemInfo
-  itemInfo: {fileID: 11400000, guid: 3b1e85242ede743d0b0e21e28d9bd68b, type: 2}
+  itemInfo: {fileID: 11400000, guid: 2d56f20353ab9a242937318bffd381a2, type: 2}
   modifierPrefab: {fileID: 7635608365116919902, guid: dc5c0424d4eb140038b329dae817f321, type: 3}
 --- !u!61 &1986390427171588991
 BoxCollider2D:
