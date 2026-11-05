@@ -13,7 +13,7 @@ public class LittleBuddyIdle : LittleBuddyState
 
     public override void CheckTransitions()
     {
-        if(lbsc.combatManager != null && lbsc.combatManager.IsInCombat)
+        if(lbsc.combatManager != null && lbsc.combatManager.IsInCombat && lbsc.canAttack)
         {
             lbsc.SetState(new LittleBuddyChase(lbsc));
         }

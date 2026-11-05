@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class AOEBurst : MonoBehaviour
 {
-    [SerializeField] private PlayerInfo playerInfo;
+    public float aoeDamage;
     
     void Start()
     {
-        playerInfo = GetComponentInParent<PlayerInfo>();
+        aoeDamage = GetComponentInParent<PlayerInfo>().AOEDamage;
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
         IDamageable target = other.GetComponent<IDamageable>();
-        target?.TakeDamage(playerInfo.AOEDamage);
+        target?.TakeDamage(aoeDamage);
     }
 }
