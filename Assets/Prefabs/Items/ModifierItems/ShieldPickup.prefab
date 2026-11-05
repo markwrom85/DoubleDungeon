@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 43993773572649710}
   - component: {fileID: 1986390427171588991}
   m_Layer: 0
-  m_Name: LittleBuddyPickup
+  m_Name: ShieldPickup
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

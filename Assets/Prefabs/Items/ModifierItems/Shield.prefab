@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7621585655956473100}
   - component: {fileID: 2365119504994904716}
-  - component: {fileID: 7595711634609458360}
   - component: {fileID: 5001044353875365776}
   - component: {fileID: 8376194260167335567}
+  - component: {fileID: 4358960891508144904}
   m_Layer: 0
-  m_Name: LittleBuddy
+  m_Name: Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,25 +95,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
---- !u!114 &7595711634609458360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7635608365116919902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd81b33a60549400d81f8ab91f3850cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LittleBuddyStateController
-  playerInfo: {fileID: 0}
-  combatManager: {fileID: 0}
-  damage: 2
-  speed: 90
-  bulletPrefab: {fileID: 5788919255543249563, guid: e6df7a94827ded2489502b16f34d11d2, type: 3}
-  shootCooldown: 1
-  canShoot: 1
 --- !u!50 &5001044353875365776
 Rigidbody2D:
   serializedVersion: 5
@@ -136,7 +117,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 72
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -148,7 +129,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7635608365116919902}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -157,7 +138,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -177,3 +158,16 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &4358960891508144904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7635608365116919902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e51824bceaa67e744a7d2a9012a72f0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Shield
+  speed: 90

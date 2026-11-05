@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2900819478159738891}
   - component: {fileID: 3484894718520692730}
   - component: {fileID: 5140764960106105871}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TomeVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 9075781612793676181}
   - component: {fileID: 6764980772094511713}
   - component: {fileID: 1098185946522992269}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pedestal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,7 +266,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93feb1e87e491774bb95333d129c641d, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PedestalShake
   returnStrength: 100
   damping: 25
@@ -325,6 +325,10 @@ PrefabInstance:
     - target: {fileID: 1955669219849000920, guid: 6f8bfb8f0eb68f04abf9f4e5ac7d126f, type: 3}
       propertyPath: m_Name
       value: LightningTomePickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955669219849000920, guid: 6f8bfb8f0eb68f04abf9f4e5ac7d126f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7090820378843097055, guid: 6f8bfb8f0eb68f04abf9f4e5ac7d126f, type: 3}
       propertyPath: m_LocalScale.x
