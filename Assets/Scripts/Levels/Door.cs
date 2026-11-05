@@ -4,23 +4,12 @@ using Unity.Cinemachine;
 public class Door : MonoBehaviour
 {
     public bool isOpen = false;
-    private DungeonManager dungeonManager;
     [SerializeField] private CinemachineCamera newLeftCinemachineCamera, newRightCinemachineCamera;
     [SerializeField] private Transform playerLeftSpawnPoint, playerRightSpawnPoint;
     [SerializeField] private GameObject[] doorsToDisableAfterTransition;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        dungeonManager = GameObject.Find("DungeonManager").GetComponent<DungeonManager>();
-    }
 
-    void OnTriggerEnter2D(Collider2D other)
+    public void ChangeRooms(DungeonManager dungeonManager)
     {
-        ArduinoJoystickPlayer player = other.GetComponentInParent<ArduinoJoystickPlayer>();
-        if (player != null && isOpen)
-        {
-            Debug.Log("Player entered the door trigger.");
-            dungeonManager.ChangeRooms(newLeftCinemachineCamera, newRightCinemachineCamera, playerLeftSpawnPoint, playerRightSpawnPoint, doorsToDisableAfterTransition);
-        }
+        dungeonManager.ChangeRooms(newLeftCinemachineCamera, newRightCinemachineCamera, playerLeftSpawnPoint, playerRightSpawnPoint, doorsToDisableAfterTransition);
     }
 }

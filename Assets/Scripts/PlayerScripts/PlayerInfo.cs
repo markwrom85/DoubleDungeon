@@ -5,6 +5,7 @@ public class PlayerInfo : MonoBehaviour
     [Header("Player Stats")]
     [SerializeField] private PlayerBaseStats baseStats;
     public SpecialAttack spAttack;
+    private DungeonManager dungeonManager;
 
     [Header("Sprite")]
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -29,6 +30,8 @@ public class PlayerInfo : MonoBehaviour
     private float currentHealth;
     private Animator animator;
     private PlayerPanel playerPanel, playerPanel2;
+
+    public event System.Action PlayerTeleported;
 
     private void LateUpdate()
     {
@@ -64,6 +67,8 @@ public class PlayerInfo : MonoBehaviour
         SwapDuration = baseStats.swapDuration;
 
         currentHealth = MaxHealth;
+
+        dungeonManager = GameObject.Find("DungeonManager").GetComponent<DungeonManager>();
 
         if (spriteRenderer != null)
             animator = spriteRenderer.GetComponent<Animator>();
@@ -254,11 +259,25 @@ public class PlayerInfo : MonoBehaviour
 
     public void TriggerSpecialAttack()
     {
-        if(spAttack == null) return;
+        if (spAttack == null) return;
         spAttack.StartAttack();
     }
 
     private void Die()
     {
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Door"))
+        {
+            collision.GetComponent<Door>().ChangeRooms(dungeonManager);
+            PlayerTeleportEvent();
+        }
+    }
+
+    public void PlayerTeleportEvent()
+    {
+        PlayerTeleported?.Invoke();
     }
 }

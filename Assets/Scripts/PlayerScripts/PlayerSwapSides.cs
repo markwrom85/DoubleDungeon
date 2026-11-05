@@ -199,6 +199,8 @@ public class PlayerSwapSides : MonoBehaviour, IPortalUser
         cardinalGun.canShoot = true;
         StartCoroutine(AOEBurst());
         StartCoroutine(SwapCooldown());
+
+        playerInfo.PlayerTeleportEvent();
     }
 
     private IEnumerator AOEBurst()

@@ -27,6 +27,8 @@ public class LittleBuddyStateController : MonoBehaviour
         SetState(new LittleBuddyIdle(this));
 
         transform.SetParent(null);
+
+        playerInfo.PlayerTeleported += BuddyTeleport;
     }
 
     // Update is called once per frame
@@ -112,6 +114,11 @@ public class LittleBuddyStateController : MonoBehaviour
         yield return new WaitForSeconds(attackDuration);
         buddyAOE.gameObject.SetActive(false);
         transitionToReturn = true;
+    }
+
+    public void BuddyTeleport()
+    {
+        Debug.Log("buddy teleport");
     }
 
     void OnCollisionEnter2D(Collision2D collision)
