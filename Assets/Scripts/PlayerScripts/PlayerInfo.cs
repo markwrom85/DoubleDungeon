@@ -271,8 +271,12 @@ public class PlayerInfo : MonoBehaviour
     {
         if (collision.CompareTag("Door"))
         {
-            collision.GetComponent<Door>().ChangeRooms(dungeonManager);
-            PlayerTeleportEvent();
+            Door door = collision.GetComponent<Door>();
+            if (door.isOpen)
+            {
+                door.ChangeRooms(dungeonManager);
+                PlayerTeleportEvent();
+            }
         }
     }
 
