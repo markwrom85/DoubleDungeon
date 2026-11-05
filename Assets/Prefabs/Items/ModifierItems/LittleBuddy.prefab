@@ -219,11 +219,12 @@ MonoBehaviour:
   followSpeed: 3.5
   followDistance: 1
   followSlowDistance: 1
+  returnSpeed: 1.5
   attackDamage: 7
-  attackCooldown: 2
+  attackCooldown: 3
   attackDuration: 0.25
   chaseRange: 10
-  chaseSpeed: 1
+  chaseSpeed: 4
   buddyAOE: {fileID: 1834542476076629055}
   canAttack: 1
   transitionToReturn: 0

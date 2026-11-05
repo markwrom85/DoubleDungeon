@@ -7,7 +7,6 @@ public class LittleBuddyExplode : LittleBuddyState
     public override void OnStateEnter()
     {
         lbsc.GetComponent<SpriteRenderer>().color = Color.yellow;
-        Debug.Log("Little Buddy Explode State Entered");
         lbsc.StartAttack();
     }
 
@@ -32,6 +31,5 @@ public class LittleBuddyExplode : LittleBuddyState
     public override void OnStateExit()
     {
         lbsc.transitionToReturn = false;
-        Debug.Log("Little Buddy Explode State Exited");
     }
 }
