@@ -7,12 +7,13 @@ public class LittleBuddyExplode : LittleBuddyState
     public override void OnStateEnter()
     {
         lbsc.GetComponent<SpriteRenderer>().color = Color.yellow;
-        lbsc.StartCoroutine(lbsc.AttackCooldown(lbsc.attackCooldown));
+        Debug.Log("Little Buddy Explode State Entered");
+        lbsc.StartAttack();
     }
 
     public override void CheckTransitions()
     {
-        if(lbsc.transitionToReturn)
+        if (lbsc.targetEnemy == null || !lbsc.targetEnemy.IsAlive || lbsc.transitionToReturn)
         {
             lbsc.SetState(new LittleBuddyReturn(lbsc));
         }
@@ -20,16 +21,17 @@ public class LittleBuddyExplode : LittleBuddyState
 
     public override void Act()
     {
-        // lbsc.StartCoroutine(lbsc.AttackEnemy());
+        
     }
 
     public override void FixedAct()
     {
-        
+
     }
 
     public override void OnStateExit()
     {
         lbsc.transitionToReturn = false;
+        Debug.Log("Little Buddy Explode State Exited");
     }
 }

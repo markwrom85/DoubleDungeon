@@ -6,7 +6,10 @@ public class AOEBurst : MonoBehaviour
     
     void Start()
     {
-        aoeDamage = GetComponentInParent<PlayerInfo>().AOEDamage;
+        if(GetComponentInParent<PlayerInfo>() != null)
+        {
+            aoeDamage = GetComponentInParent<PlayerInfo>().AOEDamage;
+        }
     }
     private void OnTriggerEnter2D(Collider2D other)
     {

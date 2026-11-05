@@ -13,10 +13,10 @@ public class LittleBuddyChase : LittleBuddyState
 
     public override void CheckTransitions()
     {
-        // if (lbsc.AttackRequested && lbsc.canAttack)
-        // {
-        //     lbsc.SetState(new LittleBuddyExplode(lbsc));
-        // }
+        if (lbsc.AttackRequested && lbsc.canAttack)
+        {
+            lbsc.SetState(new LittleBuddyExplode(lbsc));
+        }
 
         if (lbsc.targetEnemy == null || !lbsc.targetEnemy.IsAlive)
         {

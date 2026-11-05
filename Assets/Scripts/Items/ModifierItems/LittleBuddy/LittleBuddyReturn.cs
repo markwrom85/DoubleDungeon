@@ -7,6 +7,7 @@ public class LittleBuddyReturn : LittleBuddyState
     public override void OnStateEnter()
     {
         lbsc.GetComponent<SpriteRenderer>().color = Color.blue;
+        Debug.Log("Little Buddy Return State Entered");
     }
 
     public override void CheckTransitions()
@@ -30,5 +31,6 @@ public class LittleBuddyReturn : LittleBuddyState
     public override void OnStateExit()
     {
         lbsc.StartCoroutine(lbsc.AttackCooldown(lbsc.attackCooldown));
+        Debug.Log("Little Buddy Return State Exited");
     }
 }
