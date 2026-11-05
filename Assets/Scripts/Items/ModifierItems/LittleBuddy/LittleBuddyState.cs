@@ -7,6 +7,7 @@ public abstract class LittleBuddyState
 
     public abstract void CheckTransitions();
     public abstract void Act();
+    public abstract void FixedAct();
     public virtual void OnStateEnter() { }
     public virtual void OnStateExit() { }
 

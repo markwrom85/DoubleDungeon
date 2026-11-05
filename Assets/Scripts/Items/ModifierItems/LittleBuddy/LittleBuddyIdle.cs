@@ -4,6 +4,8 @@ public class LittleBuddyIdle : LittleBuddyState
 {
     public LittleBuddyIdle(LittleBuddyStateController lbsc) : base(lbsc) { }
 
+    private Vector2 playerPosition => lbsc.playerInfo.transform.position;
+
     public override void OnStateEnter()
     {
         lbsc.GetComponent<SpriteRenderer>().color = Color.green;
@@ -13,20 +15,54 @@ public class LittleBuddyIdle : LittleBuddyState
     {
         if(lbsc.combatManager != null && lbsc.combatManager.IsInCombat)
         {
-            lbsc.SetState(new LittleBuddyCombat(lbsc));
+            lbsc.SetState(new LittleBuddyChase(lbsc));
         }
     }
 
     public override void Act()
     {
-        if (lbsc.transform.parent == null)
+
+    }
+
+    public override void FixedAct()
+    {
+        Rigidbody2D body = lbsc.GetComponent<Rigidbody2D>();
+        if (body == null)
+        {
             return;
+        }
 
-        Vector3 offset = lbsc.transform.localPosition;
-        if (offset.sqrMagnitude < 0.0001f)
-            offset = Vector3.right;
+        if (lbsc.playerInfo == null)
+        {
+            body.linearVelocity = Vector2.zero;
+            return;
+        }
 
-        offset = Quaternion.Euler(0f, 0f, lbsc.speed * Time.deltaTime) * offset;
-        lbsc.transform.localPosition = offset;
+        Vector2 offset = playerPosition - body.position;
+        float stopDistance = Mathf.Max(0f, lbsc.followDistance);
+        float slowDistance = Mathf.Max(0f, lbsc.followSlowDistance);
+        float distance = offset.magnitude;
+
+        if (distance <= stopDistance)
+        {
+            body.linearVelocity = Vector2.zero;
+            return;
+        }
+
+        float speed = Mathf.SmoothStep(
+            0f,
+            Mathf.Max(0f, lbsc.followSpeed),
+            Mathf.InverseLerp(stopDistance, stopDistance + slowDistance, distance));
+
+        body.linearVelocity = offset.normalized * speed;
+    }
+
+    public override void OnStateExit()
+    {
+        Rigidbody2D body = lbsc.GetComponent<Rigidbody2D>();
+        if (body != null)
+        {
+            body.linearVelocity = Vector2.zero;
+        }
     }
 }
